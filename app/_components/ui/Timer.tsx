@@ -1,27 +1,30 @@
+import { decrementTime, incrementTime } from "@/app/features/timer/timerSlice";
+import { RootState } from "@/app/store";
+import { Button } from "@/components/ui/button";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-// const initialState = {
-//   isPlaying: false,
-//   time: 1,
-//   shortBreakCount: 0,
-//   longBreakCount: 0,
-//   key: 0,
-// };
+import { useDispatch, useSelector } from "react-redux";
+
 function Timer() {
+  const time = useSelector((state: RootState) => state.timer.time);
+  const dispatch = useDispatch();
+  console.log(time);
   return (
-    <CountdownCircleTimer
-      onComplete={() => {
-        toggleTimer;
-        console.log(isPlaying);
-        return { shouldRepeat: false };
-      }}
-      isPlaying={isPlaying}
-      size={360}
-      duration={time}
-      strokeWidth={32}
-      colors="#004777"
-    >
-      {renderTime}
-    </CountdownCircleTimer>
+    <section className="flex items-center justify-center gap-16">
+      <Button onClick={() => dispatch(decrementTime())}>-</Button>
+      <CountdownCircleTimer
+        onComplete={() => {
+          return { shouldRepeat: false };
+        }}
+        isPlaying={false}
+        size={360}
+        duration={time}
+        strokeWidth={32}
+        colors="#004777"
+      >
+        {renderTime}
+      </CountdownCircleTimer>
+      <Button onClick={() => dispatch(incrementTime())}>+</Button>
+    </section>
   );
 }
 

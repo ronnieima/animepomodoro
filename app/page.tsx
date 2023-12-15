@@ -13,9 +13,7 @@ export default function Home() {
       <main className="flex flex-col items-center justify-center gap-16">
         <TypeTags />
         <Timer />
-        <Button onClick={toggleTimer} className="">
-          {isPlaying ? "Give up" : "Start"}
-        </Button>
+        <Button className="">{/* {isPlaying ? "Give up" : "Start"} */}</Button>
       </main>
     </>
   );
