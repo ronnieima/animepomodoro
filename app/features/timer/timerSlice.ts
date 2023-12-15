@@ -4,6 +4,7 @@ const TIME_STEP = 60;
 
 type StateType = {
   time: number;
+  pomodoroCount: number;
   shortBreakCount: number;
   longBreakCount: number;
   isPlaying: boolean;
@@ -11,7 +12,8 @@ type StateType = {
 };
 
 const initialState: StateType = {
-  time: 2700,
+  time: 1, //2700
+  pomodoroCount: 0,
   shortBreakCount: 0,
   longBreakCount: 0,
   isPlaying: false,
@@ -22,11 +24,20 @@ export const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
-    toggleTimer: (state) => {
-      state.isPlaying = !state.isPlaying;
+    startTimer: (state) => {
+      state.isPlaying = true;
     },
     resetTimer: (state) => {
       state.key += 1;
+    },
+    endTimer: (state) => {
+      state.isPlaying = false;
+      state.key += 1;
+    },
+    completePomodoro: (state) => {
+      state.isPlaying = false;
+      state.key += 1;
+      state.pomodoroCount += 1;
     },
     incrementShortBreakCount: (state) => {
       state.shortBreakCount += 1;
@@ -46,7 +57,9 @@ export const timerSlice = createSlice({
 });
 
 export const {
-  toggleTimer,
+  startTimer,
+  endTimer,
+  completePomodoro,
   incrementShortBreakCount,
   incrementLongBreakCount,
   incrementTime,

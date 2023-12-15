@@ -1,13 +1,20 @@
 "use client";
 
+import {
+  completePomodoro,
+  incrementShortBreakCount,
+} from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
+import { useEffect } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Timer({ className }: { className?: string }) {
   const time = useSelector((state: RootState) => state.timer.time);
   const key = useSelector((state: RootState) => state.timer.key);
   const isPlaying = useSelector((state: RootState) => state.timer.isPlaying);
+
+  const dispatch = useDispatch();
 
   return (
     <section
@@ -16,6 +23,7 @@ function Timer({ className }: { className?: string }) {
       <CountdownCircleTimer
         key={key}
         onComplete={() => {
+          dispatch(completePomodoro());
           return { shouldRepeat: false };
         }}
         isPlaying={isPlaying}
