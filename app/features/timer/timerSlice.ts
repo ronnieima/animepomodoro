@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const TIME_STEP = 60;
+
 type StateType = {
   time: number;
   shortBreakCount: number;
@@ -23,6 +25,9 @@ export const timerSlice = createSlice({
     toggleTimer: (state) => {
       state.isPlaying = !state.isPlaying;
     },
+    resetTimer: (state) => {
+      state.key += 1;
+    },
     incrementShortBreakCount: (state) => {
       state.shortBreakCount += 1;
     },
@@ -31,11 +36,11 @@ export const timerSlice = createSlice({
     },
     incrementTime: (state) => {
       if (state.time === 7200) state.time = 7200;
-      else state.time += 300;
+      else state.time += 60;
     },
     decrementTime: (state) => {
       if (state.time === 0) state.time = 0;
-      else state.time -= 300;
+      else state.time -= 60;
     },
   },
 });
