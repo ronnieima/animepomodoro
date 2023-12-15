@@ -1,14 +1,10 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import ThemeToggle from "@/app/_components/ui/ThemeToggle";
-import TypeTags from "./_components/ui/TypeTabs";
+import { Button } from "@/components/ui/button";
 import Timer from "./_components/ui/Timer";
-import { useCountdown } from "react-countdown-circle-timer";
-import { useTimerContext } from "./_contexts/TimerContext";
+import TypeTags from "./_components/ui/TypeTabs";
 
 export default function Home() {
-  const { toggleTimer, isPlaying } = useTimerContext();
   return (
     <>
       <nav>

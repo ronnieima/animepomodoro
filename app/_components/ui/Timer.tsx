@@ -1,9 +1,12 @@
-import { useTimerContext } from "@/app/_contexts/TimerContext";
-import React, { useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-
+// const initialState = {
+//   isPlaying: false,
+//   time: 1,
+//   shortBreakCount: 0,
+//   longBreakCount: 0,
+//   key: 0,
+// };
 function Timer() {
-  const { toggleTimer, isPlaying, time } = useTimerContext();
   return (
     <CountdownCircleTimer
       onComplete={() => {
