@@ -1,4 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Timer from "./Timer";
+import Controls from "./Controls";
 
 function TypeTags({ className }: { className?: string }) {
   return (
@@ -11,6 +13,7 @@ function TypeTags({ className }: { className?: string }) {
         <TabsTrigger value="short break">Short Break</TabsTrigger>
         <TabsTrigger value="long break">Long Break</TabsTrigger>
       </TabsList>
+      <TabsContent value="animepomodoro"></TabsContent>
     </Tabs>
   );
 }
