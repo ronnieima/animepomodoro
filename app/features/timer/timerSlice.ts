@@ -12,7 +12,7 @@ type StateType = {
   time: number;
   timerState: TimerState;
   pomodoroCount: number;
-  shortBreakCount: number;
+  episodesWatchedCount: number;
   longBreakCount: number;
   isPlaying: boolean;
   key: number;
@@ -22,7 +22,7 @@ const initialState: StateType = {
   time: 2, //2700
   timerState: TimerState.POMODORO,
   pomodoroCount: 0,
-  shortBreakCount: 0,
+  episodesWatchedCount: 0,
   longBreakCount: 0,
   isPlaying: false,
   key: 0,
@@ -42,14 +42,20 @@ export const timerSlice = createSlice({
       state.isPlaying = false;
       state.key += 1;
     },
-    completePomodoro: (state) => {
+    finishPomodoro: (state) => {
       state.isPlaying = false;
       state.key += 1;
       state.pomodoroCount += 1;
       state.timerState = TimerState.ANIME;
     },
-    incrementShortBreakCount: (state) => {
-      state.shortBreakCount += 1;
+    finishEpisode: (state) => {
+      state.isPlaying = false;
+      state.key += 1;
+      state.episodesWatchedCount += 1;
+      state.timerState = TimerState.POMODORO;
+    },
+    incrementEpisodesWatchedCount: (state) => {
+      state.episodesWatchedCount += 1;
     },
     incrementLongBreakCount: (state) => {
       state.longBreakCount += 1;
@@ -68,8 +74,9 @@ export const timerSlice = createSlice({
 export const {
   startTimer,
   endTimer,
-  completePomodoro,
-  incrementShortBreakCount,
+  finishPomodoro,
+  finishEpisode,
+  incrementEpisodesWatchedCount,
   incrementLongBreakCount,
   incrementTime,
   decrementTime,

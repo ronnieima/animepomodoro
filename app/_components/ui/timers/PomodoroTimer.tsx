@@ -1,4 +1,4 @@
-import { completePomodoro } from "@/app/features/timer/timerSlice";
+import { finishPomodoro } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import renderTime from "@/app/util/renderTime";
 
@@ -15,7 +15,7 @@ function PomodoroTimer() {
     <CountdownCircleTimer
       key={key}
       onComplete={() => {
-        dispatch(completePomodoro());
+        dispatch(finishPomodoro());
         return { shouldRepeat: false };
       }}
       isPlaying={isPlaying}
