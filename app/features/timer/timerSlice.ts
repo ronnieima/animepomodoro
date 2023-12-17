@@ -4,6 +4,9 @@ export const TIME_STEP = 60 * 5;
 
 type StateType = {
   time: number;
+  pomodoroMinutes: number;
+  episodeMinutes: number;
+  longBreakMinutes: number;
   timerState: "pomodoro" | "anime" | "longBreak";
   pomodoroCount: number;
   episodesWatchedCount: number;
@@ -14,6 +17,9 @@ type StateType = {
 
 const initialState: StateType = {
   time: 2700, //2700
+  pomodoroMinutes: 60 * 45,
+  episodeMinutes: 60 * 20,
+  longBreakMinutes: 60 * 60,
   timerState: "pomodoro",
   pomodoroCount: 0,
   episodesWatchedCount: 0,
