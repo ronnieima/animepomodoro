@@ -1,9 +1,7 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PomodoroTimer from "./timers/PomodoroTimer";
-import AnimeTimer from "./timers/AnimeTimer";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
 import { updateTimerState } from "@/app/features/timer/timerSlice";
+import { RootState } from "@/app/store";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useDispatch, useSelector } from "react-redux";
 
 function TypeTabs() {
   const dispatch = useDispatch();
@@ -20,12 +18,6 @@ function TypeTabs() {
         <TabsTrigger value="pomodoro">Work</TabsTrigger>
         <TabsTrigger value="anime">Anime</TabsTrigger>
       </TabsList>
-      <TabsContent value="pomodoro">
-        <PomodoroTimer />
-      </TabsContent>
-      <TabsContent value="anime">
-        <AnimeTimer />
-      </TabsContent>
     </Tabs>
   );
 }
