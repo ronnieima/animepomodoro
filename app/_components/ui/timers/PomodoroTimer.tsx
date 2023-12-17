@@ -12,20 +12,22 @@ function PomodoroTimer() {
   );
 
   return (
-    <CountdownCircleTimer
-      key={key}
-      onComplete={() => {
-        dispatch(finishPomodoro());
-        return { shouldRepeat: false };
-      }}
-      isPlaying={isPlaying}
-      size={360}
-      duration={time}
-      strokeWidth={32}
-      colors="#004777"
-    >
-      {renderTime}
-    </CountdownCircleTimer>
+    <div className="flex flex-col items-center">
+      <CountdownCircleTimer
+        key={key}
+        onComplete={() => {
+          dispatch(finishPomodoro());
+          return { shouldRepeat: false };
+        }}
+        isPlaying={isPlaying}
+        size={360}
+        duration={time}
+        strokeWidth={32}
+        colors="#004777"
+      >
+        {renderTime}
+      </CountdownCircleTimer>
+    </div>
   );
 }
 

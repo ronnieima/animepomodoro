@@ -2,6 +2,8 @@ import {
   decrementTime,
   startTimer,
   incrementTime,
+  TIME_STEP,
+  finishPomodoro,
 } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
@@ -11,11 +13,19 @@ import CancelConfirmationDialog from "./CancelConfirmationDialog";
 
 function Controls() {
   const dispatch = useDispatch();
-  const isPlaying = useSelector((state: RootState) => state.timer.isPlaying);
+  const { isPlaying, time } = useSelector((state: RootState) => state.timer);
+
+  function handleDecrement() {
+    if (time <= TIME_STEP) {
+      dispatch(finishPomodoro());
+    } else {
+      dispatch(decrementTime());
+    }
+  }
 
   return (
     <section className="flex gap-8">
-      <Button onClick={() => dispatch(decrementTime())}>-</Button>
+      <Button onClick={handleDecrement}>-5</Button>
 
       {isPlaying ? (
         <CancelConfirmationDialog />
@@ -29,7 +39,7 @@ function Controls() {
         </Button>
       )}
 
-      <Button onClick={() => dispatch(incrementTime())}>+</Button>
+      <Button onClick={() => dispatch(incrementTime())}>+5</Button>
     </section>
   );
 }

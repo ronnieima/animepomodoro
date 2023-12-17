@@ -1,16 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const TIME_STEP = 60;
-
-export enum TimerState {
-  POMODORO,
-  ANIME,
-  LONG_BREAK,
-}
+export const TIME_STEP = 60 * 5;
 
 type StateType = {
   time: number;
-  timerState: TimerState;
+  timerState: "pomodoro" | "anime" | "longBreak";
   pomodoroCount: number;
   episodesWatchedCount: number;
   longBreakCount: number;
@@ -19,8 +13,8 @@ type StateType = {
 };
 
 const initialState: StateType = {
-  time: 2, //2700
-  timerState: TimerState.POMODORO,
+  time: 2700, //2700
+  timerState: "pomodoro",
   pomodoroCount: 0,
   episodesWatchedCount: 0,
   longBreakCount: 0,
@@ -32,6 +26,9 @@ export const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
+    updateTimerState: (state, action) => {
+      state.timerState = action.payload;
+    },
     startTimer: (state) => {
       state.isPlaying = true;
     },
@@ -46,13 +43,13 @@ export const timerSlice = createSlice({
       state.isPlaying = false;
       state.key += 1;
       state.pomodoroCount += 1;
-      state.timerState = TimerState.ANIME;
+      state.timerState = "anime";
     },
     finishEpisode: (state) => {
       state.isPlaying = false;
       state.key += 1;
       state.episodesWatchedCount += 1;
-      state.timerState = TimerState.POMODORO;
+      state.timerState = "anime";
     },
     incrementEpisodesWatchedCount: (state) => {
       state.episodesWatchedCount += 1;
@@ -65,8 +62,15 @@ export const timerSlice = createSlice({
       else state.time += TIME_STEP;
     },
     decrementTime: (state) => {
-      if (state.time === 0) state.time = 0;
-      else state.time -= TIME_STEP;
+      if (!state.isPlaying && state.time <= TIME_STEP) {
+        state.time = TIME_STEP;
+        return;
+      }
+      if (state.isPlaying && state.time <= TIME_STEP) {
+        state.time = 1;
+      }
+
+      state.time -= TIME_STEP;
     },
   },
 });
@@ -80,6 +84,7 @@ export const {
   incrementLongBreakCount,
   incrementTime,
   decrementTime,
+  updateTimerState,
 } = timerSlice.actions;
 
 export default timerSlice.reducer;

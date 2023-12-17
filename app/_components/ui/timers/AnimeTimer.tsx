@@ -12,7 +12,7 @@ function AnimeTimer() {
   );
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center">
       <h2 className="text-center">Anime Time</h2>
       <CountdownCircleTimer
         key={key}
@@ -24,7 +24,7 @@ function AnimeTimer() {
         size={360}
         duration={time}
         strokeWidth={32}
-        colors="#121212"
+        colors="#14532d"
       >
         {renderTime}
       </CountdownCircleTimer>
