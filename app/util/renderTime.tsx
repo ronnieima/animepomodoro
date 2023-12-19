@@ -1,5 +1,5 @@
 const renderTime = ({ remainingTime }: { remainingTime: number }) => {
-  const minutes = Math.floor((remainingTime % 3600) / 60);
+  const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;
   function str_pad_left(string: string, pad: string, length: number) {
     return (new Array(length + 1).join(pad) + string).slice(-length);
