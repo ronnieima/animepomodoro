@@ -10,9 +10,7 @@ import CancelConfirmationDialog from "./CancelConfirmationDialog";
 
 function Controls() {
   const dispatch = useDispatch();
-  const { isPlaying, time, timerState } = useSelector(
-    (state: RootState) => state.timer,
-  );
+  const { isPlaying } = useSelector((state: RootState) => state.timer);
 
   return (
     <section className="flex gap-8">

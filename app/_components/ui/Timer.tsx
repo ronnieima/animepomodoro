@@ -2,6 +2,7 @@
 import { finishEpisode, finishPomodoro } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import renderTime from "@/app/util/renderTime";
+import { useTheme } from "next-themes";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,12 +13,13 @@ function Timer() {
     (state: RootState) => state.timer,
   );
 
-  function handleComplete() {
+  function handleComplete(timerState: string) {
     switch (timerState) {
       case "pomodoro":
-        return finishPomodoro;
+        dispatch(finishPomodoro());
+        break;
       case "anime":
-        return finishEpisode;
+        dispatch(finishEpisode());
       case "longBreak":
         return;
       default:
@@ -37,19 +39,21 @@ function Timer() {
         throw new Error("Timer state not recognized.");
     }
   }
-
+  const { theme } = useTheme();
+  console.log(theme);
   return (
     <div className="flex flex-col items-center justify-center gap-16">
       <CountdownCircleTimer
         key={key}
         onComplete={() => {
-          console.log(handleComplete);
+          handleComplete(timerState);
         }}
         isPlaying={isPlaying}
         size={360}
         duration={time}
         strokeWidth={32}
         colors={handleColor(timerState)}
+        trailColor={theme === "dark" ? "#6a6a6a" : "#6a6a6a"}
       >
         {renderTime}
       </CountdownCircleTimer>
