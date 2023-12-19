@@ -1,14 +1,10 @@
 import {
   decrementTime,
-  startTimer,
   incrementTime,
-  TIME_STEP,
-  finishPomodoro,
-  finishEpisode,
+  startTimer,
 } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CancelConfirmationDialog from "./CancelConfirmationDialog";
 

@@ -1,5 +1,4 @@
 "use client";
-
 import { useSelector } from "react-redux";
 import Controls from "./_components/ui/Controls";
 import Timer from "./_components/ui/Timer";
