@@ -34,6 +34,19 @@ export const timerSlice = createSlice({
   reducers: {
     updateTimerState: (state, action) => {
       state.timerState = action.payload;
+      switch (state.timerState) {
+        case "pomodoro":
+          state.time = state.pomodoroMinutes;
+          break;
+        case "anime":
+          state.time = state.episodeMinutes;
+          break;
+        case "longBreak":
+          state.time = state.longBreakMinutes;
+          break;
+        default:
+          throw new Error("Timer state not recognized.");
+      }
     },
     startTimer: (state) => {
       state.isPlaying = true;
@@ -50,12 +63,14 @@ export const timerSlice = createSlice({
       state.key += 1;
       state.pomodoroCount += 1;
       state.timerState = "anime";
+      state.time = state.episodeMinutes;
     },
     finishEpisode: (state) => {
       state.isPlaying = false;
       state.key += 1;
       state.episodesWatchedCount += 1;
-      state.timerState = "anime";
+      state.timerState = "pomodoro";
+      state.time = state.pomodoroMinutes;
     },
     incrementEpisodesWatchedCount: (state) => {
       state.episodesWatchedCount += 1;
@@ -70,13 +85,9 @@ export const timerSlice = createSlice({
     decrementTime: (state) => {
       if (!state.isPlaying && state.time <= TIME_STEP) {
         state.time = TIME_STEP;
-        return;
+      } else {
+        state.time -= TIME_STEP;
       }
-      if (state.isPlaying && state.time <= TIME_STEP) {
-        state.time = 1;
-      }
-
-      state.time -= TIME_STEP;
     },
   },
 });

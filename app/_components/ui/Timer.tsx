@@ -8,21 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Timer() {
   const dispatch = useDispatch();
-  const {
-    pomodoroMinutes,
-    episodeMinutes,
-    longBreakMinutes,
-    key,
-    isPlaying,
-    timerState,
-  } = useSelector((state: RootState) => state.timer);
+  const { time, key, isPlaying, timerState } = useSelector(
+    (state: RootState) => state.timer,
+  );
 
-  function handleDecrement(totalElapsedTime: number) {
+  function handleComplete() {
     switch (timerState) {
       case "pomodoro":
-        dispatch(finishPomodoro());
+        return finishPomodoro;
       case "anime":
-        dispatch(finishEpisode());
+        return finishEpisode;
       case "longBreak":
         return;
       default:
@@ -43,27 +38,16 @@ function Timer() {
     }
   }
 
-  function handleTime(timerState: string) {
-    switch (timerState) {
-      case "pomodoro":
-        return pomodoroMinutes;
-      case "anime":
-        return episodeMinutes;
-      case "longBreak":
-        return longBreakMinutes;
-      default:
-        throw new Error("Timer state not recognized.");
-    }
-  }
-
   return (
     <div className="flex flex-col items-center justify-center gap-16">
       <CountdownCircleTimer
         key={key}
-        onComplete={handleDecrement}
+        onComplete={() => {
+          console.log(handleComplete);
+        }}
         isPlaying={isPlaying}
         size={360}
-        duration={handleTime(timerState)}
+        duration={time}
         strokeWidth={32}
         colors={handleColor(timerState)}
       >
