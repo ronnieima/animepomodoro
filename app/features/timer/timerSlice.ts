@@ -7,19 +7,22 @@ type StateType = {
   pomodoroMinutes: number;
   episodeMinutes: number;
   longBreakMinutes: number;
+
   timerState: "pomodoro" | "anime" | "longBreak";
+
   pomodoroCount: number;
   episodesWatchedCount: number;
   longBreakCount: number;
+
   isPlaying: boolean;
   key: number;
 };
 
 const initialState: StateType = {
-  time: 2700, //2700
-  pomodoroMinutes: 60 * 45,
-  episodeMinutes: 60 * 20,
-  longBreakMinutes: 60 * 60,
+  time: 1, //2700
+  pomodoroMinutes: 1, //60 * 45
+  episodeMinutes: 1, //60 * 20,
+  longBreakMinutes: 1, //60 * 60,
   timerState: "pomodoro",
   pomodoroCount: 0,
   episodesWatchedCount: 0,
@@ -62,13 +65,25 @@ export const timerSlice = createSlice({
       state.isPlaying = false;
       state.key += 1;
       state.pomodoroCount += 1;
-      state.timerState = "anime";
-      state.time = state.episodeMinutes;
+      if (state.pomodoroCount % 4 === 0 && state.timerState !== "longBreak") {
+        state.timerState = "longBreak";
+        state.time = state.longBreakMinutes;
+      } else {
+        state.timerState = "anime";
+        state.time = state.episodeMinutes;
+      }
     },
     finishEpisode: (state) => {
       state.isPlaying = false;
       state.key += 1;
       state.episodesWatchedCount += 1;
+      state.timerState = "pomodoro";
+      state.time = state.pomodoroMinutes;
+    },
+    finishLongBreak: (state) => {
+      state.isPlaying = false;
+      state.key += 1;
+      state.longBreakCount += 1;
       state.timerState = "pomodoro";
       state.time = state.pomodoroMinutes;
     },
@@ -83,6 +98,7 @@ export const timerSlice = createSlice({
       else state.time += TIME_STEP;
     },
     decrementTime: (state) => {
+      // prevents timer from going to 00:00
       if (!state.isPlaying && state.time <= TIME_STEP) {
         state.time = TIME_STEP;
       } else {
@@ -97,6 +113,7 @@ export const {
   endTimer,
   finishPomodoro,
   finishEpisode,
+  finishLongBreak,
   incrementEpisodesWatchedCount,
   incrementLongBreakCount,
   incrementTime,

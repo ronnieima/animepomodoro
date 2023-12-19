@@ -1,5 +1,9 @@
 "use client";
-import { finishEpisode, finishPomodoro } from "@/app/features/timer/timerSlice";
+import {
+  finishEpisode,
+  finishLongBreak,
+  finishPomodoro,
+} from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import renderTime from "@/app/util/renderTime";
 import { useTheme } from "next-themes";
@@ -20,8 +24,10 @@ function Timer() {
         break;
       case "anime":
         dispatch(finishEpisode());
+        break;
       case "longBreak":
-        return;
+        dispatch(finishLongBreak());
+        break;
       default:
         throw new Error("Timer state not recognized.");
     }

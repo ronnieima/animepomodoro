@@ -3,13 +3,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 function Stats() {
-  const { pomodoroCount, episodesWatchedCount } = useSelector(
+  const { pomodoroCount, episodesWatchedCount, longBreakCount } = useSelector(
     (state: RootState) => state.timer,
   );
   return (
     <div className="text-center text-2xl">
       <h2>Pomodoros Completed: {pomodoroCount} </h2>
       <h2>Episodes Watched: {episodesWatchedCount} </h2>
+      <h2>Long Breaks Completed: {longBreakCount} </h2>
     </div>
   );
 }

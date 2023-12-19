@@ -17,11 +17,14 @@ function TypeTabs() {
       onValueChange={(timerState) => dispatch(updateTimerState(timerState))}
     >
       <TabsList>
-        <TabsTrigger value="pomodoro" disabled={isPlaying}>
+        <TabsTrigger value="pomodoro" disabled>
           Work
         </TabsTrigger>
-        <TabsTrigger value="anime" disabled={isPlaying}>
+        <TabsTrigger value="anime" disabled>
           Anime
+        </TabsTrigger>
+        <TabsTrigger value="longBreak" disabled>
+          Long Break
         </TabsTrigger>
       </TabsList>
     </Tabs>
