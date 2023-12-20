@@ -46,7 +46,6 @@ function Timer() {
     }
   }
   const { theme } = useTheme();
-  console.log(theme);
   return (
     <div className="flex flex-col items-center justify-center gap-16">
       <CountdownCircleTimer
