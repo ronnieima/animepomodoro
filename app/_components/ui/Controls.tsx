@@ -6,6 +6,7 @@ import {
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
+import AnimeButton from "./AnimeButton";
 import CancelConfirmationDialog from "./CancelConfirmationDialog";
 
 function Controls() {
@@ -39,6 +40,7 @@ function Controls() {
       >
         +5
       </Button>
+      <AnimeButton />
     </section>
   );
 }
