@@ -2,7 +2,7 @@ import { updateSearchQuery } from "@/app/features/anime/animeSlice";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import React from "react";
 import { useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 

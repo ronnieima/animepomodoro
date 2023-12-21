@@ -3,6 +3,13 @@ import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useAnime from "../_hooks/useAnime";
+import { Input } from "@/components/ui/input";
+import { updateSearchQuery } from "../features/anime/animeSlice";
+import { Button } from "@/components/ui/button";
+import { useQueryClient } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import useDebounce from "../_hooks/useDebounce";
+import { RootState } from "../store";
 
 function AnimeCards() {
   const { data, isLoading } = useAnime();
@@ -33,22 +40,24 @@ function AnimeCards() {
   }
 
   return (
-    <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-8 py-16">
-      {data?.data?.map((anime: Anime) => {
-        return (
-          <div key={anime.title}>
-            <Image
-              src={anime.images.jpg.image_url}
-              alt={anime.title}
-              width={200}
-              height={300}
-            />
+    <>
+      <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-8 py-16">
+        {data?.data?.map((anime: Anime) => {
+          return (
+            <div key={anime.title}>
+              <Image
+                src={anime.images.jpg.image_url}
+                alt={anime.title}
+                width={200}
+                height={300}
+              />
 
-            <p className="w-48 text-center">{anime.title}</p>
-          </div>
-        );
-      })}
-    </section>
+              <p className="w-48 text-center">{anime.title}</p>
+            </div>
+          );
+        })}
+      </section>
+    </>
   );
 }
 
