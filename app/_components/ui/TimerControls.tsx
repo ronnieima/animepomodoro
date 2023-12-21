@@ -6,10 +6,9 @@ import {
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import AnimeButton from "./AnimeButton";
 import CancelConfirmationDialog from "./CancelConfirmationDialog";
 
-function Controls() {
+function TimerControl() {
   const dispatch = useDispatch();
   const { isPlaying } = useSelector((state: RootState) => state.timer);
 
@@ -40,9 +39,8 @@ function Controls() {
       >
         +5
       </Button>
-      <AnimeButton />
     </section>
   );
 }
 
-export default Controls;
+export default TimerControl;
