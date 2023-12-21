@@ -1,6 +1,7 @@
 "use client";
 import AnimeCards from "./_components/AnimeCards";
 import Pagination from "./_components/ui/Pagination";
+import SearchBar from "./_components/ui/SearchBar";
 import Stats from "./_components/ui/Stats";
 import ThemeToggle from "./_components/ui/ThemeToggle";
 import Timer from "./_components/ui/Timer";

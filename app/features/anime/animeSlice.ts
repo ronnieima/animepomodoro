@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type StateType = {
   page: number;
+  searchQuery: string;
 };
 
 const initialState: StateType = {
   page: 1,
+  searchQuery: "",
 };
 
 export const animeSlice = createSlice({
@@ -21,8 +23,12 @@ export const animeSlice = createSlice({
       }
       state.page -= 1;
     },
+    updateSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
   },
 });
 
-export const { incrementPage, decrementPage } = animeSlice.actions;
+export const { incrementPage, decrementPage, updateSearchQuery } =
+  animeSlice.actions;
 export default animeSlice.reducer;

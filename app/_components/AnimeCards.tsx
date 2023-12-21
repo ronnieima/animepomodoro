@@ -2,23 +2,10 @@ import { Anime } from "@tutkli/jikan-ts";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useQuery } from "react-query";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import useAnime from "../_hooks/useAnime";
 
 function AnimeCards() {
-  const { page } = useSelector((state: RootState) => state.anime);
-
-  async function fetchTopAnime() {
-    const data = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}`);
-    const topAnimeList = await data.json();
-    return topAnimeList;
-  }
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["topAnime", { page: page }],
-    queryFn: fetchTopAnime,
-  });
+  const { data, isLoading } = useAnime();
 
   if (isLoading) {
     const skeletonArray = Array(25).fill(null);
