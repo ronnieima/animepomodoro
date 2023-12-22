@@ -1,4 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {
+  Anime,
+  AnimeSearchParams,
+  JikanPagination,
+  JikanResponse,
+} from "@tutkli/jikan-ts";
 
 type StateType = {
   page: number;
@@ -26,6 +32,7 @@ export const animeSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload;
     },
+
     updateSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },

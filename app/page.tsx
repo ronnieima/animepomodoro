@@ -1,7 +1,5 @@
 "use client";
-import AnimeCards from "./_components/AnimeCards";
-import Pagination from "./_components/ui/Pagination";
-import SearchBar from "./_components/ui/SearchBar";
+import AnimeSection from "./_components/AnimeSection";
 import Stats from "./_components/ui/Stats";
 import ThemeToggle from "./_components/ui/ThemeToggle";
 import Timer from "./_components/ui/Timer";
@@ -18,11 +16,7 @@ export default function Home() {
         <TimerControl />
         <Stats />
       </section>
-      <section className="mx-auto flex max-w-6xl flex-col items-center">
-        <SearchBar />
-        <AnimeCards />
-        <Pagination />
-      </section>
+      <AnimeSection />
     </main>
   );
 }

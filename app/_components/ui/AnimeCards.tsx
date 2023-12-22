@@ -1,12 +1,11 @@
-import { Anime } from "@tutkli/jikan-ts";
+import useAnime from "@/app/_hooks/useAnime";
+import { Anime, JikanResponse } from "@tutkli/jikan-ts";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import useAnime from "../_hooks/useAnime";
 
 function AnimeCards() {
   const { data, isLoading } = useAnime();
-
   if (isLoading) {
     const skeletonArray = Array(10).fill(null);
     return (
@@ -22,11 +21,13 @@ function AnimeCards() {
   }
 
   return (
-    <>
-      <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-8 py-16">
-        {data?.data?.map((anime: Anime) => {
-          return (
-            <div key={anime.title}>
+    <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-8 py-16">
+      {data?.data?.map((anime: Anime) => {
+        return (
+          <div key={anime.title}>
+            {isLoading ? (
+              <Skeleton height={300} width={200} borderRadius={25} />
+            ) : (
               <Image
                 src={anime.images.jpg.image_url}
                 alt={anime.title}
@@ -34,13 +35,13 @@ function AnimeCards() {
                 width={300}
                 style={{ width: "200px", height: "auto" }}
               />
+            )}
 
-              <p className="w-48 text-center">{anime.title}</p>
-            </div>
-          );
-        })}
-      </section>
-    </>
+            <p className="w-48 text-center">{anime.title}</p>
+          </div>
+        );
+      })}
+    </section>
   );
 }
 

@@ -19,10 +19,10 @@ type StateType = {
 };
 
 const initialState: StateType = {
-  time: 1, //2700
-  pomodoroMinutes: 1, //60 * 45
-  episodeMinutes: 1, //60 * 20,
-  longBreakMinutes: 1, //60 * 60,
+  time: 2700,
+  pomodoroMinutes: 60 * 45,
+  episodeMinutes: 60 * 20,
+  longBreakMinutes: 60 * 60,
   timerState: "pomodoro",
   pomodoroCount: 0,
   episodesWatchedCount: 0,

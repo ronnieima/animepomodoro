@@ -1,12 +1,10 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import useDebounce from "./useDebounce";
-import { incrementPage, setPage } from "../features/anime/animeSlice";
 
 function useAnime() {
   const { searchQuery, page } = useSelector((state: RootState) => state.anime);
-  const dispatch = useDispatch();
 
   async function fetchAnime() {
     const data = await fetch(
