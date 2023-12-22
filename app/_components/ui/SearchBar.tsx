@@ -8,8 +8,8 @@ function SearchBar() {
   const { searchQuery } = useSelector((state: RootState) => state.anime);
   return (
     <Input
-      className="w-full"
-      placeholder="Search..."
+      className="h-16 w-[50%] border-foreground text-2xl"
+      placeholder="What are you currently watching?"
       value={searchQuery}
       onChange={(e) => dispatch(updateSearchQuery(e.target.value))}
     />
