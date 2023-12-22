@@ -18,9 +18,8 @@ export default function Home() {
         <TimerControl />
         <Stats />
       </section>
-      <section>
+      <section className="mx-auto flex max-w-6xl flex-col items-center">
         <SearchBar />
-        <Pagination />
         <AnimeCards />
         <Pagination />
       </section>

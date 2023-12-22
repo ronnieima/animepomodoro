@@ -3,36 +3,18 @@ import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useAnime from "../_hooks/useAnime";
-import { Input } from "@/components/ui/input";
-import { updateSearchQuery } from "../features/anime/animeSlice";
-import { Button } from "@/components/ui/button";
-import { useQueryClient } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import useDebounce from "../_hooks/useDebounce";
-import { RootState } from "../store";
 
 function AnimeCards() {
   const { data, isLoading } = useAnime();
 
   if (isLoading) {
-    const skeletonArray = Array(25).fill(null);
+    const skeletonArray = Array(10).fill(null);
     return (
       <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-8 py-16">
         {skeletonArray.map((_, index) => (
           <div key={index} className=" flex w-48 flex-col">
-            <Skeleton
-              height={300}
-              width={200}
-              duration={0.2}
-              borderRadius={25}
-            />
-            <Skeleton
-              height={20}
-              width={200}
-              count={2}
-              duration={0.2}
-              borderRadius={25}
-            />
+            <Skeleton height={300} width={200} borderRadius={25} />
+            <Skeleton height={20} width={200} count={2} borderRadius={25} />
           </div>
         ))}
       </section>
@@ -48,8 +30,9 @@ function AnimeCards() {
               <Image
                 src={anime.images.jpg.image_url}
                 alt={anime.title}
-                width={200}
-                height={300}
+                height={200}
+                width={300}
+                style={{ width: "200px", height: "auto" }}
               />
 
               <p className="w-48 text-center">{anime.title}</p>

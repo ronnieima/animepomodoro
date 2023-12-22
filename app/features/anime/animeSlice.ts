@@ -23,12 +23,15 @@ export const animeSlice = createSlice({
       }
       state.page -= 1;
     },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
     updateSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
   },
 });
 
-export const { incrementPage, decrementPage, updateSearchQuery } =
+export const { incrementPage, decrementPage, setPage, updateSearchQuery } =
   animeSlice.actions;
 export default animeSlice.reducer;
