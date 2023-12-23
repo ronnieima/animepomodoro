@@ -30,8 +30,8 @@ function CurrentAnime({ selectedAnime }: CurrentAnimeType) {
 
   console.log(data);
   return (
-    <section className="grid w-full grid-cols-[1fr_2fr] pb-32">
-      <div className="flex flex-col items-center justify-center ">
+    <section className="flex w-full grid-cols-[1fr_2fr] flex-col pb-32 md:grid">
+      <div className="order-2 flex flex-col items-center justify-center">
         <span>Currently Watching: </span>
         <Image
           src={selectedAnime.images.jpg.image_url}
@@ -42,8 +42,11 @@ function CurrentAnime({ selectedAnime }: CurrentAnimeType) {
         />
       </div>
 
-      <div>
-        <p className="text-4xl font-semibold">{`${selectedAnime.title_english} | ${selectedAnime.title_japanese}`}</p>
+      <div className="order-1 text-center">
+        <p className=" text-4xl font-semibold">{`${selectedAnime.title_english}`}</p>
+        <p className="font-bold text-muted-foreground">
+          {selectedAnime.title_japanese}
+        </p>
         <div className="flex flex-wrap gap-16">
           {data?.data?.map((episode) => (
             <div key={episode.mal_id}>{episode.title}</div>
