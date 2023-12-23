@@ -1,4 +1,4 @@
-import { endTimer, finishEpisode } from "@/app/features/timer/timerSlice";
+import { cancelTimer, finishTimer } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import {
   AlertDialog,
@@ -22,20 +22,20 @@ function CancelConfirmationDialog() {
   function handleAction() {
     switch (timerState) {
       case "pomodoro":
-        dispatch(endTimer());
+        dispatch(cancelTimer());
         break;
       case "anime":
-        dispatch(finishEpisode());
+        dispatch(finishTimer());
         break;
       case "longBreak":
-        return;
+        dispatch(finishTimer());
     }
   }
 
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Button>End</Button>
+        <Button variant={"destructive"}>Cancel</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -48,7 +48,10 @@ function CancelConfirmationDialog() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>No, continue my {timerState}</AlertDialogCancel>
+          <AlertDialogCancel>
+            No, continue my{" "}
+            {timerState === "longBreak" ? "long break" : timerState}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={handleAction}>
             Yes, end early
           </AlertDialogAction>

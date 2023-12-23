@@ -1,9 +1,5 @@
 "use client";
-import {
-  finishEpisode,
-  finishLongBreak,
-  finishPomodoro,
-} from "@/app/features/timer/timerSlice";
+import { finishTimer } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import renderTime from "@/app/util/renderTime";
 import { useTheme } from "next-themes";
@@ -16,22 +12,6 @@ function Timer() {
   const { time, key, isPlaying, timerState } = useSelector(
     (state: RootState) => state.timer,
   );
-
-  function handleComplete(timerState: string) {
-    switch (timerState) {
-      case "pomodoro":
-        dispatch(finishPomodoro());
-        break;
-      case "anime":
-        dispatch(finishEpisode());
-        break;
-      case "longBreak":
-        dispatch(finishLongBreak());
-        break;
-      default:
-        throw new Error("Timer state not recognized.");
-    }
-  }
 
   function handleColor(timerState: string) {
     switch (timerState) {
@@ -51,7 +31,7 @@ function Timer() {
       <CountdownCircleTimer
         key={key}
         onComplete={() => {
-          handleComplete(timerState);
+          dispatch(finishTimer());
         }}
         isPlaying={isPlaying}
         size={360}

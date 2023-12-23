@@ -1,5 +1,6 @@
 import {
   decrementTime,
+  finishTimer,
   incrementTime,
   startTimer,
 } from "@/app/features/timer/timerSlice";
@@ -22,7 +23,12 @@ function TimerControl() {
       </Button>
 
       {isPlaying ? (
-        <CancelConfirmationDialog />
+        <>
+          <CancelConfirmationDialog />
+          <Button variant={"secondary"} onClick={() => dispatch(finishTimer())}>
+            Skip
+          </Button>
+        </>
       ) : (
         <Button
           onClick={() => {
