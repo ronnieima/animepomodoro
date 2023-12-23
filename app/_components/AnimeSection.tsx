@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import AnimeCards from "./ui/AnimeCards";
-import SearchBar from "./ui/SearchBar";
 import { RootState } from "../store";
+import AnimeCards from "./ui/AnimeCards";
 import CurrentAnime from "./ui/CurrentAnime";
+import SearchBar from "./ui/SearchBar";
 
 function AnimeSection() {
   const { selectedAnime } = useSelector((state: RootState) => state.anime);

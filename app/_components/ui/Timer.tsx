@@ -3,6 +3,7 @@ import { finishTimer } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import renderTime from "@/app/util/renderTime";
 import { useTheme } from "next-themes";
+import { useRef } from "react";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,12 +26,17 @@ function Timer() {
         throw new Error("Timer state not recognized.");
     }
   }
+  const completeSound = useRef<HTMLAudioElement | undefined>(
+    typeof Audio !== "undefined" ? new Audio("done.wav") : undefined,
+  );
+
   const { theme } = useTheme();
   return (
     <div className="flex flex-col items-center justify-center gap-16">
       <CountdownCircleTimer
         key={key}
         onComplete={() => {
+          completeSound.current!.play();
           dispatch(finishTimer());
         }}
         isPlaying={isPlaying}

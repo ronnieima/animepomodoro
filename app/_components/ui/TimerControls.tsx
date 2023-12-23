@@ -15,7 +15,8 @@ function TimerControl() {
   const { isPlaying, timerState } = useSelector(
     (state: RootState) => state.timer,
   );
-
+  const timerStateLabel =
+    timerState === "longBreak" ? "long break" : timerState;
   return (
     <section className="flex gap-8">
       <Button
@@ -36,7 +37,7 @@ function TimerControl() {
             dispatch(startTimer());
           }}
         >
-          Start {timerState}
+          Start {timerStateLabel}
         </Button>
       )}
 

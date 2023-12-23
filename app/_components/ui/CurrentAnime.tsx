@@ -1,37 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import {
-  Anime,
-  AnimeEpisode,
-  AnimeEpisodeVideo,
-  JikanResponse,
-} from "@tutkli/jikan-ts";
+import { Anime } from "@tutkli/jikan-ts";
 import Image from "next/image";
-import React from "react";
+import AnimeEpisodes from "./AnimeEpisodes";
 
 type CurrentAnimeType = {
   selectedAnime: Anime;
 };
 
 function CurrentAnime({ selectedAnime }: CurrentAnimeType) {
-  const fetchAnime = async (): Promise<JikanResponse<AnimeEpisodeVideo[]>> => {
-    const response = await fetch(
-      `https://api.jikan.moe/v4/anime/${selectedAnime.mal_id}/videos/episodes`,
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.json();
-  };
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["anime", selectedAnime.mal_id],
-    queryFn: fetchAnime,
-  });
-
-  console.log(data);
   return (
-    <section className="flex w-full grid-cols-[1fr_2fr] flex-col pb-32 md:grid">
-      <div className="order-2 flex flex-col items-center justify-center">
+    <section className="flex w-full flex-col pb-32 sm:grid sm:grid-cols-[1fr_2fr]">
+      <div className="order-2 flex flex-col items-center justify-center sm:order-1">
         <span>Currently Watching: </span>
         <Image
           src={selectedAnime.images.jpg.image_url}
@@ -42,16 +20,16 @@ function CurrentAnime({ selectedAnime }: CurrentAnimeType) {
         />
       </div>
 
-      <div className="order-1 text-center">
-        <p className=" text-4xl font-semibold">{`${selectedAnime.title_english}`}</p>
+      <div className="order-1 flex flex-col items-center text-center">
+        <p className=" text-4xl font-semibold">{`${
+          selectedAnime.title ??
+          selectedAnime.title_english ??
+          "Could not find title."
+        }`}</p>
         <p className="font-bold text-muted-foreground">
           {selectedAnime.title_japanese}
         </p>
-        <div className="flex flex-wrap gap-16">
-          {data?.data?.map((episode) => (
-            <div key={episode.mal_id}>{episode.title}</div>
-          ))}
-        </div>
+        <AnimeEpisodes selectedAnime={selectedAnime} />
       </div>
     </section>
   );

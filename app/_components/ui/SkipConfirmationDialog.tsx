@@ -1,4 +1,4 @@
-import { cancelTimer } from "@/app/features/timer/timerSlice";
+import { finishTimer } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import {
   AlertDialog,
@@ -44,7 +44,7 @@ function SkipConfirmationDialog() {
           </AlertDialogCancel>
           <AlertDialogAction
             className=""
-            onClick={() => dispatch(cancelTimer())}
+            onClick={() => dispatch(finishTimer())}
           >
             Yes, skip this timer
           </AlertDialogAction>
