@@ -1,4 +1,9 @@
-const renderTime = ({ remainingTime }: { remainingTime: number }) => {
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+
+const RenderTime = ({ remainingTime }: { remainingTime: number }) => {
+  const { timerState } = useSelector((state: RootState) => state.timer);
+
   const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;
   function str_pad_left(string: string, pad: string, length: number) {
@@ -11,10 +16,13 @@ const renderTime = ({ remainingTime }: { remainingTime: number }) => {
     str_pad_left(seconds.toString(), "0", 2);
 
   return (
-    <div className="timer">
-      <div className="text-6xl font-semibold">{finalTime}</div>
+    <div className=" flex flex-col items-center">
+      <span className="text-6xl font-semibold">{finalTime}</span>
+      <span>
+        Until next {timerState === "pomodoro" ? "episode" : "focus session"}
+      </span>
     </div>
   );
 };
 
-export default renderTime;
+export default RenderTime;
