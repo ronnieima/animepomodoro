@@ -12,10 +12,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Ban } from "lucide-react";
+import { SkipForward } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 
-function CancelConfirmationDialog() {
+function SkipConfirmationDialog() {
   const dispatch = useDispatch();
 
   const { timerState } = useSelector((state: RootState) => state.timer);
@@ -26,16 +26,16 @@ function CancelConfirmationDialog() {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Button variant={"destructive"}>
-          <Ban />
+        <Button variant={"secondary"}>
+          <SkipForward />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            You won&apos;t be able to get credit for this {timerStateLabel}{" "}
-            session.
+            You will get credit for this {timerStateLabel} session and skip to
+            the next timer.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -43,10 +43,10 @@ function CancelConfirmationDialog() {
             No, continue my {timerStateLabel}
           </AlertDialogCancel>
           <AlertDialogAction
-            className="bg-destructive text-foreground"
+            className=""
             onClick={() => dispatch(cancelTimer())}
           >
-            Yes, cancel this timer
+            Yes, skip this timer
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -54,4 +54,4 @@ function CancelConfirmationDialog() {
   );
 }
 
-export default CancelConfirmationDialog;
+export default SkipConfirmationDialog;
