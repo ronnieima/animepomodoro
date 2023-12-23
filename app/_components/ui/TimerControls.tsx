@@ -1,5 +1,6 @@
 import {
   decrementTime,
+  finishTimer,
   incrementTime,
   startTimer,
 } from "@/app/features/timer/timerSlice";
@@ -7,10 +8,13 @@ import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import CancelConfirmationDialog from "./CancelConfirmationDialog";
+import SkipConfirmationDialog from "./SkipConfirmationDialog";
 
-function Controls() {
+function TimerControl() {
   const dispatch = useDispatch();
-  const { isPlaying } = useSelector((state: RootState) => state.timer);
+  const { isPlaying, timerState } = useSelector(
+    (state: RootState) => state.timer,
+  );
 
   return (
     <section className="flex gap-8">
@@ -22,14 +26,17 @@ function Controls() {
       </Button>
 
       {isPlaying ? (
-        <CancelConfirmationDialog />
+        <>
+          <CancelConfirmationDialog />
+          <SkipConfirmationDialog />
+        </>
       ) : (
         <Button
           onClick={() => {
             dispatch(startTimer());
           }}
         >
-          Start
+          Start {timerState}
         </Button>
       )}
 
@@ -43,4 +50,4 @@ function Controls() {
   );
 }
 
-export default Controls;
+export default TimerControl;
