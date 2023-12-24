@@ -8,7 +8,7 @@ function useAnime() {
 
   async function fetchAnime() {
     const data = await fetch(
-      `https://api.jikan.moe/v4/anime?q=${searchQuery}&limit=10&sfw`,
+      `https://api.jikan.moe/v4/anime?q=${searchQuery}&limit=10&sfw&order_by=favorites&sort=desc`,
     );
     const topAnimeList = await data.json();
     return topAnimeList;
