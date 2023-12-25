@@ -2,6 +2,7 @@ import { updateTimerState } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useDispatch, useSelector } from "react-redux";
+import ThemeToggle from "./ThemeToggle";
 
 function TypeTabs() {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function TypeTabs() {
   return (
     <Tabs
       defaultValue="pomodoro"
-      className="w-[500px] text-center"
+      className="flex w-[500px] items-center justify-center gap-8 text-center"
       value={timerState}
       onValueChange={(timerState) => dispatch(updateTimerState(timerState))}
     >
@@ -27,6 +28,7 @@ function TypeTabs() {
           Long Break
         </TabsTrigger>
       </TabsList>
+      <ThemeToggle />
     </Tabs>
   );
 }

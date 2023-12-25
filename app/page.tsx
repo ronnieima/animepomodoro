@@ -14,7 +14,6 @@ export default function Home() {
         <TypeTabs />
         <Timer />
         <TimerControl />
-        <ThemeToggle />
         <Stats />
       </section>
       <AnimeSection />

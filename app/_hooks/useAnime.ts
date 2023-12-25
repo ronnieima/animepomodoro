@@ -2,6 +2,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import useDebounce from "./useDebounce";
+import { Anime, JikanResponse } from "@tutkli/jikan-ts";
 
 function useAnime() {
   const { searchQuery } = useSelector((state: RootState) => state.anime);
@@ -10,7 +11,7 @@ function useAnime() {
     const data = await fetch(
       `https://api.jikan.moe/v4/anime?q=${searchQuery}&limit=10&sfw&order_by=favorites&sort=desc`,
     );
-    const topAnimeList = await data.json();
+    const topAnimeList: JikanResponse<Anime[]> = await data.json();
     return topAnimeList;
   }
 

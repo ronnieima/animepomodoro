@@ -17,10 +17,10 @@ const RenderTime = ({ remainingTime }: { remainingTime: number }) => {
 
   return (
     <div className=" flex flex-col items-center">
-      <span className="text-6xl font-semibold">{finalTime}</span>
       <span>
-        Until next {timerState === "pomodoro" ? "episode" : "focus session"}
+        Next {timerState === "pomodoro" ? "episode" : "focus session"} in
       </span>
+      <span className="text-6xl font-semibold">{finalTime}</span>
     </div>
   );
 };

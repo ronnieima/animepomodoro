@@ -3,34 +3,32 @@ import Image from "next/image";
 import AnimeEpisodes from "./AnimeEpisodes";
 
 type CurrentAnimeType = {
-  selectedAnime: Anime;
+  selectedAnime: { anime: Anime; episodeCount: number };
 };
 
 function CurrentAnime({ selectedAnime }: CurrentAnimeType) {
+  const { anime } = selectedAnime;
   return (
-    <section className="flex w-full flex-col pb-32 sm:grid sm:grid-cols-[1fr_2fr]">
-      <div className="order-2 flex flex-col items-center justify-center sm:order-1">
-        <span>Currently Watching: </span>
-        <Image
-          src={selectedAnime.images.jpg.image_url}
-          alt={selectedAnime.title}
-          height={200}
-          width={300}
-          className="h-auto w-[300px]"
-        />
-      </div>
+    <section className="flex w-full flex-col items-center gap-4 pb-16">
+      <span>Currently Watching: </span>
 
-      <div className="order-1 flex flex-col items-center text-center">
+      <div className="text-center">
         <p className=" text-4xl font-semibold">{`${
-          selectedAnime.title ??
-          selectedAnime.title_english ??
-          "Could not find title."
+          anime?.title ?? anime?.title_english ?? "Could not find title."
         }`}</p>
         <p className="font-bold text-muted-foreground">
-          {selectedAnime.title_japanese}
+          {anime?.title_japanese}
         </p>
-        <AnimeEpisodes selectedAnime={selectedAnime} />
       </div>
+
+      <Image
+        src={anime?.images.jpg.image_url}
+        alt={anime?.title}
+        height={200}
+        width={300}
+        className="h-auto w-[300px]"
+      />
+      <AnimeEpisodes selectedAnime={selectedAnime} />
     </section>
   );
 }
