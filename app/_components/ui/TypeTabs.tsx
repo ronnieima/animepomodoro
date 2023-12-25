@@ -28,7 +28,6 @@ function TypeTabs() {
           Long Break
         </TabsTrigger>
       </TabsList>
-      <ThemeToggle />
     </Tabs>
   );
 }

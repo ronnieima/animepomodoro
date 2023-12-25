@@ -11,6 +11,7 @@ export default function Home() {
     <main className=" h-full min-h-[100svh] ">
       <section className="flex flex-col items-center  justify-center gap-8 py-48">
         <h1 className="text-center text-7xl">Anime Pomodoro Timer</h1>
+        <ThemeToggle />
         <TypeTabs />
         <Timer />
         <TimerControl />
