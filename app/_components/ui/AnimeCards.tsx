@@ -38,6 +38,7 @@ function AnimeCards() {
               alt={anime.title}
               height={200}
               width={300}
+              className="shadow-xl"
               style={{ width: "200px", height: "auto" }}
             />
 

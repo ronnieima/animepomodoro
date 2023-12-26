@@ -13,24 +13,24 @@ function Timer() {
   const { time, key, isPlaying, timerState } = useSelector(
     (state: RootState) => state.timer,
   );
+  const { theme } = useTheme();
 
   function handleColor(timerState: string) {
     switch (timerState) {
       case "pomodoro":
-        return "#163020";
+        return theme === "dark" ? "#DFCCFB" : "#BEADFA";
       case "anime":
-        return "#B6C4B6";
+        return theme === "dark" ? "#618264" : "#D0E7D2";
       case "longBreak":
-        return "#EEF0E5";
+        return theme === "dark" ? "#FFF2CC" : "#DFA67B";
       default:
-        throw new Error("Timer state not recognized.");
+        throw new Error("Timer state could not be determined.");
     }
   }
   const completeSound = useRef<HTMLAudioElement | undefined>(
     typeof Audio !== "undefined" ? new Audio("done.wav") : undefined,
   );
 
-  const { theme } = useTheme();
   return (
     <div className="flex flex-col items-center justify-center gap-16">
       <CountdownCircleTimer
@@ -44,7 +44,7 @@ function Timer() {
         duration={time}
         strokeWidth={32}
         colors={handleColor(timerState)}
-        trailColor={theme === "dark" ? "#6a6a6a" : "#6a6a6a"}
+        trailColor={theme === "dark" ? "#31304D" : "#B6BBC4"}
       >
         {renderTime}
       </CountdownCircleTimer>
