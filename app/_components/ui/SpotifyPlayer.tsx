@@ -5,7 +5,7 @@ import { Spotify } from "react-spotify-embed";
 function SpotifyPlayer() {
   return (
     <Draggable handle=".handle" defaultPosition={{ x: 0, y: 0 }}>
-      <div className="handle absolute bottom-24  left-32 flex hidden flex-col items-center rounded-xl bg-muted-foreground p-2 hover:cursor-pointer xl:block">
+      <div className="handle absolute bottom-24  left-32  hidden flex-col items-center rounded-xl bg-muted-foreground/60 p-4 hover:cursor-pointer xl:flex">
         <div className="flex items-center">
           <Grip size={32} />
         </div>
