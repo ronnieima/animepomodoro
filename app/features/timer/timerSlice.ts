@@ -51,8 +51,21 @@ export const timerSlice = createSlice({
           throw new Error("Timer state not recognized.");
       }
     },
-    startTimer: (state) => {
+    startTimer: (state, action) => {
       state.isPlaying = true;
+      switch (state.timerState) {
+        case "pomodoro":
+          state.pomodoroMinutes = action.payload;
+          break;
+        case "anime":
+          state.episodeMinutes = action.payload;
+          break;
+        case "longBreak":
+          state.longBreakMinutes = action.payload;
+          break;
+        default:
+          throw new Error("Timer state not recognized.");
+      }
     },
     cancelTimer: (state) => {
       state.isPlaying = false;

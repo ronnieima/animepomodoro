@@ -1,6 +1,5 @@
 import {
   decrementTime,
-  finishTimer,
   incrementTime,
   startTimer,
 } from "@/app/features/timer/timerSlice";
@@ -12,7 +11,7 @@ import SkipConfirmationDialog from "./SkipConfirmationDialog";
 
 function TimerControl() {
   const dispatch = useDispatch();
-  const { isPlaying, timerState } = useSelector(
+  const { isPlaying, timerState, time } = useSelector(
     (state: RootState) => state.timer,
   );
   const timerStateLabel =
@@ -34,7 +33,7 @@ function TimerControl() {
       ) : (
         <Button
           onClick={() => {
-            dispatch(startTimer());
+            dispatch(startTimer(time));
           }}
         >
           Start {timerStateLabel}
