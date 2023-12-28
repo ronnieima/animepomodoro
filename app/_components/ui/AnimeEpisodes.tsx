@@ -9,29 +9,27 @@ import { Minus, Plus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 
 type AnimeEpisodesType = {
-  selectedAnime: { anime: Anime; episodeCount: number };
+  selectedAnime: Anime;
 };
 
 function AnimeEpisodes({ selectedAnime }: AnimeEpisodesType) {
   const dispatch = useDispatch();
-  const { episodeCount } = useSelector(
-    (state: RootState) => state.anime.selectedAnime,
-  );
+  const { episodeCounts } = useSelector((state: RootState) => state.anime);
   return (
     <div className="flex items-center  gap-4">
       <Button
         variant={"ghost"}
-        onClick={() => dispatch(decrementEpisodeCount())}
+        onClick={() => dispatch(decrementEpisodeCount(selectedAnime.mal_id))}
         className="text-destructive"
       >
         <Minus />
       </Button>
       <span className="text-xl">
-        {episodeCount} of {selectedAnime.anime?.episodes}
+        {episodeCounts[selectedAnime.mal_id]} of {selectedAnime?.episodes}
       </span>
       <Button
         variant={"ghost"}
-        onClick={() => dispatch(incrementEpisodeCount())}
+        onClick={() => dispatch(incrementEpisodeCount(selectedAnime.mal_id))}
         className="text-green-600"
       >
         <Plus />

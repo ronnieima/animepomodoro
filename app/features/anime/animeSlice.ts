@@ -3,12 +3,14 @@ import { Anime } from "@tutkli/jikan-ts";
 
 type StateType = {
   searchQuery: string;
-  selectedAnime: { anime: Anime; episodeCount: number };
+  selectedAnime: Anime;
+  episodeCounts: { [key: string]: number };
 };
 
 const initialState: StateType = {
   searchQuery: "",
-  selectedAnime: { anime: undefined!, episodeCount: 0 },
+  selectedAnime: undefined!,
+  episodeCounts: {},
 };
 
 export const animeSlice = createSlice({
@@ -19,18 +21,28 @@ export const animeSlice = createSlice({
       state.searchQuery = action.payload;
     },
     setSelectedAnime: (state, action) => {
-      state.selectedAnime.anime = action.payload;
+      state.selectedAnime = action.payload;
     },
     setEpisodeCount: (state, action) => {
-      state.selectedAnime.episodeCount = action.payload;
+      const { animeId } = action.payload;
+      state.episodeCounts[animeId] = action.payload;
     },
-    decrementEpisodeCount: (state) => {
-      if (state.selectedAnime.episodeCount > 0)
-        state.selectedAnime.episodeCount -= 1;
+    decrementEpisodeCount: (state, action) => {
+      const animeId = action.payload;
+      if (state.episodeCounts[animeId] && state.episodeCounts[animeId] > 0) {
+        state.episodeCounts[animeId] -= 1;
+      }
     },
-    incrementEpisodeCount: (state) => {
-      if (state.selectedAnime.episodeCount < state.selectedAnime.anime.episodes)
-        state.selectedAnime.episodeCount += 1;
+    incrementEpisodeCount: (state, action) => {
+      const animeId = action.payload;
+      if (
+        state.episodeCounts[animeId] &&
+        state.episodeCounts[animeId] < state.selectedAnime.episodes
+      ) {
+        state.episodeCounts[animeId] += 1;
+      } else if (!state.episodeCounts[animeId]) {
+        state.episodeCounts[animeId] = 1;
+      }
     },
   },
 });
