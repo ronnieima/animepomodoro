@@ -20,7 +20,7 @@ function MainHeader() {
       <Dialog>
         <DialogTrigger className="flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground">
           <Info className="" />
-          <p className="text-lg">What is &quot;Anime Pomodoro&quot;?</p>
+          <p className="text-lg">What is this?</p>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

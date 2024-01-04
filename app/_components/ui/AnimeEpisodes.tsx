@@ -25,7 +25,8 @@ function AnimeEpisodes({ selectedAnime }: AnimeEpisodesType) {
         <Minus />
       </Button>
       <span className="text-xl">
-        {episodeCounts[selectedAnime.mal_id]} of {selectedAnime?.episodes}
+        {episodeCounts[selectedAnime.mal_id]} of{" "}
+        {selectedAnime?.episodes ?? <i>Unknown</i>}
       </span>
       <Button
         variant={"ghost"}

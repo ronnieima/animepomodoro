@@ -22,6 +22,9 @@ export const animeSlice = createSlice({
     },
     setSelectedAnime: (state, action) => {
       state.selectedAnime = action.payload;
+      if (!state.episodeCounts[state.selectedAnime.mal_id]) {
+        state.episodeCounts[state.selectedAnime.mal_id] = 0;
+      }
     },
     setEpisodeCount: (state, action) => {
       const { animeId } = action.payload;
@@ -36,12 +39,10 @@ export const animeSlice = createSlice({
     incrementEpisodeCount: (state, action) => {
       const animeId = action.payload;
       if (
-        state.episodeCounts[animeId] &&
-        state.episodeCounts[animeId] < state.selectedAnime.episodes
+        state.episodeCounts[animeId] < state.selectedAnime.episodes ||
+        !state.selectedAnime.episodes
       ) {
         state.episodeCounts[animeId] += 1;
-      } else if (!state.episodeCounts[animeId]) {
-        state.episodeCounts[animeId] = 1;
       }
     },
   },

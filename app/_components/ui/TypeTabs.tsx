@@ -6,9 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 
 function TypeTabs() {
   const dispatch = useDispatch();
-  const { timerState, isPlaying } = useSelector(
-    (state: RootState) => state.timer,
-  );
+  const { timerState } = useSelector((state: RootState) => state.timer);
 
   return (
     <Tabs
@@ -27,6 +25,7 @@ function TypeTabs() {
         <TabsTrigger value="longBreak" disabled>
           Long Break
         </TabsTrigger>
+        <ThemeToggle />
       </TabsList>
     </Tabs>
   );
