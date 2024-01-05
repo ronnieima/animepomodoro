@@ -6,9 +6,15 @@ import SearchBar from "./ui/SearchBar";
 import { cn } from "@/lib/utils";
 
 function AnimeSection() {
-  const { selectedAnime } = useSelector((state: RootState) => state.anime);
+  const selectedAnime = useSelector(
+    (state: RootState) => state.anime.selectedAnime,
+  );
+  const timerState = useSelector((state: RootState) => state.timer.timerState);
+
+  if (timerState === "playing") return null;
+
   return (
-    <section className="mx-auto flex max-w-6xl flex-col items-center px-2">
+    <section className="mx-auto flex max-w-6xl flex-col items-center px-2 py-16">
       {selectedAnime ? (
         <CurrentAnime selectedAnime={selectedAnime} />
       ) : (

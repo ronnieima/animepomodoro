@@ -1,3 +1,4 @@
+"use client";
 import {
   decrementTime,
   incrementTime,
@@ -16,11 +17,10 @@ function TimerControl() {
   const { currentStage, time, timerState } = useSelector(
     (state: RootState) => state.timer,
   );
-  console.log(timerState);
   const currentStageLabel =
     currentStage === "longBreak" ? "long break" : currentStage;
   return (
-    <section className="flex gap-8">
+    <div className="flex gap-8">
       {timerState === "stopped" ? (
         <>
           <Button onClick={() => dispatch(decrementTime())}>-5</Button>
@@ -42,7 +42,7 @@ function TimerControl() {
           <SkipConfirmationDialog />
         </>
       )}
-    </section>
+    </div>
   );
 }
 
