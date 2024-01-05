@@ -1,6 +1,7 @@
 import {
   decrementTime,
   incrementTime,
+  pauseTimerToggle,
   startTimer,
 } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
@@ -8,44 +9,39 @@ import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import CancelConfirmationDialog from "./CancelConfirmationDialog";
 import SkipConfirmationDialog from "./SkipConfirmationDialog";
+import { Pause, Play } from "lucide-react";
 
 function TimerControl() {
   const dispatch = useDispatch();
-  const { isPlaying, timerState, time } = useSelector(
+  const { currentStage, time, timerState } = useSelector(
     (state: RootState) => state.timer,
   );
-  const timerStateLabel =
-    timerState === "longBreak" ? "long break" : timerState;
+  console.log(timerState);
+  const currentStageLabel =
+    currentStage === "longBreak" ? "long break" : currentStage;
   return (
     <section className="flex gap-8">
-      <Button
-        onClick={() => dispatch(decrementTime())}
-        className={`${isPlaying ? "hidden" : "block"}`}
-      >
-        -5
-      </Button>
-
-      {isPlaying ? (
+      {timerState === "stopped" ? (
         <>
+          <Button onClick={() => dispatch(decrementTime())}>-5</Button>
+          <Button
+            onClick={() => {
+              dispatch(startTimer(time));
+            }}
+          >
+            Start {currentStageLabel}
+          </Button>
+          <Button onClick={() => dispatch(incrementTime())}>+5</Button>
+        </>
+      ) : (
+        <>
+          <Button onClick={() => dispatch(pauseTimerToggle())}>
+            {timerState === "paused" ? <Play /> : <Pause />}
+          </Button>
           <CancelConfirmationDialog />
           <SkipConfirmationDialog />
         </>
-      ) : (
-        <Button
-          onClick={() => {
-            dispatch(startTimer(time));
-          }}
-        >
-          Start {timerStateLabel}
-        </Button>
       )}
-
-      <Button
-        onClick={() => dispatch(incrementTime())}
-        className={`${isPlaying ? "hidden" : "block"}`}
-      >
-        +5
-      </Button>
     </section>
   );
 }

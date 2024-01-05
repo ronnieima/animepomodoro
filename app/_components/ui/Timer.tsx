@@ -10,13 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Timer() {
   const dispatch = useDispatch();
-  const { time, key, isPlaying, timerState } = useSelector(
+  const { time, key, timerState, currentStage } = useSelector(
     (state: RootState) => state.timer,
   );
   const { theme } = useTheme();
 
-  function handleColor(timerState: string) {
-    switch (timerState) {
+  function handleColor(currentStage: string) {
+    switch (currentStage) {
       case "pomodoro":
         return theme === "dark" ? "#DFCCFB" : "#BEADFA";
       case "anime":
@@ -39,11 +39,11 @@ function Timer() {
           completeSound.current!.play();
           dispatch(finishTimer());
         }}
-        isPlaying={isPlaying}
+        isPlaying={timerState === "playing"}
         size={360}
         duration={time}
         strokeWidth={32}
-        colors={handleColor(timerState)}
+        colors={handleColor(currentStage)}
         trailColor={theme === "dark" ? "#31304D" : "#B6BBC4"}
       >
         {renderTime}

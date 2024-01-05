@@ -8,13 +8,11 @@ type StateType = {
   episodeMinutes: number;
   longBreakMinutes: number;
 
-  timerState: "pomodoro" | "anime" | "longBreak";
-
+  currentStage: "pomodoro" | "anime" | "longBreak";
+  timerState: "playing" | "paused" | "stopped";
   pomodoroCount: number;
   episodesWatchedCount: number;
   longBreakCount: number;
-
-  isPlaying: boolean;
   key: number;
 };
 
@@ -23,11 +21,11 @@ const initialState: StateType = {
   pomodoroMinutes: 60 * 45,
   episodeMinutes: 60 * 20,
   longBreakMinutes: 60 * 60,
-  timerState: "pomodoro",
+  currentStage: "pomodoro",
+  timerState: "stopped",
   pomodoroCount: 0,
   episodesWatchedCount: 0,
   longBreakCount: 0,
-  isPlaying: false,
   key: 0,
 };
 
@@ -35,9 +33,9 @@ export const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
-    updateTimerState: (state, action) => {
-      state.timerState = action.payload;
-      switch (state.timerState) {
+    updatecurrentStage: (state, action) => {
+      state.currentStage = action.payload;
+      switch (state.currentStage) {
         case "pomodoro":
           state.time = state.pomodoroMinutes;
           break;
@@ -52,8 +50,8 @@ export const timerSlice = createSlice({
       }
     },
     startTimer: (state, action) => {
-      state.isPlaying = true;
-      switch (state.timerState) {
+      state.timerState = "playing";
+      switch (state.currentStage) {
         case "pomodoro":
           state.pomodoroMinutes = action.payload;
           break;
@@ -68,37 +66,41 @@ export const timerSlice = createSlice({
       }
     },
     cancelTimer: (state) => {
-      state.isPlaying = false;
+      state.timerState = "stopped";
       state.key += 1;
     },
     finishTimer: (state) => {
       // stops and rerenders the timer regardless of current state
-      state.isPlaying = false;
+      state.timerState = "stopped";
       state.key += 1;
 
-      switch (state.timerState) {
+      switch (state.currentStage) {
         case "pomodoro":
           state.pomodoroCount += 1;
           if (state.pomodoroCount % 4 === 0) {
-            state.timerState = "longBreak";
+            state.currentStage = "longBreak";
             state.time = state.longBreakMinutes;
           } else {
-            state.timerState = "anime";
+            state.currentStage = "anime";
             state.time = state.episodeMinutes;
           }
           break;
         case "anime":
           state.episodesWatchedCount += 1;
-          state.timerState = "pomodoro";
+          state.currentStage = "pomodoro";
           state.time = state.pomodoroMinutes;
           break;
 
         case "longBreak":
           state.longBreakCount += 1;
-          state.timerState = "pomodoro";
+          state.currentStage = "pomodoro";
           state.time = state.pomodoroMinutes;
           break;
       }
+    },
+    pauseTimerToggle: (state) => {
+      if (state.timerState === "playing") state.timerState = "paused";
+      else state.timerState = "playing";
     },
 
     incrementTime: (state) => {
@@ -107,7 +109,7 @@ export const timerSlice = createSlice({
     },
     decrementTime: (state) => {
       // prevents timer from going to 00:00
-      if (!state.isPlaying && state.time <= TIME_STEP) {
+      if (state.timerState === "stopped" && state.time <= TIME_STEP) {
         state.time = TIME_STEP;
       } else {
         state.time -= TIME_STEP;
@@ -117,12 +119,13 @@ export const timerSlice = createSlice({
 });
 
 export const {
+  pauseTimerToggle,
   startTimer,
   cancelTimer,
   finishTimer,
   incrementTime,
   decrementTime,
-  updateTimerState,
+  updatecurrentStage,
 } = timerSlice.actions;
 
 export default timerSlice.reducer;

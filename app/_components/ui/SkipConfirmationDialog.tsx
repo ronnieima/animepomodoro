@@ -18,10 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 function SkipConfirmationDialog() {
   const dispatch = useDispatch();
 
-  const { timerState } = useSelector((state: RootState) => state.timer);
+  const { currentStage } = useSelector((state: RootState) => state.timer);
 
-  const timerStateLabel =
-    timerState === "longBreak" ? "long break" : timerState;
+  const currentStageLabel =
+    currentStage === "longBreak" ? "long break" : currentStage;
 
   return (
     <AlertDialog>
@@ -34,13 +34,13 @@ function SkipConfirmationDialog() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            You will get credit for this {timerStateLabel} session and skip to
+            You will get credit for this {currentStageLabel} session and skip to
             the next timer.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>
-            No, continue my {timerStateLabel}
+            No, continue my {currentStageLabel}
           </AlertDialogCancel>
           <AlertDialogAction
             className=""
