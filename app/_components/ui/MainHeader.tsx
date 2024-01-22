@@ -14,13 +14,13 @@ const bangers = Bangers({ weight: "400", subsets: ["latin"] });
 function MainHeader() {
   return (
     <header className="flex flex-col items-center">
-      <h1 className={`${bangers.className} text-center text-8xl`}>
+      <h1 className={`${bangers.className} text-center text-5xl sm:text-6xl`}>
         Anime Pomodoro Timer
       </h1>
       <Dialog>
         <DialogTrigger className="flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground">
           <Info className="" />
-          <p className="text-lg">What is this?</p>
+          <p className="text-base">What is this?</p>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

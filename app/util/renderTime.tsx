@@ -1,3 +1,4 @@
+"use client";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
@@ -15,7 +16,7 @@ const RenderTime = ({ remainingTime }: { remainingTime: number }) => {
 
   return (
     <div className=" flex flex-col items-center">
-      <span className="text-lg font-semibold">
+      <span className="font-semibold sm:text-lg">
         Next {currentStage === "pomodoro" ? "episode" : "focus session"} in
       </span>
       <span className="text-6xl font-semibold">{finalTime}</span>

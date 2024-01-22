@@ -13,8 +13,10 @@ function CurrentAnime({ selectedAnime }: CurrentAnimeType) {
       key={selectedAnime?.mal_id}
     >
       <div className="text-center">
-        <span className="text-2xl font-light">Currently Watching: </span>
-        <p className=" text-4xl font-semibold">{`${
+        <span className="text-2xl font-semibold text-muted-foreground">
+          Currently Watching:{" "}
+        </span>
+        <p className=" text-5xl font-bold">{`${
           selectedAnime?.title ??
           selectedAnime?.title_english ??
           "Could not find title."

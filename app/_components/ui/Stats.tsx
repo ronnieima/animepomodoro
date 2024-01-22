@@ -7,7 +7,7 @@ function Stats() {
     (state: RootState) => state.timer,
   );
   return (
-    <div className="text-center text-2xl">
+    <div className="text-center sm:text-2xl">
       <h2>Pomodoros Completed: {pomodoroCount} </h2>
       <h2>Episodes Watched: {episodesWatchedCount} </h2>
       <h2>Long Breaks Completed: {longBreakCount} </h2>

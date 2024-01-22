@@ -40,9 +40,9 @@ function Timer() {
           dispatch(finishTimer());
         }}
         isPlaying={timerState === "playing"}
-        size={360}
+        size={300}
         duration={time}
-        strokeWidth={32}
+        strokeWidth={24}
         colors={handleColor(currentStage)}
         trailColor={theme === "dark" ? "#31304D" : "#B6BBC4"}
       >

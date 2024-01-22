@@ -1,3 +1,5 @@
+"use client";
+
 import { updatecurrentStage } from "@/app/features/timer/timerSlice";
 import { RootState } from "@/app/store";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,7 +16,7 @@ function TypeTabs() {
   return (
     <Tabs
       defaultValue="pomodoro"
-      className="flex w-[500px] items-center justify-center gap-8 text-center"
+      className="flex w-full items-center justify-center gap-8 text-center"
       value={currentStage}
       onValueChange={(currentStage) =>
         dispatch(updatecurrentStage(currentStage))
