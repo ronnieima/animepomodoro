@@ -5,6 +5,31 @@ const code_challenge = await generateRandomBase64String(96);
 const code_verifier = code_challenge;
 
 export const options: NextAuthOptions = {
+  callbacks: {
+    async jwt({ token, user, account, profile }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          name: user.name,
+          image: user.picture,
+        };
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          name: token.name,
+          image: token.image,
+        },
+      };
+    },
+  },
   providers: [
     {
       id: "mal",
@@ -40,9 +65,10 @@ export const options: NextAuthOptions = {
       },
       userinfo: "https://api.myanimelist.net/v2/users/@me",
       profile(profile) {
-        console.log(profile);
         return {
           id: profile.id,
+          name: profile.name,
+          picture: profile.picture,
         };
       },
     },
