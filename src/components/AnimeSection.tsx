@@ -1,13 +1,9 @@
+import { getServerSession } from "next-auth";
 import JikanAnimeSection from "./JikanAnimeSection";
-import MALSection from "./MALSection";
+import { options } from "../app/api/auth/[...nextauth]/options";
+import MALAuthenticatedSection from "./MALAuthenticatedSection";
 
-function AnimeSection() {
-  return (
-    <>
-      <JikanAnimeSection />
-      <MALSection />
-    </>
-  );
+export default async function AnimeSection() {
+  const session = await getServerSession(options);
+  return <>{session ? <MALAuthenticatedSection /> : <JikanAnimeSection />}</>;
 }
-
-export default AnimeSection;

@@ -6,6 +6,5 @@ type CallbackParams = {
 };
 
 export default function AuthCallbackPage(searchParams: CallbackParams) {
-  console.log(searchParams);
   return <div>Authenticated Successfully!</div>;
 }
