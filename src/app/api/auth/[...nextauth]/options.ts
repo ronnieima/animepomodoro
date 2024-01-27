@@ -7,17 +7,20 @@ const code_verifier = code_challenge;
 export const options: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, account, profile }) {
+      console.log("jwt", { token, user, account, profile });
       if (user) {
         return {
           ...token,
           id: user.id,
           name: user.name,
           image: user.picture,
+          accessToken: token.token,
         };
       }
       return token;
     },
     async session({ session, token, user }) {
+      console.log("session", { session, token, user });
       // Send properties to the client, like an access_token and user id from a provider.
       return {
         ...session,
@@ -26,6 +29,7 @@ export const options: NextAuthOptions = {
           id: token.id,
           name: token.name,
           image: token.image,
+          token: token.token,
         },
       };
     },

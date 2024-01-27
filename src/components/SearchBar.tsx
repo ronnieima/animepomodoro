@@ -1,3 +1,4 @@
+"use client";
 import { setSearchQuery } from "@/src/app/features/anime/animeSlice";
 import { RootState } from "@/src/app/store";
 import { Input } from "@/src/components/ui/input";

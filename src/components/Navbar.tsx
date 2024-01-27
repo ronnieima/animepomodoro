@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Navbar() {
   const { data: session } = useSession();
-  console.log(session);
+  console.log("From Navbar:", { session });
   return (
     <nav className="relative flex items-center justify-between gap-16 px-16 py-4">
       <div className="relative h-12 w-12">
