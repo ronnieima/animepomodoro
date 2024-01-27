@@ -1,20 +1,21 @@
-import Link from "next/link";
-import React from "react";
-import { generateRandomBase64String } from "../lib/utils";
-import { buttonVariants } from "./ui/button";
+"use client";
+import { signIn, signOut, useSession } from "next-auth/react";
 
-export default async function Navbar() {
-  const codeVerification = await generateRandomBase64String(128);
-  const malAuthUrl = `https://myanimelist.net/v1/oauth2/authorize?
-  response_type=code&
-  client_id=${process.env.MAL_CLIENT_ID}&
-  code_challenge=${codeVerification.slice(0, 128)}&
-  state=RequestID42`;
+import { Button } from "./ui/button";
+
+export default function Navbar() {
+  const { data: session } = useSession();
+  console.log(session);
   return (
-    <nav>
-      <Link href={malAuthUrl} className={buttonVariants()}>
-        Sign in to MAL
-      </Link>
+    <nav className="flex items-center gap-16 px-16 py-4">
+      {session ? (
+        <>
+          <p>Hello, {session?.user?.name}</p>
+          <Button onClick={() => signOut()}>Sign out</Button>
+        </>
+      ) : (
+        <Button onClick={() => signIn()}>Sign In</Button>
+      )}
     </nav>
   );
 }

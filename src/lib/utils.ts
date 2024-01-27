@@ -5,8 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export async function generateRandomBase64String(length: number) {
-  return Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
+export const generateRandomBase64String = async (length = 24) =>
+  Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
     "base64url",
   );
-}

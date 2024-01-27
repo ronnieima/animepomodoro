@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Providers from "../components/Providers";
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import { getServerSession } from "next-auth";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -10,15 +11,16 @@ export const metadata: Metadata = {
   description: "Use AnimeDoro to optimize your studies!",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
   return (
     <html lang="en">
-      <body className={`${inter.className}  `}>
-        <Providers>
+      <body className={`${inter.className}`}>
+        <Providers session={session!}>
           <Navbar />
           {children}
         </Providers>
