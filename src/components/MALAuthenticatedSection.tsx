@@ -1,18 +1,11 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { options } from "../app/api/auth/[...nextauth]/options";
+import { AnimeListResponse } from "../lib/types/anime-types";
+import AnimeCardWrapper from "./AnimeCardWrapper";
 import AnimeGridLayoutWrapper from "./AnimeGridLayoutWrapper";
 import SelectedAnime from "./SelectedAnime";
 import { Separator } from "./ui/separator";
-import AnimeCardWrapper from "./AnimeCardWrapper";
-import { AnimeListResponse } from "../lib/types/anime-types";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
 
 export default async function MALAuthenticatedSection() {
   const session = await getServerSession(options);
@@ -23,8 +16,6 @@ export default async function MALAuthenticatedSection() {
     },
   );
   const animeList: AnimeListResponse = await res.json();
-  console.log(animeList);
-  console.log(animeList.data.length);
   return (
     <>
       {session && (

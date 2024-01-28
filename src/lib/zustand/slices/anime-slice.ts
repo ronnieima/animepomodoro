@@ -28,7 +28,7 @@ export const createAnimeSlice: StateCreator<
     set((state) => {
       return {
         selectedAnime:
-          state.selectedAnime?.node.id === anime.node.id ? null : anime,
+          state.selectedAnime?.node.id === anime?.node?.id ? null : anime,
       };
     }),
   setSearchQuery: (query) => set({ searchQuery: query }),

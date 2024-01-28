@@ -8,7 +8,7 @@ export default function AnimeCardWrapper({
   children,
   anime,
 }: {
-  key: string;
+  key: string | number;
   children: ReactNode;
   anime: Anime;
 }) {
@@ -17,7 +17,7 @@ export default function AnimeCardWrapper({
   return (
     <div
       key={key}
-      className="flex w-32 flex-col items-center hover:scale-105 hover:cursor-pointer active:translate-y-2 sm:w-48"
+      className="flex w-32 flex-col items-center transition-all hover:scale-105 hover:cursor-pointer active:translate-y-2 sm:w-48"
       onClick={() => setSelectedAnime(anime)}
     >
       {children}

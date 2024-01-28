@@ -46,24 +46,11 @@ export const USER_ANIME_SCORE_OPTIONS = [
 ];
 
 export const ANIME_STATUS_OPTIONS = [
-  {
-    label: "Watching",
-    value: "watching",
-  },
-  {
-    label: "Completed",
-    value: "completed",
-  },
-  {
-    label: "On-Hold",
-    value: "on_hold",
-  },
-  {
-    label: "Dropped",
-    value: "dropped",
-  },
-  {
-    label: "Plan to Watch",
-    value: "plan_to_watch",
-  },
-];
+  { label: "Watching", value: "watching" },
+  { label: "Completed", value: "completed" },
+  { label: "On-Hold", value: "on_hold" },
+  { label: "Dropped", value: "dropped" },
+  { label: "Plan to Watch", value: "plan_to_watch" },
+] as const;
+
+export type AnimeStatusValue = (typeof ANIME_STATUS_OPTIONS)[number]["value"];

@@ -1,3 +1,4 @@
+"use client";
 import useAnime from "@/src/hooks/useAnime";
 import useDebounce from "@/src/hooks/useDebounce";
 import { Anime } from "@tutkli/jikan-ts";
