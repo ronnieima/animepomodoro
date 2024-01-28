@@ -1,27 +1,28 @@
-import {
-  decrementEpisodeCount,
-  incrementEpisodeCount,
-} from "@/src/features/anime/animeSlice";
-import { RootState } from "@/src/app/store";
 import { Button } from "@/src/components/ui/button";
 import { Anime } from "@tutkli/jikan-ts";
 import { Minus, Plus } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 
 type AnimeEpisodesType = {
   selectedAnime: Anime;
 };
 
 function AnimeEpisodes({ selectedAnime }: AnimeEpisodesType) {
-  const dispatch = useDispatch();
-  const { episodeCounts } = useSelector((state: RootState) => state.anime);
+  const episodeCounts = useBoundStore((state) => state.episodeCounts);
+  const decrementEpisodeCount = useBoundStore(
+    (state) => state.decrementEpisodeCount,
+  );
+  const incrementEpisodeCount = useBoundStore(
+    (state) => state.incrementEpisodeCount,
+  );
+
   return (
     <div>
       <p className="text-center text-lg">Episode</p>
       <div className="flex items-center  gap-4">
         <Button
           variant={"secondary"}
-          onClick={() => dispatch(decrementEpisodeCount(selectedAnime.mal_id))}
+          onClick={() => decrementEpisodeCount(selectedAnime.mal_id)}
           className="text-destructive"
         >
           <Minus />
@@ -32,7 +33,7 @@ function AnimeEpisodes({ selectedAnime }: AnimeEpisodesType) {
         </span>
         <Button
           variant={"secondary"}
-          onClick={() => dispatch(incrementEpisodeCount(selectedAnime.mal_id))}
+          onClick={() => incrementEpisodeCount(selectedAnime.mal_id)}
           className="text-green-600"
         >
           <Plus />

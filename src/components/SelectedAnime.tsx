@@ -13,10 +13,10 @@ import {
 } from "../config/content";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { useAnimeStore } from "../stores/store";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 
 export default function SelectedAnime() {
-  const selectedAnime = useAnimeStore((state) => state.selectedAnime);
+  const selectedAnime = useBoundStore((state) => state.selectedAnime);
   return (
     <>
       {selectedAnime ? (
@@ -41,7 +41,12 @@ export default function SelectedAnime() {
             <div>
               <Label>Episode</Label>
               <div className="flex items-center">
-                <Input type="number" className="w-20" min={0} />
+                <Input
+                  value={selectedAnime.list_status.num_episodes_watched}
+                  type="number"
+                  className="w-20"
+                  min={0}
+                />
                 <span>/ 24</span>
               </div>
             </div>

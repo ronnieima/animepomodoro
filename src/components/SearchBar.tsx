@@ -1,18 +1,16 @@
 "use client";
-import { setSearchQuery } from "@/src/features/anime/animeSlice";
-import { RootState } from "@/src/app/store";
 import { Input } from "@/src/components/ui/input";
-import { useDispatch, useSelector } from "react-redux";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 
 function SearchBar() {
-  const dispatch = useDispatch();
-  const { searchQuery } = useSelector((state: RootState) => state.anime);
+  const searchQuery = useBoundStore((state) => state.searchQuery);
+  const setSearchQuery = useBoundStore((state) => state.setSearchQuery);
   return (
     <Input
       className="h-16 w-full border-foreground text-2xl sm:w-[50%]"
       placeholder="Search anime"
       value={searchQuery}
-      onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+      onChange={(e) => setSearchQuery(e.target.value)}
     />
   );
 }

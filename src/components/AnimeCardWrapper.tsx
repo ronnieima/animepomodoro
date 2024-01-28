@@ -1,7 +1,7 @@
 "use client";
-import React, { ReactNode } from "react";
-import { useAnimeStore } from "../stores/store";
-import { Anime } from "../types/anime-types";
+import { ReactNode } from "react";
+import { useBoundStore } from "../lib/zustand/bounded-store";
+import { Anime } from "../lib/types/anime-types";
 
 export default function AnimeCardWrapper({
   key,
@@ -12,7 +12,7 @@ export default function AnimeCardWrapper({
   children: ReactNode;
   anime: Anime;
 }) {
-  const setSelectedAnime = useAnimeStore((state) => state.setSelectedAnime);
+  const setSelectedAnime = useBoundStore((state) => state.setSelectedAnime);
 
   return (
     <div

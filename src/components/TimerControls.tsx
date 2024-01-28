@@ -1,41 +1,38 @@
 "use client";
-import {
-  decrementTime,
-  incrementTime,
-  pauseTimerToggle,
-  startTimer,
-} from "@/src/features/timer/timerSlice";
-import { RootState } from "@/src/app/store";
 import { Button } from "@/src/components/ui/button";
-import { useDispatch, useSelector } from "react-redux";
+import { Pause, Play } from "lucide-react";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 import CancelConfirmationDialog from "./CancelConfirmationDialog";
 import SkipConfirmationDialog from "./SkipConfirmationDialog";
-import { Pause, Play } from "lucide-react";
 
 function TimerControl() {
-  const dispatch = useDispatch();
-  const { currentStage, time, timerState } = useSelector(
-    (state: RootState) => state.timer,
-  );
+  const time = useBoundStore((state) => state.time);
+  const timerState = useBoundStore((state) => state.timerState);
+  const timerMode = useBoundStore((state) => state.timerMode);
+  const decrementTime = useBoundStore((state) => state.decrementTime);
+  const startTimer = useBoundStore((state) => state.startTimer);
+  const incrementTime = useBoundStore((state) => state.incrementTime);
+  const pauseTimerToggle = useBoundStore((state) => state.pauseTimerToggle);
+
   const currentStageLabel =
-    currentStage === "longBreak" ? "long break" : currentStage;
+    timerMode === "longBreak" ? "long break" : timerMode;
   return (
     <div className="flex gap-8">
       {timerState === "stopped" ? (
         <>
-          <Button onClick={() => dispatch(decrementTime())}>-5</Button>
+          <Button onClick={decrementTime}>-5</Button>
           <Button
             onClick={() => {
-              dispatch(startTimer(time));
+              startTimer(time);
             }}
           >
             Start {currentStageLabel}
           </Button>
-          <Button onClick={() => dispatch(incrementTime())}>+5</Button>
+          <Button onClick={incrementTime}>+5</Button>
         </>
       ) : (
         <>
-          <Button onClick={() => dispatch(pauseTimerToggle())}>
+          <Button onClick={pauseTimerToggle}>
             {timerState === "paused" ? <Play /> : <Pause />}
           </Button>
           <CancelConfirmationDialog />

@@ -1,25 +1,25 @@
 "use client";
-import { finishTimer } from "@/src/features/timer/timerSlice";
-import { RootState } from "@/src/app/store";
 import renderTime from "@/src/components/renderTime";
 import { useTheme } from "next-themes";
 import { useRef } from "react";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { useDispatch, useSelector } from "react-redux";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 
 function Timer() {
-  const dispatch = useDispatch();
-  const { time, key, timerState, currentStage } = useSelector(
-    (state: RootState) => state.timer,
-  );
+  const time = useBoundStore((state) => state.time);
+  const key = useBoundStore((state) => state.key);
+  const timerState = useBoundStore((state) => state.timerState);
+  const timerMode = useBoundStore((state) => state.timerMode);
+  const finishTimer = useBoundStore((state) => state.finishTimer);
+
   const { theme } = useTheme();
 
   function handleColor(currentStage: string) {
     switch (currentStage) {
       case "pomodoro":
         return theme === "dark" ? "#DFCCFB" : "#BEADFA";
-      case "anime":
+      case "animeBreak":
         return theme === "dark" ? "#618264" : "#D0E7D2";
       case "longBreak":
         return theme === "dark" ? "#FFF2CC" : "#DFA67B";
@@ -37,13 +37,13 @@ function Timer() {
         key={key}
         onComplete={() => {
           completeSound.current!.play();
-          dispatch(finishTimer());
+          finishTimer();
         }}
-        isPlaying={timerState === "playing"}
+        isPlaying={timerState === "running"}
         size={300}
         duration={time}
         strokeWidth={24}
-        colors={handleColor(currentStage)}
+        colors={handleColor(timerMode)}
         trailColor={theme === "dark" ? "#31304D" : "#B6BBC4"}
       >
         {renderTime}

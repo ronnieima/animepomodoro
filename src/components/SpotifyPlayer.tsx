@@ -1,12 +1,9 @@
 "use client";
 
-import { RootState } from "@/src/app/store";
-import { useSelector } from "react-redux";
 import { Spotify } from "react-spotify-embed";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 function SpotifyPlayer() {
-  const { isOpenMusicPlayer } = useSelector(
-    (state: RootState) => state.musicPlayer,
-  );
+  const isOpenMusicPlayer = useBoundStore((state) => state.isOpenMusicPlayer);
   return (
     <>
       {isOpenMusicPlayer && (

@@ -1,11 +1,10 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
-import useDebounce from "./useDebounce";
 import { Anime, JikanResponse } from "@tutkli/jikan-ts";
+import { useBoundStore } from "../lib/zustand/bounded-store";
+import useDebounce from "./useDebounce";
 
 function useAnime() {
-  const { searchQuery } = useSelector((state: RootState) => state.anime);
+  const searchQuery = useBoundStore((state) => state.searchQuery);
 
   async function fetchAnime() {
     const data = await fetch(

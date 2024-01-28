@@ -1,5 +1,3 @@
-import { finishTimer } from "@/src/features/timer/timerSlice";
-import { RootState } from "@/src/app/store";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,15 +11,14 @@ import {
 } from "@/src/components/ui/alert-dialog";
 import { Button } from "@/src/components/ui/button";
 import { SkipForward } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 
 function SkipConfirmationDialog() {
-  const dispatch = useDispatch();
-
-  const { currentStage } = useSelector((state: RootState) => state.timer);
+  const timerMode = useBoundStore((state) => state.timerMode);
+  const finishTimer = useBoundStore((state) => state.finishTimer);
 
   const currentStageLabel =
-    currentStage === "longBreak" ? "long break" : currentStage;
+    timerMode === "longBreak" ? "long break" : timerMode;
 
   return (
     <AlertDialog>
@@ -42,10 +39,7 @@ function SkipConfirmationDialog() {
           <AlertDialogCancel>
             No, continue my {currentStageLabel}
           </AlertDialogCancel>
-          <AlertDialogAction
-            className=""
-            onClick={() => dispatch(finishTimer())}
-          >
+          <AlertDialogAction className="" onClick={finishTimer}>
             Yes, skip this timer
           </AlertDialogAction>
         </AlertDialogFooter>

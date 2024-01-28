@@ -1,20 +1,17 @@
 import useAnime from "@/src/hooks/useAnime";
 import useDebounce from "@/src/hooks/useDebounce";
-import { setSelectedAnime } from "@/src/features/anime/animeSlice";
-import { RootState } from "@/src/app/store";
 import { Anime } from "@tutkli/jikan-ts";
-import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 import AnimeCard from "./AnimeCard";
 import AnimeGridLayoutWrapper from "./AnimeGridLayoutWrapper";
 
 function AnimeCards() {
   const { data, isLoading } = useAnime();
-  const { searchQuery } = useSelector((state: RootState) => state.anime);
+  const setSelectedAnime = useBoundStore((state) => state.setSelectedAnime);
+  const searchQuery = useBoundStore((state) => state.searchQuery);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
-  const dispatch = useDispatch();
 
   if (isLoading) {
     const skeletonArray = Array(10).fill(null);
@@ -44,7 +41,7 @@ function AnimeCards() {
               imageAlt={anime.title}
               imageSrc={anime.images.jpg.image_url}
               key={anime.mal_id}
-              onClick={() => dispatch(setSelectedAnime(anime))}
+              onClick={setSelectedAnime(anime)}
             />
           );
         })}

@@ -1,17 +1,13 @@
 "use client";
-import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
 import { cn } from "../lib/utils";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 import AnimeCards from "./AnimeCards";
 import CurrentAnime from "./CurrentAnime";
 import SearchBar from "./SearchBar";
 
 export default function JikanAnimeSection() {
-  const selectedAnime = useSelector(
-    (state: RootState) => state.anime.selectedAnime,
-  );
-  const timerState = useSelector((state: RootState) => state.timer.timerState);
+  const selectedAnime = useBoundStore((state) => state.selectedAnime);
+  const timerState = useBoundStore((state) => state.timerState);
   return (
     <section className="mx-auto flex max-w-6xl flex-col items-center px-2 py-16">
       {selectedAnime ? (

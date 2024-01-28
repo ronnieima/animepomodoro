@@ -1,32 +1,32 @@
 "use client";
 
-import { updatecurrentStage } from "@/src/features/timer/timerSlice";
-import { RootState } from "@/src/app/store";
-import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
-import { useDispatch, useSelector } from "react-redux";
-import ThemeToggle from "./ThemeToggle";
 import { Button } from "@/src/components/ui/button";
-import { toggleMusicPlayerVisibility } from "@/src/features/music/musicPlayerSlice";
+import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
 import { Music } from "lucide-react";
+import { useBoundStore } from "../lib/zustand/bounded-store";
+import ThemeToggle from "./ThemeToggle";
 
 function TypeTabs() {
-  const dispatch = useDispatch();
-  const { currentStage } = useSelector((state: RootState) => state.timer);
+  const timerMode = useBoundStore((state) => state.timerMode);
+  const updateTimerMode = useBoundStore((state) => state.updateTimerMode);
+  const toggleMusicPlayerVisibility = useBoundStore(
+    (state) => state.toggleMusicPlayerVisibility,
+  );
 
   return (
     <Tabs
       defaultValue="pomodoro"
       className="flex w-full items-center justify-center gap-8 text-center"
-      value={currentStage}
-      onValueChange={(currentStage) =>
-        dispatch(updatecurrentStage(currentStage))
+      value={timerMode}
+      onValueChange={(newMode) =>
+        updateTimerMode(newMode as "pomodoro" | "animeBreak" | "longBreak")
       }
     >
       <TabsList>
         <TabsTrigger value="pomodoro" disabled>
           Work
         </TabsTrigger>
-        <TabsTrigger value="anime" disabled>
+        <TabsTrigger value="animeBreak" disabled>
           Anime
         </TabsTrigger>
         <TabsTrigger value="longBreak" disabled>
@@ -36,7 +36,7 @@ function TypeTabs() {
         <Button
           variant="outline"
           size="icon"
-          onClick={() => dispatch(toggleMusicPlayerVisibility())}
+          onClick={toggleMusicPlayerVisibility}
           className="h-full"
         >
           <Music className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all " />

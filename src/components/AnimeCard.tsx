@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { setSelectedAnime } from "../features/anime/animeSlice";
 
 type AnimeCardProps = {
   key: string | number;
@@ -19,7 +17,6 @@ export default function AnimeCard({
   imageSrc,
   imageAlt,
 }: AnimeCardProps) {
-  const dispatch = useDispatch();
   return (
     <div
       key={key}

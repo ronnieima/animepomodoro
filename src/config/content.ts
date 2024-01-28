@@ -56,7 +56,7 @@ export const ANIME_STATUS_OPTIONS = [
   },
   {
     label: "On-Hold",
-    value: "on-hold",
+    value: "on_hold",
   },
   {
     label: "Dropped",
@@ -64,10 +64,6 @@ export const ANIME_STATUS_OPTIONS = [
   },
   {
     label: "Plan to Watch",
-    value: "planToWatch",
-  },
-  {
-    label: "Rewatching",
-    value: "rewatching",
+    value: "plan_to_watch",
   },
 ];
