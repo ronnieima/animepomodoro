@@ -4,6 +4,8 @@ import { options } from "../app/api/auth/[...nextauth]/options";
 import AnimeGridLayoutWrapper from "./AnimeGridLayoutWrapper";
 import SelectedAnime from "./SelectedAnime";
 import { Separator } from "./ui/separator";
+import AnimeCardWrapper from "./AnimeCardWrapper";
+import { AnimeListResponse } from "../types/anime-types";
 
 export default async function MALAuthenticatedSection() {
   const session = await getServerSession(options);
@@ -28,28 +30,27 @@ export default async function MALAuthenticatedSection() {
           <AnimeGridLayoutWrapper>
             {animeList?.data?.map((anime): any => {
               return (
-                <div
-                  key={anime.node.id}
-                  className="flex w-32 flex-col items-center hover:scale-105 hover:cursor-pointer active:translate-y-2 sm:w-48"
-                >
-                  <Image
-                    src={anime.node.main_picture?.large || "/no-image.png"}
-                    alt={anime.node.title}
-                    height={200}
-                    width={300}
-                    className="shadow-xl"
-                    style={{ width: "200px", height: "auto" }}
-                  />
-                  <p className="h-full w-full text-center font-semibold">
-                    {anime.node.title}
-                  </p>
+                <AnimeCardWrapper anime={anime} key={anime.node.title}>
+                  <>
+                    <Image
+                      src={anime.node.main_picture?.large || "/no-image.png"}
+                      alt={anime.node.title}
+                      height={200}
+                      width={300}
+                      className="shadow-xl"
+                      style={{ width: "200px", height: "auto" }}
+                    />
+                    <p className="h-full w-full text-center font-semibold">
+                      {anime.node.title}
+                    </p>
 
-                  <Separator orientation="horizontal" />
+                    <Separator orientation="horizontal" />
 
-                  <span className="text-center text-muted-foreground">
-                    {anime?.list_status.num_episodes_watched} episodes watched
-                  </span>
-                </div>
+                    <span className="text-center text-muted-foreground">
+                      {anime?.list_status.num_episodes_watched} episodes watched
+                    </span>
+                  </>
+                </AnimeCardWrapper>
               );
             })}
           </AnimeGridLayoutWrapper>
@@ -58,26 +59,3 @@ export default async function MALAuthenticatedSection() {
     </>
   );
 }
-
-type AnimeListResponse = {
-  data: Array<{
-    node: {
-      id: number;
-      title: string;
-      main_picture?: {
-        medium: string;
-        large: string;
-      };
-    };
-    list_status: {
-      status: string;
-      score: number;
-      num_episodes_watched: number;
-      is_rewatching: boolean;
-      updated_at: string;
-    };
-  }>;
-  paging: {
-    next: string;
-  };
-};

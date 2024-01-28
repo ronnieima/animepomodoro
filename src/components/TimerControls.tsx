@@ -4,7 +4,7 @@ import {
   incrementTime,
   pauseTimerToggle,
   startTimer,
-} from "@/src/app/features/timer/timerSlice";
+} from "@/src/features/timer/timerSlice";
 import { RootState } from "@/src/app/store";
 import { Button } from "@/src/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";

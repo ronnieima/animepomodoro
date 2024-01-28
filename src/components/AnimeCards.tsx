@@ -1,6 +1,6 @@
 import useAnime from "@/src/hooks/useAnime";
 import useDebounce from "@/src/hooks/useDebounce";
-import { setSelectedAnime } from "@/src/app/features/anime/animeSlice";
+import { setSelectedAnime } from "@/src/features/anime/animeSlice";
 import { RootState } from "@/src/app/store";
 import { Anime } from "@tutkli/jikan-ts";
 import Image from "next/image";

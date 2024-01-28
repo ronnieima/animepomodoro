@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import timerReducer from "@/src/app/features/timer/timerSlice";
-import animeReducer from "@/src/app/features/anime/animeSlice";
-import musicPlayerReducer from "@/src/app/features/music/musicPlayerSlice";
+import timerReducer from "@/src/features/timer/timerSlice";
+import animeReducer from "@/src/features/anime/animeSlice";
+import musicPlayerReducer from "@/src/features/music/musicPlayerSlice";
 
 export const store = configureStore({
   reducer: {

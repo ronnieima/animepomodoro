@@ -1,4 +1,4 @@
-import { finishTimer } from "@/src/app/features/timer/timerSlice";
+import { finishTimer } from "@/src/features/timer/timerSlice";
 import { RootState } from "@/src/app/store";
 import {
   AlertDialog,

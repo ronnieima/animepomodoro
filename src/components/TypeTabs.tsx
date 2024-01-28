@@ -1,12 +1,12 @@
 "use client";
 
-import { updatecurrentStage } from "@/src/app/features/timer/timerSlice";
+import { updatecurrentStage } from "@/src/features/timer/timerSlice";
 import { RootState } from "@/src/app/store";
 import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
 import { useDispatch, useSelector } from "react-redux";
 import ThemeToggle from "./ThemeToggle";
 import { Button } from "@/src/components/ui/button";
-import { toggleMusicPlayerVisibility } from "@/src/app/features/music/musicPlayerSlice";
+import { toggleMusicPlayerVisibility } from "@/src/features/music/musicPlayerSlice";
 import { Music } from "lucide-react";
 
 function TypeTabs() {

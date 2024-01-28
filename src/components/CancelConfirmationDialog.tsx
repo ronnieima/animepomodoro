@@ -1,4 +1,4 @@
-import { cancelTimer } from "@/src/app/features/timer/timerSlice";
+import { cancelTimer } from "@/src/features/timer/timerSlice";
 import { RootState } from "@/src/app/store";
 import {
   AlertDialog,

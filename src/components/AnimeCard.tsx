@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setSelectedAnime } from "../app/features/anime/animeSlice";
+import { setSelectedAnime } from "../features/anime/animeSlice";
 
 type AnimeCardProps = {
   key: string | number;

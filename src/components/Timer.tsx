@@ -1,5 +1,5 @@
 "use client";
-import { finishTimer } from "@/src/app/features/timer/timerSlice";
+import { finishTimer } from "@/src/features/timer/timerSlice";
 import { RootState } from "@/src/app/store";
 import renderTime from "@/src/components/renderTime";
 import { useTheme } from "next-themes";

@@ -1,7 +1,7 @@
 import {
   decrementEpisodeCount,
   incrementEpisodeCount,
-} from "@/src/app/features/anime/animeSlice";
+} from "@/src/features/anime/animeSlice";
 import { RootState } from "@/src/app/store";
 import { Button } from "@/src/components/ui/button";
 import { Anime } from "@tutkli/jikan-ts";
