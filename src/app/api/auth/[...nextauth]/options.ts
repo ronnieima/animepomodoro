@@ -1,7 +1,7 @@
 import { generateRandomBase64String } from "@/src/lib/utils";
 import { NextAuthOptions } from "next-auth";
 
-const code_challenge = await generateRandomBase64String(96);
+const code_challenge = async () => await generateRandomBase64String(96);
 const code_verifier = code_challenge;
 
 export const options: NextAuthOptions = {

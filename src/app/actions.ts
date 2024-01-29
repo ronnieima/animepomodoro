@@ -3,6 +3,8 @@
 import { getServerSession } from "next-auth";
 import { AnimeStatusValue } from "../config/content";
 import { options } from "./api/auth/[...nextauth]/options";
+import { redirect } from "next/navigation";
+import { AnimeStatus } from "@tutkli/jikan-ts";
 
 export async function setAnimeStatus(
   animeId: number,
@@ -20,4 +22,8 @@ export async function setAnimeStatus(
       body: new URLSearchParams({ status: newStatus }),
     },
   );
+}
+
+export async function updateFilters(status: AnimeStatusValue) {
+  redirect(`?status=${status}`);
 }
