@@ -4,7 +4,7 @@ import { options } from "../app/api/auth/[...nextauth]/options";
 import MALAuthenticatedSection from "./MALAuthenticatedSection";
 
 export type SearchParamsType = {
-  searchParams: { status: string };
+  searchParams: { status: string; search: string };
 };
 
 export default async function AnimeSection({ searchParams }: SearchParamsType) {

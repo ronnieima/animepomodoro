@@ -4,7 +4,6 @@ import { AnimeListResponse } from "../lib/types/anime-types";
 import { cn } from "../lib/utils";
 import AnimeCard from "./AnimeCard";
 import AnimeCardWrapper from "./AnimeCardWrapper";
-import AnimeGridLayoutWrapper from "./AnimeGridLayoutWrapper";
 import SearchBar from "./SearchBar";
 import SelectedAnime from "./SelectedAnime";
 
@@ -29,13 +28,16 @@ export default async function JikanAnimeSection() {
       </header>
       <SelectedAnime />
       <SearchBar />
-      <AnimeGridLayoutWrapper>
+      <section className="flex max-w-7xl flex-wrap justify-center gap-8">
         {data.data.map((anime) => (
-          <AnimeCardWrapper key={anime.node.id} anime={anime}>
+          <div
+            key={anime.node.id}
+            className="flex w-32 flex-col items-center transition-all hover:scale-105 hover:cursor-pointer active:translate-y-2 sm:w-48"
+          >
             <AnimeCard anime={anime} />
-          </AnimeCardWrapper>
+          </div>
         ))}
-      </AnimeGridLayoutWrapper>
+      </section>
       {/* <AnimeCards /> */}
     </section>
   );

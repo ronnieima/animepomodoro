@@ -6,7 +6,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useBoundStore } from "../lib/zustand/bounded-store";
 import AnimeCard from "./AnimeCard";
-import AnimeGridLayoutWrapper from "./AnimeGridLayoutWrapper";
 
 function AnimeCards() {
   const { data, isLoading } = useAnime();
@@ -17,14 +16,14 @@ function AnimeCards() {
   if (isLoading) {
     const skeletonArray = Array(10).fill(null);
     return (
-      <AnimeGridLayoutWrapper>
+      <div className="flex max-w-7xl flex-wrap justify-center gap-8">
         {skeletonArray.map((_, index) => (
           <div key={index} className=" flex w-48 flex-col">
             <Skeleton height={300} width={200} borderRadius={25} />
             <Skeleton height={20} width={200} count={2} borderRadius={25} />
           </div>
         ))}
-      </AnimeGridLayoutWrapper>
+      </div>
     );
   }
 
@@ -34,19 +33,11 @@ function AnimeCards() {
         Showing results for:{" "}
         <span className="font-bold">{debouncedSearchTerm}</span>
       </p>
-      <AnimeGridLayoutWrapper>
+      <div className="flex max-w-7xl flex-wrap justify-center gap-8">
         {data?.data?.map((anime: Anime) => {
-          return (
-            <AnimeCard
-              animeTitle={anime.title}
-              imageAlt={anime.title}
-              imageSrc={anime.images.jpg.image_url}
-              key={anime.mal_id}
-              onClick={setSelectedAnime(anime)}
-            />
-          );
+          return <div key={anime.mal_id}>A</div>;
         })}
-      </AnimeGridLayoutWrapper>
+      </div>
     </section>
   );
 }

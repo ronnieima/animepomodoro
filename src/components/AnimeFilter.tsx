@@ -1,8 +1,8 @@
 "use client";
 import { updateFilters } from "../app/actions";
 import { ANIME_STATUS_OPTIONS, AnimeStatusValue } from "../config/content";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 import { SearchParamsType } from "./AnimeSection";
-import { Button } from "./ui/button";
 import {
   Select,
   SelectContent,
@@ -13,13 +13,13 @@ import {
 
 export default function AnimeFilter({ searchParams }: SearchParamsType) {
   return (
-    <form className="flex items-center gap-8 ">
+    <div className="flex items-center gap-8 ">
       <Select
-        defaultValue={searchParams.status}
+        defaultValue={searchParams.status || "watching"}
         onValueChange={(status: AnimeStatusValue) => updateFilters(status)}
       >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Theme" />
+          <SelectValue />
         </SelectTrigger>
         <SelectContent>
           {ANIME_STATUS_OPTIONS.map((option) => (
@@ -33,8 +33,6 @@ export default function AnimeFilter({ searchParams }: SearchParamsType) {
           ))}
         </SelectContent>
       </Select>
-
-      <Button>Apply filters</Button>
-    </form>
+    </div>
   );
 }

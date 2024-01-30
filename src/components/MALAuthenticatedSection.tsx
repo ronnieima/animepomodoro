@@ -1,27 +1,27 @@
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 import { options } from "../app/api/auth/[...nextauth]/options";
 import { AnimeListResponse } from "../lib/types/anime-types";
-import AnimeCardWrapper from "./AnimeCardWrapper";
 import AnimeFilter from "./AnimeFilter";
-import AnimeGridLayoutWrapper from "./AnimeGridLayoutWrapper";
-import SelectedAnime from "./SelectedAnime";
-import { Separator } from "./ui/separator";
 import { SearchParamsType } from "./AnimeSection";
+import SelectedAnime from "./SelectedAnime";
+import AnimeCardsAuthed from "./AnimeCardsAuthed";
+import Search from "./Search";
+import { Suspense } from "react";
 
 export default async function MALAuthenticatedSection({
   searchParams,
 }: SearchParamsType) {
   const status = searchParams.status;
+  const searchQuery = searchParams.search;
   const session = await getServerSession(options);
   const res = await fetch(
-    `https://api.myanimelist.net/v2/users/@me/animelist??fields=list_status&limit=1000&sort=list_updated_at&status=${status}`,
+    `https://api.myanimelist.net/v2/anime?q=${searchQuery}&limit=10`,
     {
       headers: { Authorization: `Bearer ${session?.user?.accessToken}` },
     },
   );
   const animeList: AnimeListResponse = await res.json();
-  console.log(animeList);
+  console.log(animeList.data);
   return (
     <>
       {session && (
@@ -32,42 +32,14 @@ export default async function MALAuthenticatedSection({
               <h2 className="self-start py-8 text-xl font-bold">
                 My Currently Watching Anime
               </h2>
-              <AnimeFilter searchParams={searchParams} />
+              <div className="flex">
+                <Search searchQuery={searchQuery} />
+                <AnimeFilter searchParams={searchParams} />
+              </div>
             </header>
-            <AnimeGridLayoutWrapper>
-              {animeList?.data?.map((anime): any => {
-                return (
-                  <AnimeCardWrapper anime={anime} key={anime?.node?.title}>
-                    <>
-                      <Image
-                        src={
-                          anime?.node?.main_picture?.large || "/no-image.png"
-                        }
-                        alt={anime?.node?.title}
-                        height={200}
-                        width={300}
-                        className="shadow-xl"
-                        style={{ width: "200px", height: "auto" }}
-                      />
-
-                      <p className="h-full w-full text-center text-sm font-semibold">
-                        {anime?.node.title}
-                      </p>
-
-                      <Separator orientation="horizontal" />
-
-                      <span className="text-center text-muted-foreground">
-                        {anime?.list_status?.num_episodes_watched} episode
-                        {anime?.list_status?.num_episodes_watched === 1
-                          ? ""
-                          : "s"}
-                        watched
-                      </span>
-                    </>
-                  </AnimeCardWrapper>
-                );
-              })}
-            </AnimeGridLayoutWrapper>
+            <Suspense fallback={<div>Loading...</div>}>
+              <AnimeCardsAuthed animeList={animeList} />
+            </Suspense>
           </div>
         </section>
       )}
