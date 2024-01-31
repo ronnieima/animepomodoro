@@ -32,14 +32,18 @@ export default function AnimeCardsAuthed({
               <p className="h-full w-full text-center text-sm font-semibold">
                 {anime?.node.title}
               </p>
-
-              <Separator orientation="horizontal" />
-
-              <span className="text-center text-muted-foreground">
-                {anime?.list_status?.num_episodes_watched} episode
-                {anime?.list_status?.num_episodes_watched === 1 ? "" : "s"}
-                watched
-              </span>
+              {anime?.list_status?.num_episodes_watched && (
+                <>
+                  <Separator orientation="horizontal" />
+                  <span className="text-center text-muted-foreground">
+                    {anime?.list_status?.num_episodes_watched} episode
+                    {anime?.list_status?.num_episodes_watched === 1
+                      ? ""
+                      : "s"}{" "}
+                    watched
+                  </span>
+                </>
+              )}
             </>
           </div>
         );

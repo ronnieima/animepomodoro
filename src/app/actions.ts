@@ -5,6 +5,12 @@ import { AnimeStatusValue } from "../config/content";
 import { options } from "./api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
 import { AnimeStatus } from "@tutkli/jikan-ts";
+import { AnimeListResponse } from "../lib/types/anime-types";
+
+export const generateRandomBase64String = (length = 24) =>
+  Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
+    "base64url",
+  );
 
 export async function setAnimeStatus(
   animeId: number,
@@ -26,4 +32,18 @@ export async function setAnimeStatus(
 
 export async function updateFilters(status: AnimeStatusValue) {
   redirect(`?status=${status}`);
+}
+
+export async function getAnimeUnauthed(searchQuery: string) {
+  const fetchUrl = searchQuery
+    ? `https://api.myanimelist.net/v2/anime?q=${searchQuery}&limit=10`
+    : `https://api.myanimelist.net/v2/anime/ranking?ranking_type=bypopularity&limit=10`;
+
+  const res = await fetch(fetchUrl, {
+    // @ts-ignore
+    headers: { "X-MAL-CLIENT-ID": process.env.MAL_CLIENT_ID },
+  });
+
+  const data: AnimeListResponse = await res.json();
+  return data;
 }
