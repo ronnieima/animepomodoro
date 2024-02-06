@@ -45,6 +45,8 @@ export const USER_ANIME_SCORE_OPTIONS = [
   },
 ];
 
+export const BASE_URL = "https://api.myanimelist.net/v2/";
+
 export const ANIME_STATUS_OPTIONS = [
   { label: "Watching", value: "watching" },
   { label: "Completed", value: "completed" },
