@@ -6,6 +6,7 @@ import AnimeCardsAuthed from "./AnimeCardsAuthed";
 import AnimeFilter from "./AnimeFilter";
 import Search from "./Search";
 import SelectedAnime from "./SelectedAnime";
+import ToggleMyAnimeList from "./ToggleMyAnimeList";
 
 export default async function MALAuthenticatedSection({
   searchParams,
@@ -21,12 +22,11 @@ export default async function MALAuthenticatedSection({
           <h2 className="self-start py-8 text-xl font-bold">Anime Search</h2>
           <div className="flex">
             <Search searchQuery={searchQuery} />
-            <AnimeFilter searchParams={searchParams} />
+            <ToggleMyAnimeList />
+            {/* <AnimeFilter searchParams={searchParams} /> */}
           </div>
         </header>
-        <Suspense fallback={<div>Loading...</div>}>
-          <AnimeCardsAuthed searchQuery={searchQuery} />
-        </Suspense>
+        <AnimeCardsAuthed searchQuery={searchQuery} />
       </div>
     </section>
   );

@@ -1,10 +1,9 @@
 "use server";
 
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { AnimeStatusValue } from "../config/content";
 import { options } from "./api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
-import { AnimeStatus } from "@tutkli/jikan-ts";
 import { AnimeListResponse } from "../lib/types/anime-types";
 
 export const generateRandomBase64String = (length = 24) =>
@@ -34,7 +33,7 @@ export async function updateFilters(status: AnimeStatusValue) {
   redirect(`?status=${status}`);
 }
 
-export async function getAnimeUnauthed(searchQuery: string) {
+export async function getAnime(searchQuery: string, accessToken?: string) {
   const fetchUrl = searchQuery
     ? `https://api.myanimelist.net/v2/anime?q=${searchQuery}&limit=10`
     : `https://api.myanimelist.net/v2/anime/ranking?ranking_type=bypopularity&limit=10`;

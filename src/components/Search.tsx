@@ -10,7 +10,8 @@ export default function Search({ searchQuery }: { searchQuery?: string }) {
   const debouncedQuery = useDebounce(query, 500);
 
   useEffect(() => {
-    if (!debouncedQuery) router.push("/", { scroll: false });
+    if (!debouncedQuery) router.replace("/", { scroll: false });
+    else router.replace(`/?search=${debouncedQuery}`, { scroll: false });
   }, [router, debouncedQuery]);
 
   return (
