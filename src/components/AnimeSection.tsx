@@ -1,12 +1,11 @@
 import { getServerSession } from "next-auth";
-import { options } from "../app/api/auth/[...nextauth]/options";
-import AnimeFilter from "./AnimeFilter";
-import SelectedAnime from "./SelectedAnime";
-import AnimeCardsAuthed from "./AnimeCardsAuthed";
-import Search from "./Search";
 import { Suspense } from "react";
-import { getAnimeUnauthed } from "../app/actions";
+import { options } from "../app/api/auth/[...nextauth]/options";
 import { SearchParamsType } from "../app/page";
+import AnimeCardsAuthed from "./AnimeCardsAuthed";
+import AnimeFilter from "./AnimeFilter";
+import Search from "./Search";
+import SelectedAnime from "./SelectedAnime";
 
 export default async function MALAuthenticatedSection({
   searchParams,
@@ -14,7 +13,6 @@ export default async function MALAuthenticatedSection({
   const status = searchParams.status;
   const searchQuery = searchParams.search;
   const session = await getServerSession(options);
-  const animeList = await getAnimeUnauthed(searchQuery);
   return (
     <section className="mx-auto flex max-w-6xl flex-col items-center gap-16 px-8 py-4">
       <SelectedAnime />
@@ -27,7 +25,7 @@ export default async function MALAuthenticatedSection({
           </div>
         </header>
         <Suspense fallback={<div>Loading...</div>}>
-          <AnimeCardsAuthed animeList={animeList} />
+          <AnimeCardsAuthed searchQuery={searchQuery} />
         </Suspense>
       </div>
     </section>
