@@ -5,9 +5,12 @@ import { Button } from "./ui/button";
 
 export default function ToggleMyAnimeList() {
   const searchParams = useSearchParams();
-  console.log(searchParams.get("search"));
+  const isMal = searchParams.get("mal");
+  console.log(isMal);
   const router = useRouter();
   return (
-    <Button onClick={() => router.push(`/?mal=true`)}>View MyAnimeList</Button>
+    <Button onClick={() => router.push(`/?mal=${!isMal}&status=watching`)}>
+      View MyAnimeList
+    </Button>
   );
 }

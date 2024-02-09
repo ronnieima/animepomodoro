@@ -5,7 +5,6 @@ import { AnimeStatusValue, BASE_URL } from "../config/content";
 import { options } from "./api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
 import { AnimeListResponse } from "../lib/types/anime-types";
-import { headers } from "next/headers";
 
 export const generateRandomBase64String = (length = 24) =>
   Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
@@ -31,24 +30,32 @@ export async function setAnimeStatus(
 }
 
 export async function updateFilters(status: AnimeStatusValue) {
-  redirect(`?status=${status}`);
+  redirect(`?mal=true&status=${status}`);
 }
 
-export async function getAnime(searchQuery: string, session?: Session) {
+export async function getAnime(
+  searchQuery: string,
+  status = "watching",
+  session?: Session,
+) {
   let fetchUrl;
-  if (session?.user.accessToken) {
-    fetchUrl = `${BASE_URL}users/@me/animelist?fields=list_status`;
+  if (session?.user?.accessToken) {
+    fetchUrl = `${BASE_URL}users/@me/animelist?fields=list_status&status=${status}`;
   } else {
     fetchUrl = searchQuery
-      ? `https://api.myanimelist.net/v2/anime?q=${searchQuery}&limit=10&status=watching`
+      ? `https://api.myanimelist.net/v2/anime?q=${searchQuery}&limit=10&status=status`
       : `https://api.myanimelist.net/v2/anime/ranking?ranking_type=bypopularity&limit=10`;
   }
 
-  const options = {
-    headers: session
-      ? { Authorization: `Bearer ${session.user.accessToken}` }
-      : { "X-MAL-CLIENT-ID": process.env.MAL_CLIENT_ID },
-  };
+  let headers: Record<string, string> = {};
+
+  if (session) {
+    headers["Authorization"] = `Bearer ${session.user.accessToken}`;
+  } else if (process.env.MAL_CLIENT_ID) {
+    headers["X-MAL-CLIENT-ID"] = process.env.MAL_CLIENT_ID;
+  }
+
+  const options = { headers };
 
   const res = await fetch(fetchUrl, options);
 

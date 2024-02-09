@@ -11,7 +11,6 @@ import ToggleMyAnimeList from "./ToggleMyAnimeList";
 export default async function MALAuthenticatedSection({
   searchParams,
 }: SearchParamsType) {
-  const status = searchParams.status;
   const searchQuery = searchParams.search;
   const session = await getServerSession(options);
   return (
@@ -23,10 +22,13 @@ export default async function MALAuthenticatedSection({
           <div className="flex">
             <Search searchQuery={searchQuery} />
             <ToggleMyAnimeList />
-            {/* <AnimeFilter searchParams={searchParams} /> */}
+            <AnimeFilter searchParams={searchParams} />
           </div>
         </header>
-        <AnimeCardsAuthed searchQuery={searchQuery} />
+        <AnimeCardsAuthed
+          searchQuery={searchQuery}
+          searchParams={searchParams}
+        />
       </div>
     </section>
   );
