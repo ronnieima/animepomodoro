@@ -45,7 +45,7 @@ export const USER_ANIME_SCORE_OPTIONS = [
   },
 ];
 
-export const BASE_URL = "https://api.myanimelist.net/v2/";
+export const BASE_URL = "https://api.myanimelist.net/v2";
 
 export const ANIME_STATUS_OPTIONS = [
   { label: "Watching", value: "watching" },
@@ -53,6 +53,15 @@ export const ANIME_STATUS_OPTIONS = [
   { label: "On-Hold", value: "on_hold" },
   { label: "Dropped", value: "dropped" },
   { label: "Plan to Watch", value: "plan_to_watch" },
-] as const;
+];
 
-export type AnimeStatusValue = (typeof ANIME_STATUS_OPTIONS)[number]["value"];
+// export type AnimeStatusValue = (typeof ANIME_STATUS_OPTIONS as const)[number]["value"];
+
+export const ANIME_SORT_OPTIONS = [
+  { label: "Last Updated", value: "list_updated_at" },
+  { label: "Score", value: "list_score" },
+  { label: "Title", value: "anime_title" },
+  { label: "Anime Start Date", value: "anime_start_date" },
+];
+
+// export type AnimeSortValue = (typeof ANIME_SORT_OPTIONS)[number]["value"];

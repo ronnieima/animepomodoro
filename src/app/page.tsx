@@ -11,5 +11,5 @@ export default async function Home({ searchParams }: SearchParamsType) {
 }
 
 export type SearchParamsType = {
-  searchParams: { status: string; search: string };
+  searchParams: { status: string; search: string; sort: string };
 };

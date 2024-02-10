@@ -1,20 +1,18 @@
 "use server";
 
 import { Session, getServerSession } from "next-auth";
-import { AnimeStatusValue, BASE_URL } from "../config/content";
+import { BASE_URL } from "../config/content";
 import { options } from "./api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
 import { AnimeListResponse } from "../lib/types/anime-types";
+import { url } from "inspector";
 
 export const generateRandomBase64String = (length = 24) =>
   Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
     "base64url",
   );
 
-export async function setAnimeStatus(
-  animeId: number,
-  newStatus: AnimeStatusValue,
-) {
+export async function setAnimeStatus(animeId: number, newStatus: string) {
   const session = await getServerSession(options);
   const res = await fetch(
     `https://api.myanimelist.net/v2/anime/${animeId}/my_list_status`,
@@ -29,36 +27,33 @@ export async function setAnimeStatus(
   );
 }
 
-export async function updateFilters(status: AnimeStatusValue) {
-  redirect(`?mal=true&status=${status}`);
+export async function fetchUserAnimeList(
+  session: Session,
+  status = "watching",
+  sort = "last_updated_at",
+): Promise<AnimeListResponse> {
+  const res = await fetch(
+    `${BASE_URL}/users/@me/animelist?fields=list_status&limit=100&sort=list_updated_at&status=${status}&sort=${sort}`,
+    { headers: { Authorization: `Bearer ${session.user.accessToken}` } },
+  );
+  const data = await res.json();
+  return data;
 }
 
-export async function getAnime(
+export async function fetchTopAnime(
   searchQuery: string,
-  status = "watching",
-  session?: Session,
-) {
-  let fetchUrl;
-  if (session?.user?.accessToken) {
-    fetchUrl = `${BASE_URL}users/@me/animelist?fields=list_status&status=${status}`;
-  } else {
-    fetchUrl = searchQuery
-      ? `https://api.myanimelist.net/v2/anime?q=${searchQuery}&limit=10&status=status`
-      : `https://api.myanimelist.net/v2/anime/ranking?ranking_type=bypopularity&limit=10`;
-  }
+): Promise<AnimeListResponse> {
+  const fetchUrl = searchQuery
+    ? `${BASE_URL}/anime?q=${searchQuery}&limit=10`
+    : `${BASE_URL}/anime/ranking?ranking_type=bypopularity&limit=10`;
 
-  let headers: Record<string, string> = {};
+  const res = await fetch(fetchUrl, {
+    headers: {
+      "X-MAL-CLIENT-ID": process.env.MAL_CLIENT_ID!,
+    },
+  });
 
-  if (session) {
-    headers["Authorization"] = `Bearer ${session.user.accessToken}`;
-  } else if (process.env.MAL_CLIENT_ID) {
-    headers["X-MAL-CLIENT-ID"] = process.env.MAL_CLIENT_ID;
-  }
+  const data = await res.json();
 
-  const options = { headers };
-
-  const res = await fetch(fetchUrl, options);
-
-  const data: AnimeListResponse = await res.json();
   return data;
 }

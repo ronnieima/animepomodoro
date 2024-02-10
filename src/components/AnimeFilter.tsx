@@ -1,7 +1,6 @@
 "use client";
-import { updateFilters } from "../app/actions";
-import { SearchParamsType } from "../app/page";
-import { ANIME_STATUS_OPTIONS, AnimeStatusValue } from "../config/content";
+
+import { Label } from "./ui/label";
 import {
   Select,
   SelectContent,
@@ -9,19 +8,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function AnimeFilter({ searchParams }: SearchParamsType) {
+type AnimeFilterType = {
+  label: string;
+  defaultValue: string;
+  queryParam: string;
+  options: { label: string; value: string }[];
+};
+
+export default function AnimeFilter({
+  label,
+  defaultValue,
+  queryParam,
+  options,
+}: AnimeFilterType) {
+  const router = useRouter();
+  const params = useSearchParams();
   return (
-    <div className="flex items-center gap-8 ">
+    <div className="flex flex-col">
+      <Label className="pb-3">{label}</Label>
       <Select
-        defaultValue={searchParams.status}
-        onValueChange={(status: AnimeStatusValue) => updateFilters(status)}
+        defaultValue={defaultValue}
+        onValueChange={(value) => {
+          const newParams = new URLSearchParams(params);
+          newParams.set(queryParam, value);
+          router.replace(`?${newParams.toString()}`, { scroll: false });
+        }}
       >
         <SelectTrigger className="w-[180px]">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {ANIME_STATUS_OPTIONS.map((option) => (
+          {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
