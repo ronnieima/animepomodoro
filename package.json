@@ -39,6 +39,7 @@
     "react-player": "^2.14.1",
     "react-resizable-panels": "^1.0.7",
     "react-spotify-embed": "^2.0.3",
+    "react-toastify": "^10.0.4",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4",

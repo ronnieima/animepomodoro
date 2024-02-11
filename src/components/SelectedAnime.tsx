@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 import { setAnimeStatus } from "../app/actions";
 import {
   ANIME_STATUS_OPTIONS,
-  AnimeStatusValue,
   USER_ANIME_SCORE_OPTIONS,
 } from "../config/content";
 import { useBoundStore } from "../lib/zustand/bounded-store";
@@ -17,11 +16,18 @@ import {
   SelectValue,
 } from "./ui/select";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function SelectedAnime() {
   const session = useSession();
+  const router = useRouter();
+  const params = useSearchParams();
   const selectedAnime = useBoundStore((state) => state.selectedAnime);
   const animeId = selectedAnime?.node?.id;
+  const [key, setKey] = useState(0);
+
   return (
     <>
       {selectedAnime ? (
@@ -43,8 +49,17 @@ export default function SelectedAnime() {
                 <Label>Status</Label>
                 <Select
                   value={selectedAnime?.list_status?.status}
-                  onValueChange={(newStatus: AnimeStatusValue) => {
-                    setAnimeStatus(animeId!, newStatus);
+                  onValueChange={async (newStatus: string) => {
+                    try {
+                      await setAnimeStatus(animeId!, newStatus);
+                      toast(
+                        `${selectedAnime.node.title} set to ${newStatus}.`,
+                        {
+                          type: "success",
+                        },
+                      );
+                      router.replace(`?${params.toString()}`);
+                    } catch (error) {}
                   }}
                 >
                   <SelectTrigger className="w-[180px]">

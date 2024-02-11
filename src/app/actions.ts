@@ -2,10 +2,9 @@
 
 import { Session, getServerSession } from "next-auth";
 import { BASE_URL } from "../config/content";
-import { options } from "./api/auth/[...nextauth]/options";
-import { redirect } from "next/navigation";
 import { AnimeListResponse } from "../lib/types/anime-types";
-import { url } from "inspector";
+import { options } from "./api/auth/[...nextauth]/options";
+import { toast } from "react-toastify";
 
 export const generateRandomBase64String = (length = 24) =>
   Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
@@ -13,18 +12,21 @@ export const generateRandomBase64String = (length = 24) =>
   );
 
 export async function setAnimeStatus(animeId: number, newStatus: string) {
-  const session = await getServerSession(options);
-  const res = await fetch(
-    `https://api.myanimelist.net/v2/anime/${animeId}/my_list_status`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Bearer ${session?.user?.accessToken}`,
+  try {
+    console.log(animeId, newStatus);
+    const session = await getServerSession(options);
+    const res = await fetch(
+      `https://api.myanimelist.net/v2/anime/${animeId}/my_list_status`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${session?.user?.accessToken}`,
+        },
+        body: new URLSearchParams({ status: newStatus }),
       },
-      body: new URLSearchParams({ status: newStatus }),
-    },
-  );
+    );
+  } catch (error) {}
 }
 
 export async function fetchUserAnimeList(
