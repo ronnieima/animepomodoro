@@ -1,5 +1,6 @@
 import MALAuthenticatedSection from "../components/AnimeSection";
 import TimerSection from "../components/TimerSection";
+import { AnimeSortOption, AnimeStatusOption } from "../config/content";
 
 export default async function Home({ searchParams }: SearchParamsType) {
   return (
@@ -11,5 +12,9 @@ export default async function Home({ searchParams }: SearchParamsType) {
 }
 
 export type SearchParamsType = {
-  searchParams: { status: string; search: string; sort: string };
+  searchParams: {
+    status: AnimeStatusOption;
+    search: string;
+    sort: AnimeSortOption;
+  };
 };

@@ -33,7 +33,9 @@ export default function AnimeFilter({
         onValueChange={(value) => {
           const newParams = new URLSearchParams(params);
           newParams.set(queryParam, value);
-          router.replace(`?${newParams.toString()}`, { scroll: false });
+          router.replace(`?${newParams.toString()}`, {
+            scroll: false,
+          });
         }}
       >
         <SelectTrigger className="w-[180px]">

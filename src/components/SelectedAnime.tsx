@@ -1,8 +1,13 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { setAnimeStatus } from "../app/actions";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { updateAnimeStatus } from "../app/actions";
 import {
   ANIME_STATUS_OPTIONS,
+  AnimeStatusOption,
   USER_ANIME_SCORE_OPTIONS,
 } from "../config/content";
 import { useBoundStore } from "../lib/zustand/bounded-store";
@@ -15,18 +20,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import Image from "next/image";
-import { toast } from "react-toastify";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 
 export default function SelectedAnime() {
   const session = useSession();
-  const router = useRouter();
-  const params = useSearchParams();
   const selectedAnime = useBoundStore((state) => state.selectedAnime);
+
   const animeId = selectedAnime?.node?.id;
-  const [key, setKey] = useState(0);
+  const currentAnimeStatus = selectedAnime?.list_status.status;
+
+  const [animeStatus, setAnimeStatus] = useState(currentAnimeStatus);
+
+  useEffect(() => {
+    if (selectedAnime) {
+      setAnimeStatus(selectedAnime.list_status.status);
+    }
+  }, [selectedAnime]);
 
   return (
     <>
@@ -48,18 +56,21 @@ export default function SelectedAnime() {
               <div>
                 <Label>Status</Label>
                 <Select
-                  value={selectedAnime?.list_status?.status}
-                  onValueChange={async (newStatus: string) => {
+                  defaultValue={animeStatus}
+                  value={animeStatus}
+                  onValueChange={async (newStatus: AnimeStatusOption) => {
                     try {
-                      await setAnimeStatus(animeId!, newStatus);
+                      await updateAnimeStatus(animeId!, newStatus);
+
+                      setAnimeStatus(newStatus);
+
                       toast(
                         `${selectedAnime.node.title} set to ${newStatus}.`,
-                        {
-                          type: "success",
-                        },
+                        { type: "success" },
                       );
-                      router.replace(`?${params.toString()}`);
-                    } catch (error) {}
+                    } catch (error: any) {
+                      throw new Error(error);
+                    }
                   }}
                 >
                   <SelectTrigger className="w-[180px]">
