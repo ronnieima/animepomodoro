@@ -8,6 +8,7 @@ import {
 } from "../config/content";
 import { AnimeListResponse } from "../lib/types/anime-types";
 import { options } from "./api/auth/[...nextauth]/options";
+import { revalidateTag } from "next/cache";
 
 export const generateRandomBase64String = (length = 24) =>
   Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
@@ -16,11 +17,25 @@ export const generateRandomBase64String = (length = 24) =>
 
 export async function updateAnimeStatus(
   animeId: number,
+  newEpisodeCount: number,
+): Promise<void>;
+export async function updateAnimeStatus(
+  animeId: number,
   newStatus: AnimeStatusOption,
+): Promise<void>;
+export async function updateAnimeStatus(
+  animeId: number,
+  newStatusOrEpisodeCount: AnimeStatusOption | number,
 ): Promise<void> {
   try {
+    const body = new URLSearchParams();
+    if (typeof newStatusOrEpisodeCount === "number")
+      body.append("num_episodes_watched", newStatusOrEpisodeCount.toString());
+    else body.append("status", newStatusOrEpisodeCount);
+
     const session = await getServerSession(options);
-    const res = await fetch(
+
+    await fetch(
       `https://api.myanimelist.net/v2/anime/${animeId}/my_list_status`,
       {
         method: "PATCH",
@@ -28,9 +43,10 @@ export async function updateAnimeStatus(
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${session?.user?.accessToken}`,
         },
-        body: new URLSearchParams({ status: newStatus }),
+        body: body,
       },
     );
+    revalidateTag("userAnimeList");
   } catch (error: any) {
     throw error;
   }
@@ -43,7 +59,10 @@ export async function fetchUserAnimeList(
 ): Promise<AnimeListResponse> {
   const res = await fetch(
     `${BASE_URL}/users/@me/animelist?fields=list_status&limit=100&sort=list_updated_at&status=${status}&sort=${sort}`,
-    { headers: { Authorization: `Bearer ${session.user.accessToken}` } },
+    {
+      headers: { Authorization: `Bearer ${session.user.accessToken}` },
+      next: { tags: ["userAnimeList"] },
+    },
   );
   const data = await res.json();
   return data;

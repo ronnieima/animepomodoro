@@ -24,17 +24,12 @@ import {
 export default function SelectedAnime() {
   const session = useSession();
   const selectedAnime = useBoundStore((state) => state.selectedAnime);
+  const initialAnimeStatus = selectedAnime?.list_status.status;
+  const [animeStatus, setAnimeStatus] = useState(initialAnimeStatus);
 
-  const animeId = selectedAnime?.node?.id;
-  const currentAnimeStatus = selectedAnime?.list_status.status;
+  if (!selectedAnime) return null;
 
-  const [animeStatus, setAnimeStatus] = useState(currentAnimeStatus);
-
-  useEffect(() => {
-    if (selectedAnime) {
-      setAnimeStatus(selectedAnime.list_status.status);
-    }
-  }, [selectedAnime]);
+  const animeId = selectedAnime.node.id;
 
   return (
     <>
