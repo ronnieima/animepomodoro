@@ -29,6 +29,7 @@ export default function SelectedAnime() {
   const initialAnimeStatus = selectedAnime?.list_status.status;
   const initialEpisodeCount = selectedAnime?.list_status.num_episodes_watched;
 
+  const [episodeCountOnFocus, setEpisodeCountOnFocus] = useState(0);
   const [animeStatus, setAnimeStatus] = useState(initialAnimeStatus);
   const [episodeCount, setEpisodeCount] = useState(initialEpisodeCount);
   const [totalEpisodes, setTotalEpisodes] = useState();
@@ -101,12 +102,19 @@ export default function SelectedAnime() {
                 <Input
                   value={episodeCount}
                   onChange={(e) => {
+                    const newEpisodeCount: number = Number(e.target.value);
+                    setEpisodeCount(newEpisodeCount);
+                  }}
+                  onFocus={(e) => {
+                    setEpisodeCountOnFocus(Number(e.target.value));
+                  }}
+                  onBlur={() => {
+                    if (episodeCount === episodeCountOnFocus) return;
                     try {
-                      const newEpisodeCount = Number(e.target.value);
-                      updateAnimeStatus(animeId, newEpisodeCount);
-                      setEpisodeCount(newEpisodeCount);
+                      updateAnimeStatus(animeId, Number(episodeCount));
+
                       toast(
-                        `${selectedAnime.node.title}'s episode count updated to ${newEpisodeCount}}`,
+                        `${selectedAnime.node.title}'s episode count updated to ${episodeCount}`,
                         { type: "success" },
                       );
                     } catch (error) {
