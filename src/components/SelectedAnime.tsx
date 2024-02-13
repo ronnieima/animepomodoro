@@ -1,10 +1,9 @@
 "use client";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { updateAnimeStatus } from "../app/actions";
+import { fetchAnimeTotalEpisodes, updateAnimeStatus } from "../app/actions";
 import {
   ANIME_STATUS_OPTIONS,
   AnimeStatusOption,
@@ -20,16 +19,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import useDebounce from "../hooks/useDebounce";
 
 export default function SelectedAnime() {
   const session = useSession();
   const selectedAnime = useBoundStore((state) => state.selectedAnime);
+  const animeId = selectedAnime?.node.id;
+
   const initialAnimeStatus = selectedAnime?.list_status.status;
+  const initialEpisodeCount = selectedAnime?.list_status.num_episodes_watched;
+
   const [animeStatus, setAnimeStatus] = useState(initialAnimeStatus);
+  const [episodeCount, setEpisodeCount] = useState(initialEpisodeCount);
+  const [totalEpisodes, setTotalEpisodes] = useState();
 
-  if (!selectedAnime) return null;
+  useEffect(() => {
+    async function fetchEps() {
+      const eps = await fetchAnimeTotalEpisodes(animeId!);
+      setTotalEpisodes(eps.num_episodes);
+    }
+    setAnimeStatus(initialAnimeStatus);
+    setEpisodeCount(initialEpisodeCount);
+    fetchEps();
+  }, [selectedAnime, initialAnimeStatus, initialEpisodeCount, animeId]);
 
-  const animeId = selectedAnime.node.id;
+  if (!selectedAnime || !animeId) return null;
 
   return (
     <>
@@ -51,7 +65,6 @@ export default function SelectedAnime() {
               <div>
                 <Label>Status</Label>
                 <Select
-                  defaultValue={animeStatus}
                   value={animeStatus}
                   onValueChange={async (newStatus: AnimeStatusOption) => {
                     try {
@@ -86,14 +99,25 @@ export default function SelectedAnime() {
               <Label>Episode</Label>
               <div className="flex items-center">
                 <Input
-                  defaultValue={
-                    selectedAnime?.list_status?.num_episodes_watched || 0
-                  }
+                  value={episodeCount}
+                  onChange={(e) => {
+                    try {
+                      const newEpisodeCount = Number(e.target.value);
+                      updateAnimeStatus(animeId, newEpisodeCount);
+                      setEpisodeCount(newEpisodeCount);
+                      toast(
+                        `${selectedAnime.node.title}'s episode count updated to ${newEpisodeCount}}`,
+                        { type: "success" },
+                      );
+                    } catch (error) {
+                      throw error;
+                    }
+                  }}
                   type="number"
                   className="w-20"
                   min={0}
                 />
-                <span>/ 24</span>
+                <span>/ {totalEpisodes}</span>
               </div>
             </div>
 

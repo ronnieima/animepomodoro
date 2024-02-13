@@ -17,21 +17,15 @@ export const generateRandomBase64String = (length = 24) =>
 
 export async function updateAnimeStatus(
   animeId: number,
-  newEpisodeCount: number,
-): Promise<void>;
-export async function updateAnimeStatus(
-  animeId: number,
-  newStatus: AnimeStatusOption,
-): Promise<void>;
-export async function updateAnimeStatus(
-  animeId: number,
   newStatusOrEpisodeCount: AnimeStatusOption | number,
 ): Promise<void> {
   try {
-    const body = new URLSearchParams();
+    let params;
     if (typeof newStatusOrEpisodeCount === "number")
-      body.append("num_episodes_watched", newStatusOrEpisodeCount.toString());
-    else body.append("status", newStatusOrEpisodeCount);
+      params = new URLSearchParams({
+        num_watched_episodes: newStatusOrEpisodeCount.toString(),
+      });
+    else params = new URLSearchParams({ status: newStatusOrEpisodeCount });
 
     const session = await getServerSession(options);
 
@@ -43,13 +37,22 @@ export async function updateAnimeStatus(
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${session?.user?.accessToken}`,
         },
-        body: body,
+        body: params.toString(),
       },
     );
     revalidateTag("userAnimeList");
   } catch (error: any) {
     throw error;
   }
+}
+
+export async function fetchAnimeTotalEpisodes(animeId: number) {
+  const session = await getServerSession(options);
+  const res = await fetch(`${BASE_URL}/anime/${animeId}?fields=num_episodes`, {
+    headers: { Authorization: `Bearer ${session?.user.accessToken}` },
+  });
+  const data = await res.json();
+  return data;
 }
 
 export async function fetchUserAnimeList(
