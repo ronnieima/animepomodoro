@@ -4,6 +4,12 @@ import { NextAuthOptions } from "next-auth";
 const code_challenge = generateRandomBase64String(96);
 const code_verifier = code_challenge;
 
+const malClientId = process.env.MAL_CLIENT_ID!;
+const malSecret = process.env.MAL_SECRET!;
+const callbackUrl = process.env.CALLBACK_URL!;
+
+console.log(process.env.NODE_ENV);
+
 export const options: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, account, profile }) {
@@ -37,8 +43,8 @@ export const options: NextAuthOptions = {
       id: "mal",
       name: "MyAnimeList",
       type: "oauth",
-      clientId: process.env.MAL_CLIENT_ID,
-      clientSecret: process.env.MAL_SECRET,
+      clientId: malClientId,
+      clientSecret: malSecret,
       authorization: {
         url: `https://myanimelist.net/v1/oauth2/authorize`,
         params: {
@@ -52,16 +58,16 @@ export const options: NextAuthOptions = {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({
-              client_id: "9b02a51e2006b456d96f84782b27f6bc",
-              client_secret:
-                "abd692a2f2f90f3558f80c4e248f2f2d7173e4ab37ceed74e32bdd907ecbc74d",
+              client_id: malClientId,
+              client_secret: malSecret,
               code: code!,
               code_verifier: code_verifier,
               grant_type: "authorization_code",
-              redirect_uri: "http://localhost:3000/api/auth/callback/mal",
+              redirect_uri: callbackUrl,
             }),
           });
           const tokens = await res.json();
+          console.log(tokens);
           return { tokens };
         },
       },
