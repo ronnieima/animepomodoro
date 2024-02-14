@@ -14,7 +14,7 @@ type AnimeFilterType = {
   label: string;
   defaultValue: string;
   queryParam: string;
-  options: { label: string; value: string }[];
+  options: readonly { readonly label: string; readonly value: string }[];
 };
 
 export default function AnimeFilter({
