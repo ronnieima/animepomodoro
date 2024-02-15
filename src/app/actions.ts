@@ -10,11 +10,6 @@ import { AnimeListResponse } from "../lib/types/anime-types";
 import { options } from "./api/auth/[...nextauth]/options";
 import { revalidateTag } from "next/cache";
 
-export const generateRandomBase64String = (length = 24) =>
-  Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
-    "base64url",
-  );
-
 export async function updateAnimeStatus(
   animeId: number,
   newStatusOrEpisodeCount: AnimeStatusOption | number,

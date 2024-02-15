@@ -1,14 +1,14 @@
-import { generateRandomBase64String } from "@/src/app/actions";
 import { NextAuthOptions } from "next-auth";
-
+export const generateRandomBase64String = (length = 24) =>
+  Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
+    "base64url",
+  );
 const code_challenge = generateRandomBase64String(96);
 const code_verifier = code_challenge;
 
 const malClientId = process.env.MAL_CLIENT_ID!;
 const malSecret = process.env.MAL_SECRET!;
 const callbackUrl = process.env.CALLBACK_URL!;
-
-console.log(process.env.NODE_ENV);
 
 export const options: NextAuthOptions = {
   callbacks: {
@@ -67,7 +67,6 @@ export const options: NextAuthOptions = {
             }),
           });
           const tokens = await res.json();
-          console.log(tokens);
           return { tokens };
         },
       },

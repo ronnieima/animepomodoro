@@ -32,7 +32,6 @@ function TypeTabs() {
         <TabsTrigger value="longBreak" disabled>
           Long Break
         </TabsTrigger>
-        <ThemeToggle />
         <Button
           variant="outline"
           size="icon"
