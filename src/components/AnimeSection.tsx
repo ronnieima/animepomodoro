@@ -14,10 +14,12 @@ export default async function MALAuthenticatedSection({
 }: SearchParamsType) {
   const session = await getServerSession(options);
   return (
-    <section className=" bg-[#121212] md:p-16">
-      <div className="mx-auto max-w-7xl">
-        <header className="flex gap-8 p-4">
-          <h2 className="text-5xl font-bold">My Anime List</h2>
+    <section className=" bg-[#121212] py-4 md:p-16">
+      <div className="mx-auto max-w-7xl py-8">
+        <header className="p flex items-center justify-center gap-8 px-2">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            My Anime List
+          </h2>
           <Link
             href={`https://myanimelist.net/${
               session?.user?.name ? `animelist/${session?.user?.name}` : ""

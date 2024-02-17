@@ -1,8 +1,9 @@
 "use client";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import Image from "next/image";
-import { Button } from "./ui/button";
+import Link from "next/link";
+import SignInButton from "./SignInButton";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import Link from "next/link";
-import SignInButton from "./SignInButton";
 
 export default function Navbar() {
   const { data: session } = useSession();
 
   return (
-    <nav className=" fixed top-0 z-50 flex w-full items-center justify-between gap-16 bg-neutral-950/50 px-16 py-2">
+    <nav className=" fixed top-0 z-50 flex w-full items-center justify-between gap-16 bg-neutral-950/50 px-4 py-2 sm:px-16">
       <Link href="/" className="hover:underline">
         animepomodoro.
       </Link>
@@ -51,7 +50,7 @@ export default function Navbar() {
           </div>
         </>
       ) : (
-        <SignInButton />
+        <SignInButton size={"sm"} />
       )}
     </nav>
   );
