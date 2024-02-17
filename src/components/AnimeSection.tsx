@@ -16,7 +16,7 @@ export default async function MALAuthenticatedSection({
   return (
     <section className=" bg-[#121212] py-4 md:p-16">
       <div className="mx-auto max-w-7xl py-8">
-        <header className="p flex items-center justify-center gap-8 px-2">
+        <header className="flex flex-wrap items-center justify-center gap-8 px-2 py-8 sm:justify-start">
           <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
             My Anime List
           </h2>
@@ -37,11 +37,11 @@ export default async function MALAuthenticatedSection({
           </Link>
         </header>
         {session ? (
-          <div className=" flex  flex-col items-center gap-16 px-8 py-4">
+          <div className=" flex  flex-col items-center gap-16 px-2 py-4">
             <SelectedAnime />
             <div className="flex flex-col gap-8">
               <header className="flex flex-col items-center py-8">
-                <div className="flex gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-4 px-4">
                   <AnimeFilter
                     key="status"
                     label="Filter status"
