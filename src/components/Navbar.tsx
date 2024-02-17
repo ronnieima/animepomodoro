@@ -24,37 +24,30 @@ export default function Navbar() {
       {session?.user ? (
         <>
           <div className="flex items-center gap-8">
-            {session.user?.image ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Image
-                    src={session?.user?.image}
-                    height={100}
-                    width={100}
-                    className=" h-12 w-12 rounded-full"
-                    alt="MAL profile picture"
-                  />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="hover:cursor-pointer"
-                    onClick={() => signOut()}
-                  >
-                    Sign out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Image
-                src="no-image.png"
-                height={100}
-                width={100}
-                className=" h-12 w-12 rounded-full"
-                alt="MAL profile picture"
-              />
-            )}
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Image
+                  src={
+                    session?.user?.image ? session.user.image : "no-image.png"
+                  }
+                  height={100}
+                  width={100}
+                  className=" h-12 w-12 rounded-full"
+                  alt="MAL profile picture"
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="hover:cursor-pointer"
+                  onClick={() => signOut()}
+                >
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            )
           </div>
         </>
       ) : (
