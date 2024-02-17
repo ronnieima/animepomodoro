@@ -28,7 +28,7 @@ export default function Navbar() {
               <DropdownMenuTrigger>
                 <Image
                   src={
-                    session?.user?.image ? session.user.image : "no-image.png"
+                    session?.user?.image ? session.user.image : "/no-image.png"
                   }
                   height={100}
                   width={100}
