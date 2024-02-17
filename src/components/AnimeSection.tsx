@@ -15,7 +15,7 @@ export default async function MALAuthenticatedSection({
   const session = await getServerSession(options);
   return (
     <section className=" bg-[#121212] md:p-16">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl">
         <header className="flex gap-8 p-4">
           <h2 className="text-5xl font-bold">My Anime List</h2>
           <Link
