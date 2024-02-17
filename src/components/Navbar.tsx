@@ -21,13 +21,10 @@ export default function Navbar() {
       <Link href="/" className="hover:underline">
         animepomodoro.
       </Link>
-      {/* <div className="relative h-12 w-12">
-        <Image src={"/animedoro.jpg"} alt="logo" fill className="absolute" />
-      </div> */}
-      {session ? (
+      {session?.user ? (
         <>
           <div className="flex items-center gap-8">
-            {session.user?.image && (
+            {session.user?.image ? (
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Image
@@ -49,6 +46,14 @@ export default function Navbar() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+            ) : (
+              <Image
+                src="no-image.png"
+                height={100}
+                width={100}
+                className=" h-12 w-12 rounded-full"
+                alt="MAL profile picture"
+              />
             )}
           </div>
         </>
