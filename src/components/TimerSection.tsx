@@ -11,7 +11,7 @@ import Timer from "./Timer";
 export default function TimerSection() {
   return (
     <section className="relative ">
-      <div className="flex h-full flex-col items-center justify-center gap-4 py-24 sm:gap-8">
+      <div className="flex h-[100svh]  flex-col items-center justify-center gap-4 py-24 sm:gap-8">
         <MainHeader />
         <TypeTabs />
         <Timer />

@@ -19,15 +19,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import useDebounce from "../hooks/useDebounce";
+import { Separator } from "./ui/separator";
 
 export default function SelectedAnime() {
   const session = useSession();
   const selectedAnime = useBoundStore((state) => state.selectedAnime);
   const animeId = selectedAnime?.node.id;
 
-  const initialAnimeStatus = selectedAnime?.list_status.status;
-  const initialEpisodeCount = selectedAnime?.list_status.num_episodes_watched;
+  const initialAnimeStatus = selectedAnime?.list_status?.status;
+  const initialEpisodeCount = selectedAnime?.list_status?.num_episodes_watched;
 
   const [episodeCountOnFocus, setEpisodeCountOnFocus] = useState(0);
   const [animeStatus, setAnimeStatus] = useState(initialAnimeStatus);
@@ -42,22 +42,31 @@ export default function SelectedAnime() {
     setAnimeStatus(initialAnimeStatus);
     setEpisodeCount(initialEpisodeCount);
     fetchEps();
-  }, [selectedAnime, initialAnimeStatus, initialEpisodeCount, animeId]);
+  }, [
+    selectedAnime,
+    initialAnimeStatus,
+    initialEpisodeCount,
+    animeId,
+    session.status,
+  ]);
 
   if (!selectedAnime || !animeId) return null;
 
   return (
     <>
       {selectedAnime ? (
-        <div className="flex flex-col items-center justify-center gap-8">
-          <div className="flex flex-col items-center">
-            <h2 className="text-center text-xl">{selectedAnime?.node.title}</h2>
+        <div className="flex flex-col items-center justify-center gap-2">
+          <div className="flex flex-col items-center ">
+            <p className="text-muted-foreground">Currently Watching</p>
+            <h2 className="text-center text-3xl font-semibold">
+              {selectedAnime?.node.title}
+            </h2>
             <Image
               src={selectedAnime.node.main_picture?.large || "/no-image.png"}
               alt={selectedAnime.node.title}
               height={700}
               width={1000}
-              className="shadow-xl"
+              className="py-2 shadow-xl"
               style={{ width: "200px", height: "auto" }}
             />
           </div>
@@ -98,7 +107,7 @@ export default function SelectedAnime() {
 
             <div>
               <Label>Episode</Label>
-              <div className="flex items-center">
+              <div className="flex w-full items-center gap-4">
                 <Input
                   value={episodeCount}
                   onChange={(e) => {
@@ -152,6 +161,7 @@ export default function SelectedAnime() {
               </div>
             ) : null}
           </div>
+          <Separator />
         </div>
       ) : null}
     </>

@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import Link from "next/link";
+import SignInButton from "./SignInButton";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -50,7 +51,7 @@ export default function Navbar() {
           </div>
         </>
       ) : (
-        <Button onClick={() => signIn()}>Sign In</Button>
+        <SignInButton />
       )}
     </nav>
   );
