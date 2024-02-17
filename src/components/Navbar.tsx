@@ -47,7 +47,6 @@ export default function Navbar() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            )
           </div>
         </>
       ) : (
