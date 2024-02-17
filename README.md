@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Anime Pomodoro Timer
 
-## Getting Started
+> A Next.js React web app integrating the Pomodoro Technique with anime breaks, enhanced by MyAnimeList integration.
 
-First, run the development server:
+## **https://www.animepomodoro.com**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Main Menu](https://github.com/ronnieima/animepomodoro/assets/70875687/e4f31ee1-e11b-4e46-a3a8-29a6818c8e3e)
+![Anime Section](https://github.com/ronnieima/animepomodoro/assets/70875687/28f3e47a-c437-44a0-9c3e-e10adcfc6511)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Boost your productivity with a customizable Pomodoro timer, enhanced with anime-themed breaks and MyAnimeList integration.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+- **Animedoro Technique:** Incorporates Josh Chen's Animedoro method, blending the Pomodoro technique with scheduled anime watching breaks to enhance focus and relaxation.
+- **MyAnimeList Integration:** Seamlessly update your current anime list directly from the app. Change watch status, track episodes watched, and adjust ratings without leaving your productivity session.
+- **Watch Status Filtering:** Easily filter your anime list by watch status (Watching, Completed, On Hold, Dropped, Plan to Watch) to quickly access and manage your anime viewing.
+- **Built-in Spotify Player:** Features a curated lo-fi anime playlist on Spotify to provide a calming and focused backdrop for both work sessions and breaks.
+- **Customizable Timer:** Set personalized work and break intervals in alignment with the Animedoro method for an optimized productivity rhythm.
+- **Responsive Design:** Designed to provide a seamless experience across various devices, ensuring accessibility and convenience wherever you are.
 
-To learn more about Next.js, take a look at the following resources:
+## To-Do List
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [x] Basic Pomodoro timer functionality.
+- [x] Initial MyAnimeList integration for updating watchlists.
+- [ ] Add database integration to persist animedoro sessions.
+- [ ] Graphs to track and display user sessions.
+- [ ] Add ability to input user's spotify playlists.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+1. Visit [www.animepomodoro.com](https://www.animepomodoro.com).
+2. Customize your work and break intervals.
+3. Start the timer and focus on your task.
+4. Enjoy anime content from MyAnimeList during breaks.
+5. Update your anime watchlist directly within the app.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies Used
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Frontend:** Next.js for server-side rendering, React for the UI.
+- **Styling:** Tailwind CSS for responsive design.
+- **API:** MyAnimeList API for anime information and updates.
+- **State Management:** Zustand for managing application state.
+
+## Disclaimer
+
+This app is a fan-made project and is not affiliated with MyAnimeList. It is designed for entertainment and productivity enhancement purposes only.
+
+## Author
+
+Created by [Ronnie Kaito Imagawa](https://github.com/ronnieima).
