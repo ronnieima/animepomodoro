@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "../components/Navbar";
 import Providers from "../components/Providers";
 import "./globals.css";
+import { options } from "./api/auth/[...nextauth]/options";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(options);
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
