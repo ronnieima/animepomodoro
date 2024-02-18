@@ -8,39 +8,39 @@ export const USER_ANIME_SCORE_OPTIONS = [
     value: 10,
   },
   {
-    label: "(9)",
+    label: "(9) Great",
     value: 9,
   },
   {
-    label: "(8)",
+    label: "(8) Very Good",
     value: 8,
   },
   {
-    label: "(7)",
+    label: "(7) Good",
     value: 7,
   },
   {
-    label: "(6)",
+    label: "(6) Fine",
     value: 6,
   },
   {
-    label: "(5)",
+    label: "(5) Average",
     value: 5,
   },
   {
-    label: "(4)",
+    label: "(4) Bad",
     value: 4,
   },
   {
-    label: "(3)",
+    label: "(3) Very Bad",
     value: 3,
   },
   {
-    label: "(2)",
+    label: "(2) Horrible",
     value: 2,
   },
   {
-    label: "(1)",
+    label: "(1) Appaling",
     value: 1,
   },
 ];
