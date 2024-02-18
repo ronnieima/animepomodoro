@@ -11,6 +11,6 @@ declare module "next-auth" {
     };
   }
   interface User {
-    picture: string;
+    image: string;
   }
 }
