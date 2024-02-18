@@ -5,6 +5,9 @@ import { useRef } from "react";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useBoundStore } from "../lib/zustand/bounded-store";
+import db from "../db";
+import { timerSessionHistory } from "../db/schema/timer";
+import { useSession } from "next-auth/react";
 
 function Timer() {
   const time = useBoundStore((state) => state.time);
@@ -12,6 +15,9 @@ function Timer() {
   const timerState = useBoundStore((state) => state.timerState);
   const timerMode = useBoundStore((state) => state.timerMode);
   const finishTimer = useBoundStore((state) => state.finishTimer);
+  const sessionDurations = useBoundStore((state) => state.sessionDurations);
+
+  const session = useSession();
 
   const { theme } = useTheme();
 

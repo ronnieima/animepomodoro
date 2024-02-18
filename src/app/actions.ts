@@ -9,6 +9,17 @@ import {
 import { AnimeListResponse } from "../lib/types/anime-types";
 import { options } from "./api/auth/[...nextauth]/options";
 import { revalidateTag } from "next/cache";
+import db from "../db";
+import { timerSessionHistory } from "../db/schema/timer";
+import { InferInsertModel } from "drizzle-orm";
+
+export type timerSessionHistoryType = InferInsertModel<
+  typeof timerSessionHistory
+>;
+
+export async function insertSession(session: timerSessionHistoryType) {
+  await db.insert(timerSessionHistory).values(session);
+}
 
 /**
  * Updates specified details of an anime.

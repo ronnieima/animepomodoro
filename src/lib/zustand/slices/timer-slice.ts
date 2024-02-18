@@ -7,9 +7,12 @@ const MIN_TIME = 60 * 5; // 5 mins
 
 export interface TimerSlice {
   time: number;
-  pomodoroMinutes: number;
-  animeBreakMinutes: number;
-  longBreakMinutes: number;
+
+  sessionDurations: {
+    pomodoro: number;
+    animeBreak: number;
+    longBreak: number;
+  };
 
   timerMode: "pomodoro" | "animeBreak" | "longBreak";
   timerState: "running" | "paused" | "stopped";
@@ -36,9 +39,12 @@ export const createTimerSlice: StateCreator<
 > = (set) => ({
   //INITIAL STATE
   time: 2700,
-  pomodoroMinutes: 60 * 45,
-  animeBreakMinutes: 60 * 20,
-  longBreakMinutes: 60 * 60,
+  sessionDurations: {
+    pomodoro: 60 * 45,
+    animeBreak: 60 * 20,
+    longBreak: 60 * 60,
+  },
+
   timerMode: "pomodoro",
   timerState: "stopped",
   pomodoroCount: 0,
@@ -50,37 +56,12 @@ export const createTimerSlice: StateCreator<
   // ACTIONS
   updateTimerMode: (newMode) =>
     set((state) => {
-      let newTime;
-      switch (newMode) {
-        case "pomodoro":
-          newTime = state.pomodoroMinutes;
-          break;
-        case "animeBreak":
-          newTime = state.animeBreakMinutes;
-          break;
-        case "longBreak":
-          newTime = state.longBreakMinutes;
-          break;
-        default:
-          throw new Error("Timer state not recognized.");
-      }
+      const newTime = state.sessionDurations[newMode];
       return { timerMode: newMode, time: newTime };
     }),
   startTimer: (prevMinutes) =>
     set((state) => {
-      switch (state.timerMode) {
-        case "pomodoro":
-          state.pomodoroMinutes = prevMinutes;
-          break;
-        case "animeBreak":
-          state.animeBreakMinutes = prevMinutes;
-          break;
-        case "longBreak":
-          state.longBreakMinutes = prevMinutes;
-          break;
-        default:
-          throw new Error("Timer state not recognized.");
-      }
+      state.sessionDurations[state.timerMode] = prevMinutes;
       return { timerState: "running" };
     }),
 
@@ -99,22 +80,23 @@ export const createTimerSlice: StateCreator<
             pomodoroCount: state.pomodoroCount + 1,
             timerMode: isLongBreakNext ? "longBreak" : "animeBreak",
             time: isLongBreakNext
-              ? state.longBreakMinutes
-              : state.animeBreakMinutes,
+              ? state.sessionDurations.longBreak
+              : state.sessionDurations.animeBreak,
           };
+
           break;
         case "animeBreak":
           stateUpdates = {
             episodesWatchedCount: state.episodesWatchedCount + 1,
             timerMode: "pomodoro",
-            time: state.pomodoroMinutes,
+            time: state.sessionDurations.pomodoro,
           };
           break;
         case "longBreak":
           stateUpdates = {
             longBreakCount: state.longBreakCount + 1,
             timerMode: "pomodoro",
-            time: state.pomodoroMinutes,
+            time: state.sessionDurations.pomodoro,
           };
           break;
       }

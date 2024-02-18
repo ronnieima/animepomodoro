@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,10 +13,15 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { SkipForward } from "lucide-react";
 import { useBoundStore } from "../lib/zustand/bounded-store";
+import { useSession } from "next-auth/react";
+import { insertSession } from "../app/actions";
 
 function SkipConfirmationDialog() {
+  const session = useSession();
+  const userId = session.data?.user?.id;
   const timerMode = useBoundStore((state) => state.timerMode);
   const finishTimer = useBoundStore((state) => state.finishTimer);
+  const sessionDurations = useBoundStore((state) => state.sessionDurations);
 
   const currentStageLabel =
     timerMode === "longBreak" ? "long break" : timerMode;
@@ -23,7 +29,7 @@ function SkipConfirmationDialog() {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Button variant={"secondary"}>
+        <Button variant={"secondary"} onClick={() => {}}>
           <SkipForward />
         </Button>
       </AlertDialogTrigger>
@@ -39,7 +45,19 @@ function SkipConfirmationDialog() {
           <AlertDialogCancel>
             No, continue my {currentStageLabel}
           </AlertDialogCancel>
-          <AlertDialogAction className="" onClick={finishTimer}>
+          <AlertDialogAction
+            className=""
+            onClick={() => {
+              const finishedSession = {
+                userId: userId,
+                sessionMode: timerMode,
+                sessionLengthInSeconds: sessionDurations[timerMode],
+                completed: new Date(),
+              };
+              insertSession(finishedSession);
+              finishTimer();
+            }}
+          >
             Yes, skip this timer
           </AlertDialogAction>
         </AlertDialogFooter>

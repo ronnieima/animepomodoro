@@ -14,9 +14,6 @@ export const users = pgTable("user", {
   email: text("email"),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
-  pomodoros_completed: integer("pomodoros_completed").default(0),
-  episodes_watched: integer("episodes_watched").default(0),
-  long_breaks_completed: integer("long_breaks_completed").default(0),
 });
 
 export const accounts = pgTable(
