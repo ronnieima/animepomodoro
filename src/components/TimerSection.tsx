@@ -20,7 +20,6 @@ export default function TimerSection() {
         <Stats />
         <SpotifyPlayer />
       </div>
-      <Boxes className="absolute w-screen" />
     </section>
   );
 }
