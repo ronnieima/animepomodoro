@@ -5,7 +5,7 @@ import { useBoundStore } from "../lib/zustand/bounded-store";
 function SpotifyPlayer() {
   const isOpenMusicPlayer = useBoundStore((state) => state.isOpenMusicPlayer);
   return (
-    <>
+    <div className="z-10">
       {isOpenMusicPlayer && (
         <Spotify
           wide
@@ -13,7 +13,7 @@ function SpotifyPlayer() {
           link="https://open.spotify.com/playlist/2bohAjZj98rDVLoWn5d3V5?si=38e36128437c424e"
         />
       )}
-    </>
+    </div>
   );
 }
 

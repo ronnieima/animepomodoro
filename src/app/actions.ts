@@ -75,22 +75,6 @@ export async function fetchAnimeTotalEpisodes(animeId: number) {
   return data;
 }
 
-export async function fetchUserAnimeList(
-  session: Session,
-  status: AnimeStatusOption = "watching",
-  sort: AnimeSortOption = "list_updated_at",
-): Promise<AnimeListResponse> {
-  const res = await fetch(
-    `${BASE_URL}/users/@me/animelist?fields=list_status&limit=100&sort=list_updated_at&status=${status}&sort=${sort}`,
-    {
-      headers: { Authorization: `Bearer ${session.user.accessToken}` },
-      next: { tags: ["userAnimeList"] },
-    },
-  );
-  const data = await res.json();
-  return data;
-}
-
 export async function fetchTopAnime(
   searchQuery: string,
 ): Promise<AnimeListResponse> {

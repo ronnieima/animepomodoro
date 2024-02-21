@@ -13,7 +13,7 @@ const bangers = Bangers({ weight: "400", subsets: ["latin"] });
 
 function MainHeader() {
   return (
-    <header className="flex flex-col items-center">
+    <header className="z-10 flex flex-col items-center">
       <h1 className={`${bangers.className} text-center text-5xl sm:text-6xl`}>
         Anime Pomodoro Timer
       </h1>

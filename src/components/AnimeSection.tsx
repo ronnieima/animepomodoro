@@ -14,7 +14,7 @@ export default async function MALAuthenticatedSection({
 }: SearchParamsType) {
   const session = await getServerSession(options);
   return (
-    <section className=" bg-[#121212] py-4 md:p-16">
+    <section className="  py-4 md:p-16">
       <div className="mx-auto max-w-7xl py-8">
         <header className="flex flex-wrap items-center justify-center gap-8 px-2 py-8 sm:justify-start">
           <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">

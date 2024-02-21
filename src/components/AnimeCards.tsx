@@ -1,17 +1,19 @@
 import { Suspense } from "react";
-import { fetchTopAnime, fetchUserAnimeList } from "../app/actions";
 import AnimeCard from "./AnimeCard";
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { options } from "../app/api/auth/[...nextauth]/options";
 import { SearchParamsType } from "../app/page";
+import {
+  AnimeSortOption,
+  AnimeStatusOption,
+  BASE_URL,
+} from "../config/content";
+import { AnimeListResponse } from "../lib/types/anime-types";
 
 export default async function AnimeCards({ searchParams }: SearchParamsType) {
-  const { search, status, sort } = searchParams;
-  const session = await getServerSession(options);
+  const { status, sort } = searchParams;
 
-  const animeList = session
-    ? await fetchUserAnimeList(session, status, sort)
-    : await fetchTopAnime(search);
+  const animeList = await fetchUserAnimeList(status, sort);
 
   return (
     <div className="flex max-w-7xl flex-wrap justify-center gap-8">
@@ -24,4 +26,21 @@ export default async function AnimeCards({ searchParams }: SearchParamsType) {
       })}
     </div>
   );
+}
+
+export async function fetchUserAnimeList(
+  status: AnimeStatusOption = "watching",
+  sort: AnimeSortOption = "list_updated_at",
+): Promise<AnimeListResponse> {
+  const session = await getServerSession(options);
+  if (!session) throw new Error("No session");
+  const res = await fetch(
+    `${BASE_URL}/users/@me/animelist?fields=list_status&limit=100&sort=list_updated_at&status=${status}&sort=${sort}`,
+    {
+      headers: { Authorization: `Bearer ${session.user.accessToken}` },
+      next: { tags: ["userAnimeList"] },
+    },
+  );
+  const data = await res.json();
+  return data;
 }

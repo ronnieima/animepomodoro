@@ -3,21 +3,20 @@ import renderTime from "@/src/components/renderTime";
 import { useTheme } from "next-themes";
 import { useRef } from "react";
 
+import { useSession } from "next-auth/react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useBoundStore } from "../lib/zustand/bounded-store";
-import db from "../db";
-import { timerSessionHistory } from "../db/schema/timer";
-import { useSession } from "next-auth/react";
+import { insertSession } from "../app/actions";
 
 function Timer() {
+  const session = useSession();
+
   const time = useBoundStore((state) => state.time);
   const key = useBoundStore((state) => state.key);
   const timerState = useBoundStore((state) => state.timerState);
   const timerMode = useBoundStore((state) => state.timerMode);
   const finishTimer = useBoundStore((state) => state.finishTimer);
   const sessionDurations = useBoundStore((state) => state.sessionDurations);
-
-  const session = useSession();
 
   const { theme } = useTheme();
 
@@ -38,11 +37,17 @@ function Timer() {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-16">
+    <div className="z-10 flex flex-col items-center justify-center gap-16">
       <CountdownCircleTimer
         key={key}
         onComplete={() => {
           completeSound.current!.play();
+          insertSession({
+            userId: session.data?.user?.id,
+            sessionMode: timerMode,
+            sessionLengthInSeconds: sessionDurations[timerMode],
+            completed: new Date(),
+          });
           finishTimer();
         }}
         isPlaying={timerState === "running"}

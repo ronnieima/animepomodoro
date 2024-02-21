@@ -16,7 +16,7 @@ function TypeTabs() {
   return (
     <Tabs
       defaultValue="pomodoro"
-      className="flex w-full items-center justify-center gap-8 text-center"
+      className="z-10 flex w-full items-center justify-center gap-8 text-center"
       value={timerMode}
       onValueChange={(newMode) =>
         updateTimerMode(newMode as "pomodoro" | "animeBreak" | "longBreak")
