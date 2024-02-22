@@ -1,13 +1,20 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useBoundStore } from "../lib/zustand/bounded-store";
 import Image from "next/image";
-import { Separator } from "./ui/separator";
-import { Card } from "./ui/card";
 import { cn } from "../lib/utils";
+import { Tv } from "lucide-react";
+import { Anime } from "../lib/types/anime-types";
 
-export default function AnimeCard({ anime }: { anime: any }) {
+export default function AnimeCard({
+  anime,
+  totalAnimeEpisodes,
+}: {
+  anime: Anime;
+  totalAnimeEpisodes: number;
+}) {
   const setSelectedAnime = useBoundStore((state) => state.setSelectedAnime);
+
   return (
     <div
       onClick={() => setSelectedAnime(anime)}
@@ -36,14 +43,12 @@ export default function AnimeCard({ anime }: { anime: any }) {
         </div>
 
         {anime?.list_status?.num_episodes_watched && (
-          <>
-            <Separator orientation="horizontal" />
-            <span className="text-center text-muted-foreground">
-              {anime?.list_status?.num_episodes_watched} episode
-              {anime?.list_status?.num_episodes_watched === 1 ? "" : "s"}{" "}
-              watched
+          <div className="flex gap-1">
+            <Tv />
+            <span className="flex  text-center text-muted-foreground">
+              {anime?.list_status?.num_episodes_watched} / {totalAnimeEpisodes}
             </span>
-          </>
+          </div>
         )}
       </>
     </div>

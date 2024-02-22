@@ -47,7 +47,7 @@ export async function fetchAnimeTotalEpisodes(animeId: number) {
     headers: { Authorization: `Bearer ${session?.user.accessToken}` },
   });
   const data = await res.json();
-  return data;
+  return data.num_episodes;
 }
 
 export async function fetchUserAnimeList(

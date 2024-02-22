@@ -37,11 +37,13 @@ export default function SelectedAnime() {
   useEffect(() => {
     async function fetchEps() {
       const eps = await fetchAnimeTotalEpisodes(animeId!);
-      setTotalEpisodes(eps.num_episodes);
+      setTotalEpisodes(eps);
     }
     setAnimeStatus(initialAnimeStatus);
     setEpisodeCount(initialEpisodeCount);
-    fetchEps();
+    if (animeId) {
+      fetchEps();
+    }
   }, [
     selectedAnime,
     initialAnimeStatus,

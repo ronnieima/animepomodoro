@@ -18,11 +18,11 @@ function Timer() {
   function handleColor(currentStage: string) {
     switch (currentStage) {
       case "pomodoro":
-        return theme === "dark" ? "#DFCCFB" : "#BEADFA";
+        return "#DFCCFB";
       case "animeBreak":
-        return theme === "dark" ? "#618264" : "#D0E7D2";
+        return "#618264";
       case "longBreak":
-        return theme === "dark" ? "#FFF2CC" : "#DFA67B";
+        return "#FFF2CC";
       default:
         throw new Error("Timer state could not be determined.");
     }
@@ -44,7 +44,7 @@ function Timer() {
         duration={time}
         strokeWidth={24}
         colors={handleColor(timerMode)}
-        trailColor={theme === "dark" ? "#31304D" : "#B6BBC4"}
+        trailColor={"#31304D"}
         strokeLinecap="butt"
       >
         {renderTime}
