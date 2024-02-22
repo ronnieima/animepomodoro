@@ -4,6 +4,7 @@ import { Pause, Play } from "lucide-react";
 import { useBoundStore } from "../lib/zustand/bounded-store";
 import CancelConfirmationDialog from "./CancelConfirmationDialog";
 import SkipConfirmationDialog from "./SkipConfirmationDialog";
+import { convertCamelCaseToWords } from "../lib/utils";
 
 function TimerControl() {
   const time = useBoundStore((state) => state.time);
@@ -14,8 +15,8 @@ function TimerControl() {
   const incrementTime = useBoundStore((state) => state.incrementTime);
   const pauseTimerToggle = useBoundStore((state) => state.pauseTimerToggle);
 
-  const currentStageLabel =
-    timerMode === "longBreak" ? "long break" : timerMode;
+  const timerModeWords = convertCamelCaseToWords(timerMode);
+
   return (
     <div className="flex gap-8">
       {timerState === "stopped" ? (
@@ -26,7 +27,7 @@ function TimerControl() {
               startTimer(time);
             }}
           >
-            Start {currentStageLabel}
+            Start {timerModeWords}
           </Button>
           <Button onClick={incrementTime}>+5</Button>
         </>
@@ -34,6 +35,9 @@ function TimerControl() {
         <>
           <Button onClick={pauseTimerToggle}>
             {timerState === "paused" ? <Play /> : <Pause />}
+            <span className="sr-only">
+              {timerState === "paused" ? "Play timer" : "Pause timer"}
+            </span>
           </Button>
           <CancelConfirmationDialog />
           <SkipConfirmationDialog />

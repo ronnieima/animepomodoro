@@ -45,6 +45,7 @@ function Timer() {
         strokeWidth={24}
         colors={handleColor(timerMode)}
         trailColor={theme === "dark" ? "#31304D" : "#B6BBC4"}
+        strokeLinecap="butt"
       >
         {renderTime}
       </CountdownCircleTimer>

@@ -22,7 +22,7 @@ function TypeTabs() {
         updateTimerMode(newMode as "pomodoro" | "animeBreak" | "longBreak")
       }
     >
-      <TabsList>
+      <TabsList className="border border-neutral-300/20 shadow-md shadow-slate-700/40 hover:cursor-not-allowed">
         <TabsTrigger value="pomodoro" disabled>
           Work
         </TabsTrigger>
