@@ -45,7 +45,7 @@ export default async function MALAuthenticatedSection({
                   <AnimeFilter
                     key="status"
                     label="Filter status"
-                    defaultValue={searchParams.status || "watching"}
+                    defaultValue={"watching"}
                     options={ANIME_STATUS_OPTIONS}
                     queryParam="status"
                   />

@@ -40,14 +40,15 @@ export default function SelectedAnime() {
   useEffect(() => {
     async function fetchEps() {
       const eps = await fetchAnimeTotalEpisodes(animeId!);
-      setTotalEpisodes(eps.num_episodes);
+      setTotalEpisodes(eps);
     }
 
     setAnimeStatus(initialAnimeStatus);
     setEpisodeCount(initialEpisodeCount);
-    setAnimeScore(initialAnimeScore);
+    if (animeId) {
+      fetchEps();
+    }
 
-    fetchEps();
   }, [
     selectedAnime,
     initialAnimeStatus,
@@ -62,21 +63,21 @@ export default function SelectedAnime() {
   return (
     <>
       {selectedAnime ? (
-        <div className="flex flex-col items-center justify-center gap-2">
+        <div className="flex flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center ">
             <p className="text-muted-foreground">Currently Watching</p>
             <h2 className="text-center text-3xl font-semibold">
               {selectedAnime?.node.title}
             </h2>
-            <Image
-              src={selectedAnime.node.main_picture?.large || "/no-image.png"}
-              alt={selectedAnime.node.title}
-              height={700}
-              width={1000}
-              className="py-2 shadow-xl"
-              style={{ width: "200px", height: "auto" }}
-            />
           </div>
+          <Image
+            src={selectedAnime.node.main_picture?.large || "/no-image.png"}
+            alt={selectedAnime.node.title}
+            height={700}
+            width={1000}
+            className=" rounded-[2rem] "
+            style={{ width: "200px", height: "auto" }}
+          />
           <div className="flex flex-wrap items-center justify-center gap-8 py-8">
             <div>
               <Label>Status</Label>

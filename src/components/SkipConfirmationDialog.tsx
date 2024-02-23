@@ -13,18 +13,16 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { SkipForward } from "lucide-react";
 import { useBoundStore } from "../lib/zustand/bounded-store";
-import { useSession } from "next-auth/react";
-import { insertSession } from "../app/actions";
+import { convertCamelCaseToWords } from "../lib/utils";
+
 
 function SkipConfirmationDialog() {
   const session = useSession();
   const userId = session.data?.user?.id;
   const timerMode = useBoundStore((state) => state.timerMode);
   const finishTimer = useBoundStore((state) => state.finishTimer);
-  const sessionDurations = useBoundStore((state) => state.sessionDurations);
+  const timerModeWords = convertCamelCaseToWords(timerMode);
 
-  const currentStageLabel =
-    timerMode === "longBreak" ? "long break" : timerMode;
 
   return (
     <AlertDialog>
@@ -37,13 +35,13 @@ function SkipConfirmationDialog() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            You will get credit for this {currentStageLabel} session and skip to
+            You will get credit for this {timerModeWords} session and skip to
             the next timer.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>
-            No, continue my {currentStageLabel}
+            No, continue my {timerModeWords}
           </AlertDialogCancel>
           <AlertDialogAction
             className=""

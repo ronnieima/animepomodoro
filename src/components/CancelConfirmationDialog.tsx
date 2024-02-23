@@ -12,32 +12,33 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { Ban } from "lucide-react";
 import { useBoundStore } from "../lib/zustand/bounded-store";
+import { convertCamelCaseToWords } from "../lib/utils";
 
 function CancelConfirmationDialog() {
   const timerMode = useBoundStore((state) => state.timerMode);
   const cancelTimer = useBoundStore((state) => state.cancelTimer);
 
-  const currentStageLabel =
-    timerMode === "longBreak" ? "long break" : timerMode;
+  const timerModeWords = convertCamelCaseToWords(timerMode);
 
   return (
     <AlertDialog>
       <AlertDialogTrigger>
         <Button variant={"destructive"}>
           <Ban />
+          <span className="sr-only">Cancel timer</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            You won&apos;t be able to get credit for this {currentStageLabel}{" "}
+            You won&apos;t be able to get credit for this {timerModeWords}{" "}
             session.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>
-            No, continue my {currentStageLabel}
+            No, continue my {timerModeWords}
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-destructive text-foreground"
