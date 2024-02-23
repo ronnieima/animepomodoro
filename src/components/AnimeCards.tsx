@@ -20,11 +20,9 @@ export default async function AnimeCards({ searchParams }: SearchParamsType) {
   return (
     <div className="flex max-w-7xl flex-wrap justify-center gap-8">
       {animeList?.data?.map(async (anime) => {
-        const totalAnimeEpisodes = await fetchAnimeTotalEpisodes(anime.node.id);
-
         return (
           <Suspense key={anime.node.id} fallback={<div>Loading...</div>}>
-            <AnimeCard anime={anime} totalAnimeEpisodes={totalAnimeEpisodes} />
+            <AnimeCard anime={anime} />
           </Suspense>
         );
       })}
