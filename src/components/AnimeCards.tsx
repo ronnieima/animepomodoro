@@ -1,9 +1,5 @@
 import { Suspense } from "react";
-import {
-  fetchAnimeTotalEpisodes,
-  fetchTopAnime,
-  fetchUserAnimeList,
-} from "../app/actions";
+import { fetchAnimeTotalEpisodes, fetchTopAnime } from "../app/actions";
 
 import AnimeCard from "./AnimeCard";
 import { Session, getServerSession } from "next-auth";

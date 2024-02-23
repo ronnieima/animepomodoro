@@ -14,15 +14,17 @@ import { Button } from "@/src/components/ui/button";
 import { SkipForward } from "lucide-react";
 import { useBoundStore } from "../lib/zustand/bounded-store";
 import { convertCamelCaseToWords } from "../lib/utils";
-
+import { useSession } from "next-auth/react";
+import { insertSession } from "../app/actions";
 
 function SkipConfirmationDialog() {
   const session = useSession();
   const userId = session.data?.user?.id;
   const timerMode = useBoundStore((state) => state.timerMode);
   const finishTimer = useBoundStore((state) => state.finishTimer);
-  const timerModeWords = convertCamelCaseToWords(timerMode);
+  const sessionDurations = useBoundStore((state) => state.sessionDurations);
 
+  const timerModeWords = convertCamelCaseToWords(timerMode);
 
   return (
     <AlertDialog>
