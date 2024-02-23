@@ -11,7 +11,7 @@ export default function AnimeCard({ anime }: { anime: Anime }) {
   return (
     <div
       onClick={() => setSelectedAnime(anime)}
-      className="flex w-48 flex-col items-center rounded-xl p-4 transition-all hover:scale-105 hover:cursor-pointer active:translate-y-2 sm:w-64"
+      className="w-54 flex flex-col items-center rounded-xl p-4 transition-all hover:scale-105 hover:cursor-pointer active:translate-y-2 sm:w-64"
       key={anime.node.id}
     >
       <>
@@ -52,6 +52,7 @@ export default function AnimeCard({ anime }: { anime: Anime }) {
           </div>
         )}
       </>
+
     </div>
   );
 }

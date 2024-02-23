@@ -1,4 +1,9 @@
+import db from "@/src/db";
+import { accounts } from "@/src/db/schema/users";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { eq } from "drizzle-orm";
 import { NextAuthOptions } from "next-auth";
+import type { Adapter } from "next-auth/adapters";
 export const generateRandomBase64String = (length = 24) =>
   Buffer.from(crypto.getRandomValues(new Uint8Array(length))).toString(
     "base64url",
@@ -10,34 +15,31 @@ const malClientId = process.env.MAL_CLIENT_ID!;
 const malSecret = process.env.MAL_SECRET!;
 const callbackUrl = process.env.CALLBACK_URL!;
 
+// MAL API Ref: https://myanimelist.net/apiconfig/references/api/v2
+
 export const options: NextAuthOptions = {
+  session: { strategy: "database" },
   callbacks: {
-    async jwt({ token, user, account, profile }) {
-      if (user) {
-        return {
-          ...token,
-          id: user.id,
-          name: user.name,
-          image: user.picture,
-          accessToken: account?.access_token,
-        };
-      }
-      return token;
-    },
-    async session({ session, token, user }) {
+    async session({ session, user }) {
+      const data = await db
+        .select({ accessToken: accounts.access_token })
+        .from(accounts)
+        .where(eq(accounts.userId, user.id));
+      const accessToken = data[0].accessToken;
+
       // Send properties to the client, like an access_token and user id from a provider.
       return {
         ...session,
         user: {
           ...session.user,
-          id: token.id,
-          name: token.name,
-          image: token.image,
-          accessToken: token.accessToken,
+          id: user.id,
+          name: user.name,
+          accessToken: accessToken,
         },
       };
     },
   },
+  adapter: DrizzleAdapter(db) as Adapter,
   providers: [
     {
       id: "mal",
@@ -75,7 +77,7 @@ export const options: NextAuthOptions = {
         return {
           id: profile.id,
           name: profile.name,
-          picture: profile.picture,
+          image: profile.picture,
         };
       },
     },

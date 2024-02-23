@@ -7,6 +7,7 @@ import Stats from "./Stats";
 import TimerControl from "./TimerControls";
 import TypeTabs from "./TypeTabs";
 import Timer from "./Timer";
+import { Boxes } from "./ui/background-boxes";
 
 export default function TimerSection() {
   return (
@@ -16,6 +17,7 @@ export default function TimerSection() {
       ></div>
 
       <div className="flex h-full  flex-col items-center justify-center gap-4 py-24 sm:gap-8">
+
         <MainHeader />
         <TypeTabs />
         <Timer />

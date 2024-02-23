@@ -6,6 +6,7 @@ function SpotifyPlayer() {
   const isOpenMusicPlayer = useBoundStore((state) => state.isOpenMusicPlayer);
   return (
     <div className="relative h-full w-96 rounded-full">
+
       {isOpenMusicPlayer && (
         <Spotify
           wide

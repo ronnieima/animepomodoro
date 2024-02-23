@@ -18,7 +18,7 @@ function TimerControl() {
   const timerModeWords = convertCamelCaseToWords(timerMode);
 
   return (
-    <div className="flex gap-8">
+    <div className="z-10 flex gap-8">
       {timerState === "stopped" ? (
         <>
           <Button onClick={decrementTime}>-5</Button>

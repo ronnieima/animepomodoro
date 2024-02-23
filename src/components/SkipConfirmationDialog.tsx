@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,15 +15,19 @@ import { SkipForward } from "lucide-react";
 import { useBoundStore } from "../lib/zustand/bounded-store";
 import { convertCamelCaseToWords } from "../lib/utils";
 
+
 function SkipConfirmationDialog() {
+  const session = useSession();
+  const userId = session.data?.user?.id;
   const timerMode = useBoundStore((state) => state.timerMode);
   const finishTimer = useBoundStore((state) => state.finishTimer);
   const timerModeWords = convertCamelCaseToWords(timerMode);
 
+
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Button variant={"secondary"}>
+        <Button variant={"secondary"} onClick={() => {}}>
           <SkipForward />
         </Button>
       </AlertDialogTrigger>
@@ -38,7 +43,19 @@ function SkipConfirmationDialog() {
           <AlertDialogCancel>
             No, continue my {timerModeWords}
           </AlertDialogCancel>
-          <AlertDialogAction className="" onClick={finishTimer}>
+          <AlertDialogAction
+            className=""
+            onClick={() => {
+              const finishedSession = {
+                userId: userId,
+                sessionMode: timerMode,
+                sessionLengthInSeconds: sessionDurations[timerMode],
+                completed: new Date(),
+              };
+              insertSession(finishedSession);
+              finishTimer();
+            }}
+          >
             Yes, skip this timer
           </AlertDialogAction>
         </AlertDialogFooter>
