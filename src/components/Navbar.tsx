@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { buttonVariants } from "./ui/button";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -20,6 +21,9 @@ export default function Navbar() {
     <nav className=" fixed top-0 z-50 flex w-full items-center justify-between gap-16 bg-neutral-950/50 px-4 py-2 sm:px-16">
       <Link href="/" className="hover:underline">
         animepomodoro.
+      </Link>
+      <Link href={`/sessions`} className={buttonVariants({ variant: "link" })}>
+        View my sessions
       </Link>
       {session?.user ? (
         <>
@@ -34,6 +38,7 @@ export default function Navbar() {
                   width={100}
                   className=" h-12 w-12 rounded-full"
                   alt="MAL profile picture"
+                  style={{ objectFit: "cover" }}
                 />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
