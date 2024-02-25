@@ -22,10 +22,12 @@ function CancelConfirmationDialog() {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger asChild>
         <Button variant={"destructive"}>
-          <Ban />
-          <span className="sr-only">Cancel timer</span>
+          <>
+            <Ban />
+            <span className="sr-only">Cancel timer</span>
+          </>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

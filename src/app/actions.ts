@@ -8,10 +8,10 @@ import {
 } from "../config/content";
 import { AnimeListResponse } from "../lib/types/anime-types";
 import { options } from "./api/auth/[...nextauth]/options";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import db from "../db";
 import { timerSessionHistory } from "../db/schema/timer";
-import { InferInsertModel } from "drizzle-orm";
+import { InferInsertModel, eq } from "drizzle-orm";
 
 export type timerSessionHistoryType = InferInsertModel<
   typeof timerSessionHistory
@@ -91,4 +91,34 @@ export async function fetchTopAnime(
   const data = await res.json();
 
   return data;
+}
+
+export async function deleteSession(sessionIdToDelete: string) {
+  try {
+    await db
+      .delete(timerSessionHistory)
+      .where(eq(timerSessionHistory.sessionId, sessionIdToDelete));
+    revalidatePath("/sessions");
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateSession(
+  sessionIdToUpdate: string,
+  newSessionLengthInSeconds: number,
+  newSessionMode: string,
+) {
+  try {
+    await db
+      .update(timerSessionHistory)
+      .set({
+        sessionLengthInSeconds: newSessionLengthInSeconds,
+        sessionMode: newSessionMode,
+      })
+      .where(eq(timerSessionHistory.sessionId, sessionIdToUpdate));
+    revalidatePath("/sessions");
+  } catch (error) {
+    throw error;
+  }
 }
