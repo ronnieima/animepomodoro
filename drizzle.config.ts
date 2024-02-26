@@ -1,8 +1,4 @@
-import { loadEnvConfig } from "@next/env";
 import type { Config } from "drizzle-kit";
-import { cwd } from "node:process";
-
-loadEnvConfig(cwd());
 
 export default {
   schema: "./src/db/schema/*",

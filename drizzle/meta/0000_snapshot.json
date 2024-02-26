@@ -1,34 +1,43 @@
 {
-  "id": "383f801e-5daf-4eec-ada9-a15b6479cf4e",
+  "id": "ba881f72-1935-4416-b86e-4245e059403a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
   "tables": {
     "timerSessionHistory ": {
       "name": "timerSessionHistory ",
+      "schema": "",
+      "columns": {
+        "sessionId": {
+          "name": "sessionId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
         "userId": {
           "name": "userId",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "sessionMode": {
           "name": "sessionMode",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "sessionLengthInSeconds": {
           "name": "sessionLengthInSeconds",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "completed": {
           "name": "completed",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
@@ -53,6 +62,7 @@
     "account": {
       "name": "account",
       "schema": "",
+      "columns": {
         "userId": {
           "name": "userId",
           "type": "text",
@@ -209,11 +219,7 @@
           "name": "email",
           "type": "text",
           "primaryKey": false,
-<<<<<<< HEAD
-          "notNull": true
-=======
           "notNull": false
->>>>>>> 38f4b48 (add session history)
         },
         "emailVerified": {
           "name": "emailVerified",
