@@ -4,7 +4,7 @@ import { AnimeSortOption, AnimeStatusOption } from "../config/content";
 
 export default async function Home({ searchParams }: SearchParamsType) {
   return (
-    <main className="bg-gradient-to-b from-neutral-800 to-neutral-900">
+    <main className="">
       <TimerSection />
       <MALAuthenticatedSection searchParams={searchParams} />
     </main>
@@ -16,5 +16,6 @@ export type SearchParamsType = {
     status: AnimeStatusOption;
     search: string;
     sort: AnimeSortOption;
+    mode: "userlist" | "search";
   };
 };

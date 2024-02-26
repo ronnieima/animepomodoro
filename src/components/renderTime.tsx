@@ -18,7 +18,7 @@ const RenderTime = ({ remainingTime }: { remainingTime: number }) => {
       <span className="font-semibold sm:text-lg">
         Next {timerMode === "pomodoro" ? "episode" : "focus session"} in
       </span>
-      <span className="text-6xl font-semibold">{finalTime}</span>
+      <span className="text-6xl  font-semibold tracking-wide">{finalTime}</span>
     </div>
   );
 };

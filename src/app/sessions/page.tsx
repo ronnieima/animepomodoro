@@ -29,7 +29,7 @@ export default async function SessionsPage() {
     .where(eq(timerSessionHistory.userId, userId));
   return (
     <main className="">
-      <div className="mx-auto max-w-3xl py-24">
+      <div className="mx-auto max-w-3xl px-2 py-24">
         <h1 className="text-3xl">My Sessions</h1>
         <Table className="w-full">
           <TableCaption>A list of your recent sessions.</TableCaption>
@@ -47,14 +47,14 @@ export default async function SessionsPage() {
                   <TableCell className="font-medium">
                     {timerSession.completed?.toLocaleString()}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="">
                     {timerSession.sessionLengthInSeconds! / 60}
                   </TableCell>
                   <TableCell className="capitalize">
                     {timerSession.sessionMode}
                   </TableCell>
                   <TableCell className="text-right">
-                    <SessionRowButtons sessionId={timerSession.sessionId} />
+                    <SessionRowButtons session={timerSession} />
                   </TableCell>
                 </TableRow>
               );

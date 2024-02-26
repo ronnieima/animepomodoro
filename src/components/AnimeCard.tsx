@@ -32,7 +32,7 @@ export default function AnimeCard({ anime }: { anime: Anime }) {
           >
             {anime?.node.title}
           </p>
-          <div className="absolute bottom-0 z-10 h-3/4 w-full bg-gradient-to-t from-[#121212] from-[20%]  to-transparent"></div>
+          <div className="absolute bottom-0 z-10 h-3/4 w-full bg-gradient-to-t from-neutral-800 from-[20%]  to-transparent"></div>
         </div>
 
         {anime?.list_status?.num_episodes_watched && (
@@ -52,7 +52,6 @@ export default function AnimeCard({ anime }: { anime: Anime }) {
           </div>
         )}
       </>
-
     </div>
   );
 }

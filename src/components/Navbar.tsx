@@ -12,16 +12,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { buttonVariants } from "./ui/button";
+
 import { usePathname } from "next/navigation";
 import { cn } from "../lib/utils";
+import { useBoundStore } from "../lib/zustand/bounded-store";
 
 export default function Navbar() {
   const session = useSession();
   const path = usePathname();
+  const timerMode = useBoundStore((store) => store.timerMode);
 
   return (
-    <nav className=" fixed top-0 z-50 flex w-full items-center justify-between gap-16 bg-neutral-950/50 px-4 py-2 sm:px-16">
+    <nav
+      className={cn(
+        `top-0 z-50 flex w-full items-center justify-between gap-16 bg-transparent px-4 py-2 transition-all duration-1000 sm:px-16`,
+        {
+          "bg-[#ba4949]/50  ": timerMode === "pomodoro",
+          "bg-[#38858a]/50 ": timerMode === "animeBreak",
+          "bg-green-900/50 ": timerMode === "longBreak",
+        },
+      )}
+    >
       <Link href="/" className="hover:underline">
         animepomodoro.
       </Link>

@@ -1,9 +1,7 @@
 "use client";
-import React from "react";
-import { Button } from "./ui/button";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { ListChecks, Search } from "lucide-react";
-import { param } from "drizzle-orm";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "./ui/button";
 
 export default function SwitchModeButton() {
   const router = useRouter();

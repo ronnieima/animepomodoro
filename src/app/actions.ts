@@ -18,6 +18,7 @@ export type timerSessionHistoryType = InferInsertModel<
 >;
 
 export async function insertSession(session: timerSessionHistoryType) {
+  if (session.sessionMode !== "pomodoro") return;
   await db.insert(timerSessionHistory).values(session);
 }
 

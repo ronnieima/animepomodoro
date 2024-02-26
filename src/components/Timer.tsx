@@ -23,7 +23,7 @@ function Timer() {
   function handleColor(currentStage: string) {
     switch (currentStage) {
       case "pomodoro":
-        return "#DFCCFB";
+        return "#788EDA";
       case "animeBreak":
         return "#618264";
       case "longBreak":
