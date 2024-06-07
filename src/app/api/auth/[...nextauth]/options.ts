@@ -36,6 +36,7 @@ export const options: NextAuthOptions = {
               grant_type: "refresh_token",
               refresh_token: malAccount.refresh_token!,
               code_verifier: code_verifier,
+              redirect_uri: callbackUrl,
             }),
             method: "POST",
           });
