@@ -3,6 +3,7 @@ export type AnimeListResponse = {
   paging: {
     next: string;
   };
+  error: string;
 };
 
 export type Anime = {

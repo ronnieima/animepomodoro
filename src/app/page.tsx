@@ -4,7 +4,7 @@ import { AnimeSortOption, AnimeStatusOption } from "../config/content";
 
 export default async function Home({ searchParams }: SearchParamsType) {
   return (
-    <main className="">
+    <main>
       <TimerSection />
       <MALAuthenticatedSection searchParams={searchParams} />
     </main>

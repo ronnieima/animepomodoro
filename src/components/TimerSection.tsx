@@ -20,12 +20,6 @@ export default function TimerSection() {
         "bg-green-900/50 ": timerMode === "longBreak",
       })}
     >
-      {/* <div
-        className={cn(
-          `pointer-events-none absolute inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_910%,black)]`,
-        )}
-      ></div> */}
-
       <div className="flex h-full  flex-col items-center justify-center gap-4 py-24  sm:gap-8">
         <MainHeader />
         <TypeTabs />

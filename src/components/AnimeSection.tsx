@@ -39,7 +39,6 @@ export default async function MALAuthenticatedSection({
               />
             </Link>
           </div>
-          {/* <SwitchModeButton /> */}
         </header>
         {session?.user ? (
           <div className=" flex  flex-col items-center gap-16 px-2 py-4">
@@ -47,7 +46,6 @@ export default async function MALAuthenticatedSection({
             <div className="flex flex-col gap-8">
               <div className="flex flex-col items-center py-8">
                 <div className="flex flex-wrap items-center justify-center gap-4 px-4">
-                  {/* {searchParams.mode === "userlist" ? ( */}
                   <>
                     <AnimeFilter
                       key="status"
@@ -64,11 +62,6 @@ export default async function MALAuthenticatedSection({
                       queryParam="sort"
                     />
                   </>
-                  {/* ) : (
-                    <>
-                      <Search />
-                    </>
-                  )} */}
                 </div>
               </div>
 

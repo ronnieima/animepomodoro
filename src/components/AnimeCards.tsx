@@ -8,7 +8,6 @@ import { AnimeListResponse } from "../lib/types/anime-types";
 export default async function AnimeCards({ searchParams }: SearchParamsType) {
   const session = await getServerSession(options);
   const { status, sort } = searchParams;
-
   const res = await fetch(
     `${BASE_URL}/users/@me/animelist?fields=list_status&limit=100&sort=list_updated_at&status=${
       status || "watching"
@@ -23,9 +22,13 @@ export default async function AnimeCards({ searchParams }: SearchParamsType) {
 
   return (
     <div className="flex max-w-7xl flex-wrap justify-center gap-8">
-      {animeList?.data?.map(async (anime) => {
-        return <AnimeCard key={anime.node.id} anime={anime} />;
-      })}
+      {!animeList.error ? (
+        animeList.data.map(async (anime) => (
+          <AnimeCard key={anime.node.id} anime={anime} />
+        ))
+      ) : (
+        <div>Failed to pull list from MyAnimeList: {animeList.error}</div>
+      )}
     </div>
   );
 }
