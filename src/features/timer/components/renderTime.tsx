@@ -1,5 +1,6 @@
 "use client";
-import { useBoundStore } from "../lib/zustand/bounded-store";
+
+import { useBoundStore } from "@/src/lib/zustand/bounded-store";
 
 const RenderTime = ({ remainingTime }: { remainingTime: number }) => {
   const timerMode = useBoundStore((state) => state.timerMode);

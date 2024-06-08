@@ -3,8 +3,8 @@
 import { Button } from "@/src/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
 import { Music } from "lucide-react";
-import { useBoundStore } from "../lib/zustand/bounded-store";
-import ThemeToggle from "./ThemeToggle";
+import { useBoundStore } from "../../../lib/zustand/bounded-store";
+import ThemeToggle from "../../components/ThemeToggle";
 
 function TypeTabs() {
   const timerMode = useBoundStore((state) => state.timerMode);

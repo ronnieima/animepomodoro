@@ -1,25 +1,26 @@
 "use client";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { fetchAnimeTotalEpisodes, updateAnimeDetails } from "../app/actions";
-import {
-  ANIME_STATUS_OPTIONS,
-  AnimeStatusOption,
-  USER_ANIME_SCORE_OPTIONS,
-} from "../config/content";
-import { useBoundStore } from "../lib/zustand/bounded-store";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { fetchAnimeTotalEpisodes } from "@/src/app/actions";
+import { Input } from "@/src/components/ui/input";
+import { Label } from "@/src/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Separator } from "./ui/separator";
+} from "@/src/components/ui/select";
+import {
+  AnimeStatusOption,
+  ANIME_STATUS_OPTIONS,
+  USER_ANIME_SCORE_OPTIONS,
+} from "@/src/config/content";
+import { useBoundStore } from "@/src/lib/zustand/bounded-store";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function SelectedAnime() {
   const session = useSession();
@@ -48,7 +49,6 @@ export default function SelectedAnime() {
     if (animeId) {
       fetchEps();
     }
-
   }, [
     selectedAnime,
     initialAnimeStatus,
@@ -59,6 +59,14 @@ export default function SelectedAnime() {
   ]);
 
   if (!selectedAnime || !animeId) return null;
+
+  function updateAnimeDetails(
+    animeId: any,
+    arg1: string,
+    newStatus: AnimeStatusOption,
+  ) {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <>
@@ -127,7 +135,12 @@ export default function SelectedAnime() {
                       await updateAnimeDetails(
                         animeId,
                         "episodeCount",
-                        episodeCount!.toString(),
+                        episodeCount!.toString() as
+                          | "watching"
+                          | "completed"
+                          | "on_hold"
+                          | "dropped"
+                          | "plan_to_watch",
                       );
 
                       toast(
@@ -152,7 +165,16 @@ export default function SelectedAnime() {
                 value={animeScore?.toString()}
                 onValueChange={async (newScore) => {
                   try {
-                    await updateAnimeDetails(animeId, "score", newScore);
+                    await updateAnimeDetails(
+                      animeId,
+                      "score",
+                      newScore as
+                        | "watching"
+                        | "completed"
+                        | "on_hold"
+                        | "dropped"
+                        | "plan_to_watch",
+                    );
 
                     setAnimeScore(Number(newScore));
 
@@ -186,4 +208,7 @@ export default function SelectedAnime() {
       ) : null}
     </>
   );
+}
+function useBoundStor(arg0: (state: any) => any) {
+  throw new Error("Function not implemented.");
 }

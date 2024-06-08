@@ -1,5 +1,5 @@
+import SignInButton from "@/src/components/SignInButton";
 import Image from "next/image";
-import SignInButton from "./SignInButton";
 
 export default function LogInToMal() {
   return (

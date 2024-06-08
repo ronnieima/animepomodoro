@@ -1,23 +1,24 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { options } from "../app/api/auth/[...nextauth]/options";
-import { SearchParamsType } from "../app/page";
+import { options } from "../../../app/api/auth/[...nextauth]/options";
+import { SearchParamsType } from "../../../app/page";
+import {
+  ANIME_SORT_OPTIONS,
+  ANIME_STATUS_OPTIONS,
+} from "../../../config/content";
 import AnimeCards from "./AnimeCards";
-import LogInToMal from "./LogInToMal";
-import SelectedAnime from "./SelectedAnime";
-import SwitchModeButton from "./SwitchModeButton";
 import AnimeFilter from "./AnimeFilter";
-import { ANIME_SORT_OPTIONS, ANIME_STATUS_OPTIONS } from "../config/content";
-import Search from "./Search";
+import SelectedAnime from "./SelectedAnime";
+import LogInToMal from "./LogInToMal";
 
-export default async function MALAuthenticatedSection({
+export default async function AnimeListSection({
   searchParams,
 }: SearchParamsType) {
   const session = await getServerSession(options);
   return (
     <section className="bg-[#121212]   py-4 md:p-16">
-      <div className="mx-auto max-w-7xl py-8">
+      <div className="mx-auto max-w-7xl px-8 py-8">
         <header className="flex flex-wrap items-center justify-center  gap-8 px-2 py-8 sm:justify-between">
           <div className="flex items-center gap-8">
             <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">

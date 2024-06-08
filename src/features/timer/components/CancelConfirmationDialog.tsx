@@ -10,9 +10,9 @@ import {
   AlertDialogTrigger,
 } from "@/src/components/ui/alert-dialog";
 import { Button } from "@/src/components/ui/button";
+import { convertCamelCaseToWords } from "@/src/lib/utils";
+import { useBoundStore } from "@/src/lib/zustand/bounded-store";
 import { Ban } from "lucide-react";
-import { useBoundStore } from "../lib/zustand/bounded-store";
-import { convertCamelCaseToWords } from "../lib/utils";
 
 function CancelConfirmationDialog() {
   const timerMode = useBoundStore((state) => state.timerMode);

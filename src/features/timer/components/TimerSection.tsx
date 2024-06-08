@@ -3,12 +3,12 @@
 import React from "react";
 import MainHeader from "./MainHeader";
 import SpotifyPlayer from "./SpotifyPlayer";
-import Stats from "./Stats";
 import TimerControl from "./TimerControls";
 import TypeTabs from "./TypeTabs";
 import Timer from "./Timer";
-import { cn } from "../lib/utils";
-import { useBoundStore } from "../lib/zustand/bounded-store";
+import { cn } from "../../../lib/utils";
+import { useBoundStore } from "../../../lib/zustand/bounded-store";
+import Stats from "./Stats";
 
 export default function TimerSection() {
   const timerMode = useBoundStore((store) => store.timerMode);

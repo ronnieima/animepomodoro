@@ -1,4 +1,4 @@
-import { useBoundStore } from "../lib/zustand/bounded-store";
+import { useBoundStore } from "@/src/lib/zustand/bounded-store";
 
 function Stats() {
   const pomodoroCount = useBoundStore((state) => state.pomodoroCount);

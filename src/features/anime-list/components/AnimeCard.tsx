@@ -1,9 +1,9 @@
 "use client";
 import { Eye, Star } from "lucide-react";
 import Image from "next/image";
-import { Anime } from "../lib/types/anime-types";
-import { cn } from "../lib/utils";
-import { useBoundStore } from "../lib/zustand/bounded-store";
+import { Anime } from "../../../lib/types/anime-types";
+import { cn } from "../../../lib/utils";
+import { useBoundStore } from "../../../lib/zustand/bounded-store";
 
 export default function AnimeCard({ anime }: { anime: Anime }) {
   const setSelectedAnime = useBoundStore((state) => state.setSelectedAnime);

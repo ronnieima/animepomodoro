@@ -1,12 +1,12 @@
-import MALAuthenticatedSection from "../components/AnimeSection";
-import TimerSection from "../components/TimerSection";
+import AnimeListSection from "../features/anime-list/components/AnimeListSection";
+import TimerSection from "../features/timer/components/TimerSection";
 import { AnimeSortOption, AnimeStatusOption } from "../config/content";
 
 export default async function Home({ searchParams }: SearchParamsType) {
   return (
     <main>
       <TimerSection />
-      <MALAuthenticatedSection searchParams={searchParams} />
+      <AnimeListSection searchParams={searchParams} />
     </main>
   );
 }

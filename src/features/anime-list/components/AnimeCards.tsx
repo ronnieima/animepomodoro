@@ -1,9 +1,9 @@
-import { SearchParamsType } from "../app/page";
+import { SearchParamsType } from "../../../app/page";
 import AnimeCard from "./AnimeCard";
 import { getServerSession } from "next-auth";
-import { options } from "../app/api/auth/[...nextauth]/options";
-import { BASE_URL } from "../config/content";
-import { AnimeListResponse } from "../lib/types/anime-types";
+import { options } from "../../../app/api/auth/[...nextauth]/options";
+import { BASE_URL } from "../../../config/content";
+import { AnimeListResponse } from "../../../lib/types/anime-types";
 
 export default async function AnimeCards({ searchParams }: SearchParamsType) {
   const session = await getServerSession(options);

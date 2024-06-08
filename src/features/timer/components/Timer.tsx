@@ -1,12 +1,12 @@
 "use client";
-import renderTime from "@/src/components/renderTime";
 import { useTheme } from "next-themes";
 import { useRef } from "react";
 
 import { useSession } from "next-auth/react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { useBoundStore } from "../lib/zustand/bounded-store";
-import { insertSession } from "../app/actions";
+import { useBoundStore } from "../../../lib/zustand/bounded-store";
+import { insertSession } from "../../../app/actions";
+import RenderTime from "./renderTime";
 
 function Timer() {
   const session = useSession();
@@ -58,7 +58,7 @@ function Timer() {
         trailColor={"#31304D"}
         strokeLinecap="butt"
       >
-        {renderTime}
+        {RenderTime}
       </CountdownCircleTimer>
     </div>
   );

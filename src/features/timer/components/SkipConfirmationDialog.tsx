@@ -1,4 +1,5 @@
 "use client";
+import { insertSession } from "@/src/app/actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,11 +12,10 @@ import {
   AlertDialogTrigger,
 } from "@/src/components/ui/alert-dialog";
 import { Button } from "@/src/components/ui/button";
+import { convertCamelCaseToWords } from "@/src/lib/utils";
+import { useBoundStore } from "@/src/lib/zustand/bounded-store";
 import { SkipForward } from "lucide-react";
-import { useBoundStore } from "../lib/zustand/bounded-store";
-import { convertCamelCaseToWords } from "../lib/utils";
 import { useSession } from "next-auth/react";
-import { insertSession } from "../app/actions";
 
 function SkipConfirmationDialog() {
   const session = useSession();

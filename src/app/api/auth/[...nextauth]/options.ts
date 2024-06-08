@@ -25,9 +25,9 @@ export const options: NextAuthOptions = {
         .select()
         .from(accounts)
         .where(eq(accounts.userId, user.id));
-
       if (malAccount.expires_at && malAccount.expires_at * 1000 < Date.now()) {
         try {
+          // get refresh token
           const res = await fetch(`https://myanimelist.net/v1/oauth2/token`, {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({

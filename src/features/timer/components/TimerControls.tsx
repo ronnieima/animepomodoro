@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@/src/components/ui/button";
 import { Pause, Play } from "lucide-react";
-import { useBoundStore } from "../lib/zustand/bounded-store";
+import { useBoundStore } from "../../../lib/zustand/bounded-store";
+import { convertCamelCaseToWords } from "../../../lib/utils";
 import CancelConfirmationDialog from "./CancelConfirmationDialog";
 import SkipConfirmationDialog from "./SkipConfirmationDialog";
-import { convertCamelCaseToWords } from "../lib/utils";
 
 function TimerControl() {
   const time = useBoundStore((state) => state.time);
